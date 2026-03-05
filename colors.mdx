@@ -3,36 +3,35 @@ title: "Colors"
 description: "色は階層を確立し、ブランディングを強化し、調和を築きます。"
 ---
 
-色は階層を確立し、ブランディングを強化し、調和を築きます。
-
 <Tabs>
   <Tab title="Overview">
-    ## Quicklook
+    # Quicklook
 
     - トークンは「Theme → Lightness-mode → Component」の3つの階層で管理しています
     - 基本はLightness-mode tokens を使用します
     - APCA によるコントラスト評価をもとに行い、アクセシビリティを確保します
 
-    ## トークンの階層
+    # トークンの階層
 
     Garageのカラートークンは3層構造で管理されています。それぞれ役割が明確に分かれており、ブランドの一貫性を保ちながらモード切り替えやコンポーネントごとの配色調整をしやすくする設計です。
 
+    ![トークン階層の図解](/images/colors-token-hierarchy-light.png)
+
+    {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/4128-1270  */}
+
     | 層 | 役割 |
-    | --- | --- |
+    | ---- | ----- |
     | **Theme** | 各ブランドごとに基本色と生成ルールを定義する基盤層です。 |
     | **Lightness-Mode** | 背景やテキストなど、UIに直接関わるセマンティック層のトークンです。 |
-    | **Component-Specific** | ⚠️デザイナー向けのみ（Figma Variablesの定義です）。ボタンなど、実際のUIコンポーネントに、どの色をどの役割で使うかをマッピングする層です。 |
+    | **Component-Specific** | ⚠️デザイナー向けのみ（Figma Variablesの定義です）。ボタンなど、実際のUIコンポーネントに、どの色をどの役割で使うかを<br />マッピングする層です。|
 
-    ![トークン階層の図解](/images/colors-token-hierarchy-light.png)
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/4128-1270 -->
-
-    ## Theme (Primitive Tokens)
+    # Theme (Primitive Tokens)
 
     各ブランドで共通して使う基礎色セットを定義する Primitive 層で、テキストや背景など具体的な用途はまだ固定せず、「どんな色を使ってよいか」の範囲と性質にフォーカスします。
 
     **コミュニケーションデザインを行う場合は、この Theme トークンを直接使用できます。**
 
-    ### ブランドテーマの追加・設計
+    ## ブランドテーマの追加・設計
 
     - Lightness-mode の参照ルール（どの Lightness トークンが、どの theme トークンを使うか）を前提に設計する
     - 既存の Lightness-mode の構造を崩さずに、ブランドらしさを表現できる色やスタイルをあて込む
@@ -46,25 +45,33 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     この法則は、「刺激がどれくらい変化したと感じるか」に関する観察結果であり、色の明るさのつけ方（明度スケール）に影響します。知覚的に均一とされる色空間でも、色相や明るさを数値上は等間隔に並べても、人の目には同じ間隔には見えません。人が「均一だ」と感じる変化は、数直線のような直線ではなく、指数的なカーブ（パワースケール）に従います。
 
-    スティーブンスのベキ法則を参考に、ガンマ補正（Gamma ≈ 1.45）を適用した非線形カーブを採用しています。
+    <Columns cols={2}>
+      <Column>
+        ![Image](/images/image.png)
 
-    ![線形スケールと非線形スケールの比較](/images/colors-lightness-scale-comparison-light.png)
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/3778-1085 -->
-
-    Garage の色システムでは、この特性を考慮し、直線ではなく曲線に沿った明度の分布を採用しています。これにより、人が感じる変化量がよりそろいやすくなり、ホバーやアクティブなどのインタラクティブな状態でも、一貫した色の変化を保ちやすくなります。
-
-    各カラースケールは0〜100の18段階で設計されており、OKLCH色空間のL値（Luminance）を基準に非線形で配置しています。
+        {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/3778-1085  */}
+      </Column>
+      <Column>
+        <img
+          src="/images/colors-lightness-scale-comparison-light.png"
+          alt="線形スケールと非線形スケールの比較"
+          className="mx-auto"
+        />
+      </Column>
+    </Columns>
+    Garage の色システムでは、この特性を考慮し、直線ではなく曲線に沿った明度の分布を採用しています。これにより、人が感じる変化量がよりそろいやすくなり、ホバーやアクティブなどのインタラクティブな状態でも、一貫した色の変化を保ちやすくなります。各カラースケールは0〜100の18段階で設計されており、OKLCH色空間のL値（Luminance）を基準に非線形で配置しています。
 
     ![カラースケールの明るさ（Lightness）値一覧](/images/colors-lightness-values-light.png)
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/3731-1403 -->
+
+    {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/3731-1403  */}
 
     非線形の明るさスケールによって、次のようなメリットがあります。
 
-    - 各ステップ間の「見た目の差」がおおよそ均一になる
-    - ダーク／ライトテーマ間で、自然なトーンバランスを保ちやすい
-    - 階調が滑らかなので、背景レイヤーやホバー／アクティブ状態の設計がしやすい
+    - 各ステップ間の\*\*「見た目の差」がおおよそ均一\*\*になる
+    - ダーク／ライトテーマ間で、**自然なトーンバランス**を保ちやすい
+    - 階調が滑らかなので、**背景レイヤーやホバー／アクティブ状態**の設計がしやすい
 
-    ## Lightness-Mode (Semantic Tokens)
+    # Lightness-Mode (Semantic Tokens)
 
     実際のプロダクトUI要素に直接適用される、意味をもった色を定義する層です。ボタン、テキスト、背景、境界線、フィードバックメッセージなど、ユーザーが目にする多くの配色はこの層で決まります。
 
@@ -76,52 +83,79 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     ### Color role
 
-    | カテゴリ | トークン | 説明 |
+    | カテゴリ| トークン| 説明 |
     | --- | --- | --- |
-    | Surface系 | surface | 構造的な背景レイヤー |
-    | Container系 | surface-container, accent-container, feedback-container | ボタンやinputなどテキストやアイコンやUIなどを含む要素の背景色に使用します |
-    | Border系 | border, accent-border, feedback-border | コンテナの周囲の枠線、罫（ストローク）、またはぼかり線（ディバイダー）に使用します |
-    | on系 | on-surface, on-accent, on-feedback, accent, feedback | surface, container系の上に配置されるコンテンツ（テキスト・アイコンなど）に使用します |
-    | Shadow系 | shadow | 視覚的にエレベーションを表現するドロップシャドウに使用します |
+    | Surface系 | `surface` | 構造的な背景レイヤー |
+    | Container系 | `surface-container`, `accent-container`, `feedback-container`  | ボタンやinputなどテキストやアイコンやUIなどを含む要素の背景色に使用します |
+    | Border系 | `border`, `accent-border`,`feedback-border` | コンテナの周囲の枠線、罫（ストローク）、またはぼかり線（ディバイダー）に使用します |
+    | on系 | `on-surface`, `on-accent`, `on-feedback,` `accent`, `feedback` | surface, container系の上に配置されるコンテンツ（テキスト・アイコンなど）に使用します |
+    | Shadow系 | `shadow` | 視覚的にエレベーションを表現するドロップシャドウに使用します |
 
-    ![トークンの使用例](/images/colors-token-usage-example-light.png)
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/3483-939 -->
+    <Frame>
+      ![トークンの使用例](/images/colors-token-usage-example-light.png)
+    </Frame>
+    {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/3483-939  */}
 
     ![Surface Layers（ライトモード・ダークモード）](/images/colors-surface-layers-light.png)
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/3731-1405 -->
 
-    ## Component Tokens
+    {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/3731-1405  */}
 
-    実際のUIコンポーネントに対して、どの色をどの役割で使うかを具体的にマッピングする層です。ボタン、入力欄、カード、テキストなど、コンポーネント単位で「背景色」「境界線」「テキスト」「アイコン」などの用途にTheme/Lightness-Mode層の色を割り当てます。
+    # Component Tokens
 
-    この層を通じて、デザインと実装の間で色指定を正確に共有しやすくなり、コンポーネントの再利用性やメンテナンス性も高められます。
+    実際のUIコンポーネントに対して、どの色をどの役割で使うかを具体的にマッピングする層です。ボタン、入力欄、カード、テキストなど、コンポーネント単位で「背景色」「境界線」「テキスト」「アイコン」などの用途にTheme/Lightness-Mode層の色を割り当てます。この層を通じて、デザインと実装の間で色指定を正確に共有しやすくなり、コンポーネントの再利用性やメンテナンス性も高められます。
 
-    ⚠️ Panda.cssの制約上、Component Tokensはデザイナー向けのVariablesとしてのみ提供しており、コード上には実装されていません。実装するときは、FigmaのDevモードでバリアブルの詳細パネルを開き、そこに表示される参照元のLightness-modeトークンを確認して、その値を使ってください。
+    <Frame>
+      <img
+        src="/images/image.png"
+        alt="Image"
+        title="Image"
+        className="mx-auto"
+        style={{ width:"72%" }}
+      />
+    </Frame>
+    <Note>
+      ⚠️ Panda.cssの制約上、Component Tokensはデザイナー向けのVariablesとしてのみ提供しており、コード上には実装されていません。実装するときは、FigmaのDevモードでバリアブルの詳細パネルを開き、そこに表示される参照元のLightness-modeトークンを確認して、その値を使ってください。
 
-    ## アクセシビリティ
+      ![Image](/images/image-1.png)
+    </Note>
+    # アクセシビリティ
 
     知覚に基づく新しいコントラストモデル APCA を採用し、より実際の見え方に近いコントラスト評価を行うことで、コントラスト評価でブロンズレベルを目指します。
 
     APCA（Advanced Perceptual Contrast Algorithm）は、人の視覚により近い形でコントラストを評価する新しいモデルです。「明暗差」だけでなく、書体・文字サイズや太さ、背景色などを考慮して、読みやすさを数値化します。WCAG 2.x の単純なコントラスト比とは異なり、小さい文字と大きい文字で適切なコントラスト基準を変えることができます。
 
-    **Do**
+    <Columns cols={2}>
+      <Column>
+        <Tip>
+          <Frame>
+            <img
+              src="/images/image-2.png"
+              alt="Image"
+            />
+          </Frame>
+          **Do**
 
-    - UIテキストにおいては、Lc値は60以上を目標とします。
-    - 段落などの本文には75以上を目標とします。
+          - UIテキストにおいては、Lc値は60以上を目標とします。
+          - 段落などの本文には75以上を目標とします。
+        </Tip>
+      </Column>
+      <Column>
+        <Warning>
+          <Frame>
+            ![Image](/images/image-3.png)
+          </Frame>
+          **Don't**
 
-    ![アクセシビリティ Do/Don't — フィードバックカラーのコントラスト例](/images/colors-do-dont-feedback-light.png)
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/4128-1279 -->
-
-    **Don't**
-
-    - PlaceholderやDisabled、アイコン以外のUIコンテンツにはLc60以上を目安としてください
+          - PlaceholderやDisabled、アイコン以外のUIコンテンツにはLc60以上を目安としてください
+        </Warning>
+      </Column>
+    </Columns>
   </Tab>
-
   <Tab title="Usage">
-    | | Web | iOS | Android |
-    | --- | --- | --- | --- |
-    | Light Mode | ✅ Ready | To do | To do |
-    | Dark Mode | To do | To do | To do |
+    |            | Web     | iOS   | Android |
+    | ---------- | ------- | ----- | ------- |
+    | Light Mode | ✅ Ready | To do | To do   |
+    | Dark Mode  | To do   | To do | To do   |
 
     ## 原則
 
@@ -138,7 +172,7 @@ description: "色は階層を確立し、ブランディングを強化し、調
     ### ✅ Themeトークンを使える例
 
     | ユースケース | 理由 |
-    | --- | --- |
+    | ---------------- | -------------------- |
     | プロジェクトアイコンの背景色 | 色は識別のためで、緑でも青でも機能は同じ |
     | 付箋・タグのカラーバリエーション | ユーザーが好きな色で分類する |
 
@@ -165,22 +199,27 @@ description: "色は階層を確立し、ブランディングを強化し、調
     - ダークモードでは薄く（明るく）することで強調
     - 基準色に応じて、適切な方向に1-2段階変化させる
 
-    ![インタラクション濃淡変化の例](/images/colors-interaction-tonal-change-light.png)
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/4128-1278 -->
+    <Frame>
+      ![インタラクション濃淡変化の例](/images/colors-interaction-tonal-change-light.png)
+    </Frame>
+    {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/4128-1278  */}
 
     #### 2. Disabled状態 = 40% opacity
 
     無効状態では、ルールがシンプルで、一貫性を保ちやすくするため、カラートークンは変更せず、opacity: 0.4（40%）を一律で適用します。
 
-    ![Disabled状態の例](/images/colors-disabled-state-light.png)
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/3775-4655 -->
+    <Frame>
+      ![Disabled状態の例](/images/colors-disabled-state-light.png)
+    </Frame>
+    {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/3775-4655  */}
 
     #### 3. Focus Ring = 固定色
 
     アクセシビリティの一貫性を保つため、キーボードフォーカス時のフォーカスリングは、画面や使う場所に関係なく、いつも同じ色を使います。
 
-    <!-- Focus Ringの画像はFigmaフレーム内に見つかりませんでした。必要に応じて追加してください -->
-    <!-- figma-frame: PSqBlA9pU7SHYbplxhS8q6/3731-1404 -->
+    {/*  Focus Ringの画像はFigmaフレーム内に見つかりませんでした。必要に応じて追加してください  */}
+
+    {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/3731-1404  */}
 
     ## Surface
 
@@ -246,12 +285,12 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     フィードバックカラーは、ユーザーにアクションやイベントの状態に関するセマンティックな情報を視覚的に伝えるために使用します。これらの色は、Garage UI全体で特定の関連性を伝えるために予約されています。
 
-    | トークン | 用途 |
-    | --- | --- |
-    | feedback | 直接 surface 上に配置されるラベルやアイコン向けに使います。 |
-    | feedback-container | 背景色。surface-container と同じ考え方で、フィードバック内容をまとめるコンテナに使います。 |
-    | feedback-border | border と同じ使い方で、枠線による状態の強調に使用します。 |
-    | on-feedback | 背景（feedback-container）の上に載るテキスト・アイコンの色として使います。on-surface と同様に、コントラストを確保した前景色として使います。 |
+    | トークン               | 用途                                                                                   |
+    | ------------------ | ------------------------------------------------------------------------------------ |
+    | feedback           | 直接 surface 上に配置されるラベルやアイコン向けに使います。                                                   |
+    | feedback-container | 背景色。surface-container と同じ考え方で、フィードバック内容をまとめるコンテナに使います。                               |
+    | feedback-border    | border と同じ使い方で、枠線による状態の強調に使用します。                                                     |
+    | on-feedback        | 背景（feedback-container）の上に載るテキスト・アイコンの色として使います。on-surface と同様に、コントラストを確保した前景色として使います。 |
 
     ## Accent
 
@@ -259,26 +298,25 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     現状はブランドカラーを採用したアクセントカラーとリンクのみ定義されています。
 
-    | トークン | 用途 |
-    | --- | --- |
-    | accent.#type | surface, surface-containerに直接配置されるテキストやアイコンなどのカラーに使用されます |
-    | accent-container.#type | 背景色。surface-container と同じ考え方で、フィードバック内容をまとめるコンテナに使います。 |
-    | accent-border.#type | border と同じ使い方で、枠線による状態の強調に使用します。 |
-    | on-accent.#type | 背景（feedback-container）の上に載るテキスト・アイコンの色として使います。on-surface と同様に、コントラストを確保した前景色として使います |
+    | トークン                   | 用途                                                                                  |
+    | ---------------------- | ----------------------------------------------------------------------------------- |
+    | accent.#type           | surface, surface-containerに直接配置されるテキストやアイコンなどのカラーに使用されます                            |
+    | accent-container.#type | 背景色。surface-container と同じ考え方で、フィードバック内容をまとめるコンテナに使います。                              |
+    | accent-border.#type    | border と同じ使い方で、枠線による状態の強調に使用します。                                                    |
+    | on-accent.#type        | 背景（feedback-container）の上に載るテキスト・アイコンの色として使います。on-surface と同様に、コントラストを確保した前景色として使います |
 
     ## カラーの選択ガイド
 
     セマンティックに色を一貫して選択することで、認知負荷を軽減し、統一された魅力的なユーザーエクスペリエンスの実現を目指します。
 
-    | | Action | Message | Connectivity | Status | Priority |
-    | --- | --- | --- | --- | --- | --- |
-    | Neutral | Default | Neutral | Unavailable | Default, To do, Draft, Not started, Ended | Trivial |
-    | Primary (Brand) | Primary, Confirm, Save | Positive | Success, Available | Approved, Complete | Minor |
-    | Assertive | Remove | Error | Busy | Removed or Failed, Rejected | Critical |
-    | Notice | — | Warning | — | Notice, Pending, Needs approval | Medium to blocker |
-    | Info | — | Information | — | In progress | — |
+    |                 | Action                 | Message     | Connectivity       | Status                                    | Priority          |
+    | --------------- | ---------------------- | ----------- | ------------------ | ----------------------------------------- | ----------------- |
+    | Neutral         | Default                | Neutral     | Unavailable        | Default, To do, Draft, Not started, Ended | Trivial           |
+    | Primary (Brand) | Primary, Confirm, Save | Positive    | Success, Available | Approved, Complete                        | Minor             |
+    | Assertive       | Remove                 | Error       | Busy               | Removed or Failed, Rejected               | Critical          |
+    | Notice          | —                      | Warning     | —                  | Notice, Pending, Needs approval           | Medium to blocker |
+    | Info            | —                      | Information | —                  | In progress                               | —                 |
   </Tab>
-
   <Tab title="Theme Tokens">
     > データソース: Figma Variables — コレクション "Theme"、モード "newmo"
 
@@ -296,64 +334,64 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     #### neutral
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#FFFFFF` | Migration: #ffffff → neutral.0 / Legacy: white |
-    | 5 | `#F8F9FA` | — |
-    | 10 | `#F2F4F6` | Migration: #f5f5f5 → neutral.10 / Legacy: neutral-100 |
-    | 15 | `#ECEFF2` | Migration: #e5e5e5 → neutral.15 / Legacy: neutral-200 |
-    | 20 | `#E3E6EA` | Migration: #cccccc → neutral.20 / Legacy: neutral-300 |
-    | 25 | `#D6D9DB` | — |
-    | 30 | `#C0C3C6` | Migration: #aaaaaa → neutral.30 / Legacy: neutral-400 |
-    | 40 | `#A2A5A8` | — |
-    | 50 | `#8A8E92` | Migration: #888888 → neutral.50 / Legacy: neutral-500 |
-    | 60 | `#717579` | — |
-    | 70 | `#64686D` | Migration: #666666 → neutral.70 / Legacy: neutral-600 |
-    | 80 | `#505459` | Migration: #555555 → neutral.80 / Legacy: neutral-700 |
-    | 85 | `#3D4146` | — |
-    | 90 | `#2A2E32` | Migration: #373737 → neutral.90 / Legacy: neutral-800 |
-    | 95 | `#1B1E21` | Migration: #222222 → neutral.95 / Legacy: neutral-900 |
-    | 98 | `#111417` | — |
-    | 99 | `#090B0D` | — |
-    | 100 | `#000000` | — |
+    | ステップ | HEX       | コメント                                                  |
+    | ---- | --------- | ----------------------------------------------------- |
+    | 0    | `#FFFFFF` | Migration: #ffffff → neutral.0 / Legacy: white        |
+    | 5    | `#F8F9FA` | —                                                     |
+    | 10   | `#F2F4F6` | Migration: #f5f5f5 → neutral.10 / Legacy: neutral-100 |
+    | 15   | `#ECEFF2` | Migration: #e5e5e5 → neutral.15 / Legacy: neutral-200 |
+    | 20   | `#E3E6EA` | Migration: #cccccc → neutral.20 / Legacy: neutral-300 |
+    | 25   | `#D6D9DB` | —                                                     |
+    | 30   | `#C0C3C6` | Migration: #aaaaaa → neutral.30 / Legacy: neutral-400 |
+    | 40   | `#A2A5A8` | —                                                     |
+    | 50   | `#8A8E92` | Migration: #888888 → neutral.50 / Legacy: neutral-500 |
+    | 60   | `#717579` | —                                                     |
+    | 70   | `#64686D` | Migration: #666666 → neutral.70 / Legacy: neutral-600 |
+    | 80   | `#505459` | Migration: #555555 → neutral.80 / Legacy: neutral-700 |
+    | 85   | `#3D4146` | —                                                     |
+    | 90   | `#2A2E32` | Migration: #373737 → neutral.90 / Legacy: neutral-800 |
+    | 95   | `#1B1E21` | Migration: #222222 → neutral.95 / Legacy: neutral-900 |
+    | 98   | `#111417` | —                                                     |
+    | 99   | `#090B0D` | —                                                     |
+    | 100  | `#000000` | —                                                     |
 
     #### neutral-alpha
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#00375800` | — |
-    | 5 | `#00375807` | Migration: rgba(17,17,17,0.04) → neutralAlpha.5 / Legacy: neutral-alpha-100 |
-    | 10 | `#00234A0D` | — |
-    | 15 | `#00234A13` | Migration: rgba(17,17,17,0.10) → neutralAlpha.15 / Legacy: neutral-alpha-200 |
-    | 20 | `#001A3D1C` | — |
-    | 25 | `#00112229` | Migration: rgba(17,17,17,0.22) → neutralAlpha.25 / Legacy: neutral-alpha-300 |
-    | 30 | `#010B173F` | — |
-    | 40 | `#0109115D` | Migration: rgba(17,17,17,0.36) → neutralAlpha.40 / Legacy: neutral-alpha-400 |
-    | 50 | `#01091175` | Migration: rgba(17,17,17,0.50) → neutralAlpha.50 / Legacy: neutral-alpha-500 |
-    | 60 | `#0109108F` | Migration: rgba(17,17,17,0.64) → neutralAlpha.60 / Legacy: neutral-alpha-600 |
-    | 70 | `#2F3032CC` | Migration: rgba(17,17,17,0.72) → neutralAlpha.70 / Legacy: neutral-alpha-700 |
-    | 80 | `#2F3032E0` | — |
-    | 90 | `#1A1E22ED` | Migration: rgba(17,17,17,0.92) → neutralAlpha.90 / Legacy: neutral-alpha-900 |
-    | 100 | `#000000` | — |
+    | ステップ | HEX         | コメント                                                                         |
+    | ---- | ----------- | ---------------------------------------------------------------------------- |
+    | 0    | `#00375800` | —                                                                            |
+    | 5    | `#00375807` | Migration: rgba(17,17,17,0.04) → neutralAlpha.5 / Legacy: neutral-alpha-100  |
+    | 10   | `#00234A0D` | —                                                                            |
+    | 15   | `#00234A13` | Migration: rgba(17,17,17,0.10) → neutralAlpha.15 / Legacy: neutral-alpha-200 |
+    | 20   | `#001A3D1C` | —                                                                            |
+    | 25   | `#00112229` | Migration: rgba(17,17,17,0.22) → neutralAlpha.25 / Legacy: neutral-alpha-300 |
+    | 30   | `#010B173F` | —                                                                            |
+    | 40   | `#0109115D` | Migration: rgba(17,17,17,0.36) → neutralAlpha.40 / Legacy: neutral-alpha-400 |
+    | 50   | `#01091175` | Migration: rgba(17,17,17,0.50) → neutralAlpha.50 / Legacy: neutral-alpha-500 |
+    | 60   | `#0109108F` | Migration: rgba(17,17,17,0.64) → neutralAlpha.60 / Legacy: neutral-alpha-600 |
+    | 70   | `#2F3032CC` | Migration: rgba(17,17,17,0.72) → neutralAlpha.70 / Legacy: neutral-alpha-700 |
+    | 80   | `#2F3032E0` | —                                                                            |
+    | 90   | `#1A1E22ED` | Migration: rgba(17,17,17,0.92) → neutralAlpha.90 / Legacy: neutral-alpha-900 |
+    | 100  | `#000000`   | —                                                                            |
 
     #### white-alpha
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#FFFFFF00` | Migration: rgba(255,255,255,0) → whiteAlpha.0 / Legacy: white-alpha-0 |
-    | 5 | `#FFFFFF05` | — |
-    | 10 | `#FFFFFF0A` | Migration: rgba(255,255,255,0.05) → whiteAlpha.10 / Legacy: white-alpha-10 |
-    | 15 | `#FFFFFF12` | — |
-    | 20 | `#FFFFFF1A` | — |
-    | 25 | `#FFFFFF21` | Migration: rgba(255,255,255,0.12) → whiteAlpha.25 / Legacy: white-alpha-20 |
-    | 30 | `#FFFFFF29` | Migration: rgba(255,255,255,0.12) → whiteAlpha.30 / Legacy: white-alpha-30 |
-    | 40 | `#FFFFFF3D` | Migration: rgba(255,255,255,0.24) → whiteAlpha.40 / Legacy: white-alpha-40 |
-    | 50 | `#FFFFFF52` | Migration: rgba(255,255,255,0.31) → whiteAlpha.50 / Legacy: white-alpha-50 |
-    | 60 | `#FFFFFF7A` | Migration: rgba(255,255,255,0.46) → whiteAlpha.60 / Legacy: white-alpha-70 |
-    | 70 | `#FFFFFFA3` | Migration: rgba(255,255,255,0.61) → whiteAlpha.70 / Legacy: white-alpha-100 |
-    | 80 | `#FFFFFFCC` | Migration: rgba(255,255,255,0.75) → whiteAlpha.80 / Legacy: white-alpha-120 |
-    | 90 | `#FFFFFFEB` | Migration: rgba(255,255,255,0.87) → whiteAlpha.90 / Legacy: white-alpha-140 |
-    | 100 | `#FFFFFF` | Migration: rgba(255,255,255,1) → whiteAlpha.100 / Legacy: white-alpha-160 |
+    | ステップ | HEX         | コメント                                                                        |
+    | ---- | ----------- | --------------------------------------------------------------------------- |
+    | 0    | `#FFFFFF00` | Migration: rgba(255,255,255,0) → whiteAlpha.0 / Legacy: white-alpha-0       |
+    | 5    | `#FFFFFF05` | —                                                                           |
+    | 10   | `#FFFFFF0A` | Migration: rgba(255,255,255,0.05) → whiteAlpha.10 / Legacy: white-alpha-10  |
+    | 15   | `#FFFFFF12` | —                                                                           |
+    | 20   | `#FFFFFF1A` | —                                                                           |
+    | 25   | `#FFFFFF21` | Migration: rgba(255,255,255,0.12) → whiteAlpha.25 / Legacy: white-alpha-20  |
+    | 30   | `#FFFFFF29` | Migration: rgba(255,255,255,0.12) → whiteAlpha.30 / Legacy: white-alpha-30  |
+    | 40   | `#FFFFFF3D` | Migration: rgba(255,255,255,0.24) → whiteAlpha.40 / Legacy: white-alpha-40  |
+    | 50   | `#FFFFFF52` | Migration: rgba(255,255,255,0.31) → whiteAlpha.50 / Legacy: white-alpha-50  |
+    | 60   | `#FFFFFF7A` | Migration: rgba(255,255,255,0.46) → whiteAlpha.60 / Legacy: white-alpha-70  |
+    | 70   | `#FFFFFFA3` | Migration: rgba(255,255,255,0.61) → whiteAlpha.70 / Legacy: white-alpha-100 |
+    | 80   | `#FFFFFFCC` | Migration: rgba(255,255,255,0.75) → whiteAlpha.80 / Legacy: white-alpha-120 |
+    | 90   | `#FFFFFFEB` | Migration: rgba(255,255,255,0.87) → whiteAlpha.90 / Legacy: white-alpha-140 |
+    | 100  | `#FFFFFF`   | Migration: rgba(255,255,255,1) → whiteAlpha.100 / Legacy: white-alpha-160   |
 
     ### Accent Colors
 
@@ -361,126 +399,126 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     このカラースケールがLightness-mode tokensでのaccent, accent-container, on-accent, accent-borderで使用されます。
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#FFFFFF` | — |
-    | 5 | `#F3FCF3` | — |
-    | 10 | `#EAF9EA` | Migration: #e2f9e7 → brand.10 / Legacy: green-100 (primary use) |
-    | 15 | `#DBF8DB` | — |
-    | 20 | `#CAF4C9` | — |
-    | 25 | `#A6EEA6` | — |
-    | 30 | `#7BDD7E` | Migration: #4ecb69 → brand.30 / Legacy: green-300 (primary use) |
-    | 40 | `#43C24A` | — |
-    | 50 | `#00A724` | Migration: #00a724 → brand.50 / Legacy: green-500 (primary use) / Brand color |
-    | 60 | `#028D1D` | — |
-    | 70 | `#027E19` | Migration: #00811c → brand.70 / Legacy: green-700 (primary use) |
-    | 80 | `#076615` | — |
-    | 85 | `#01500D` | — |
-    | 90 | `#003906` | — |
-    | 95 | `#002603` | — |
-    | 98 | `#011A03` | — |
-    | 99 | `#020F02` | — |
-    | 100 | `#000000` | — |
+    | ステップ | HEX       | コメント                                                                          |
+    | ---- | --------- | ----------------------------------------------------------------------------- |
+    | 0    | `#FFFFFF` | —                                                                             |
+    | 5    | `#F3FCF3` | —                                                                             |
+    | 10   | `#EAF9EA` | Migration: #e2f9e7 → brand.10 / Legacy: green-100 (primary use)               |
+    | 15   | `#DBF8DB` | —                                                                             |
+    | 20   | `#CAF4C9` | —                                                                             |
+    | 25   | `#A6EEA6` | —                                                                             |
+    | 30   | `#7BDD7E` | Migration: #4ecb69 → brand.30 / Legacy: green-300 (primary use)               |
+    | 40   | `#43C24A` | —                                                                             |
+    | 50   | `#00A724` | Migration: #00a724 → brand.50 / Legacy: green-500 (primary use) / Brand color |
+    | 60   | `#028D1D` | —                                                                             |
+    | 70   | `#027E19` | Migration: #00811c → brand.70 / Legacy: green-700 (primary use)               |
+    | 80   | `#076615` | —                                                                             |
+    | 85   | `#01500D` | —                                                                             |
+    | 90   | `#003906` | —                                                                             |
+    | 95   | `#002603` | —                                                                             |
+    | 98   | `#011A03` | —                                                                             |
+    | 99   | `#020F02` | —                                                                             |
+    | 100  | `#000000` | —                                                                             |
 
     #### Red
 
     このカラースケールがLightness-mode tokensでのfeedback.assertive, feedback-container.assertive, on-feedback.assertive, feedback-border.assertiveで使用されます。
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#FFFFFF` | — |
-    | 5 | `#FEF7F6` | — |
-    | 10 | `#FFF0EF` | — |
-    | 15 | `#FFE9E4` | Migration: #ffe2e0 → assertive.15 / Legacy: red-100 |
-    | 20 | `#FFDDD8` | — |
-    | 25 | `#FFCBC1` | — |
-    | 30 | `#FFA99A` | — |
-    | 40 | `#FF735F` | Migration: #ff6157 → assertive.40 / Legacy: red-300 |
-    | 50 | `#F43828` | Migration: #e80e00 → assertive.50 / Legacy: red-500 |
-    | 60 | `#DA0900` | — |
-    | 70 | `#BE1E12` | Migration: #cd0d00 → assertive.70 / Legacy: red-700 |
-    | 80 | `#9E0E05` | — |
-    | 85 | `#7E0601` | — |
-    | 90 | `#5A0703` | — |
-    | 95 | `#400000` | — |
-    | 98 | `#2E0100` | — |
-    | 99 | `#1C0100` | — |
-    | 100 | `#000000` | — |
+    | ステップ | HEX       | コメント                                                |
+    | ---- | --------- | --------------------------------------------------- |
+    | 0    | `#FFFFFF` | —                                                   |
+    | 5    | `#FEF7F6` | —                                                   |
+    | 10   | `#FFF0EF` | —                                                   |
+    | 15   | `#FFE9E4` | Migration: #ffe2e0 → assertive.15 / Legacy: red-100 |
+    | 20   | `#FFDDD8` | —                                                   |
+    | 25   | `#FFCBC1` | —                                                   |
+    | 30   | `#FFA99A` | —                                                   |
+    | 40   | `#FF735F` | Migration: #ff6157 → assertive.40 / Legacy: red-300 |
+    | 50   | `#F43828` | Migration: #e80e00 → assertive.50 / Legacy: red-500 |
+    | 60   | `#DA0900` | —                                                   |
+    | 70   | `#BE1E12` | Migration: #cd0d00 → assertive.70 / Legacy: red-700 |
+    | 80   | `#9E0E05` | —                                                   |
+    | 85   | `#7E0601` | —                                                   |
+    | 90   | `#5A0703` | —                                                   |
+    | 95   | `#400000` | —                                                   |
+    | 98   | `#2E0100` | —                                                   |
+    | 99   | `#1C0100` | —                                                   |
+    | 100  | `#000000` | —                                                   |
 
     #### Green
 
     このカラースケールがLightness-mode tokensでのfeedback.positive, feedback-container.positive, on-feedback.positive, feedback-border.positiveで使用されます。
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#FFFFFF` | — |
-    | 5 | `#F1FDF4` | — |
-    | 10 | `#E7F9EC` | Migration: #e2f9e7 → positive.10 / Legacy: green-100 (success use) |
-    | 15 | `#D8F8E2` | — |
-    | 20 | `#C2F5D2` | — |
-    | 25 | `#9BEFB9` | — |
-    | 30 | `#6EDD9A` | Migration: #4ecb69 → positive.30 / Legacy: green-300 (success use) |
-    | 40 | `#33C176` | — |
-    | 50 | `#00A55E` | Migration: #00a724 → positive.50 / Legacy: green-500 (success use) |
-    | 60 | `#018B4F` | — |
-    | 70 | `#007C45` | — |
-    | 80 | `#006538` | — |
-    | 85 | `#004F2A` | — |
-    | 90 | `#02381D` | — |
-    | 95 | `#002511` | — |
-    | 98 | `#001A0A` | — |
-    | 99 | `#010F05` | — |
-    | 100 | `#000000` | — |
+    | ステップ | HEX       | コメント                                                               |
+    | ---- | --------- | ------------------------------------------------------------------ |
+    | 0    | `#FFFFFF` | —                                                                  |
+    | 5    | `#F1FDF4` | —                                                                  |
+    | 10   | `#E7F9EC` | Migration: #e2f9e7 → positive.10 / Legacy: green-100 (success use) |
+    | 15   | `#D8F8E2` | —                                                                  |
+    | 20   | `#C2F5D2` | —                                                                  |
+    | 25   | `#9BEFB9` | —                                                                  |
+    | 30   | `#6EDD9A` | Migration: #4ecb69 → positive.30 / Legacy: green-300 (success use) |
+    | 40   | `#33C176` | —                                                                  |
+    | 50   | `#00A55E` | Migration: #00a724 → positive.50 / Legacy: green-500 (success use) |
+    | 60   | `#018B4F` | —                                                                  |
+    | 70   | `#007C45` | —                                                                  |
+    | 80   | `#006538` | —                                                                  |
+    | 85   | `#004F2A` | —                                                                  |
+    | 90   | `#02381D` | —                                                                  |
+    | 95   | `#002511` | —                                                                  |
+    | 98   | `#001A0A` | —                                                                  |
+    | 99   | `#010F05` | —                                                                  |
+    | 100  | `#000000` | —                                                                  |
 
     #### Amber
 
     このカラースケールがLightness-mode tokensでのfeedback.notice, feedback-container.notice, on-feedback.notice, feedback-border.noticeで使用されます。
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#FFFFFF` | — |
-    | 5 | `#FFF9E6` | — |
-    | 10 | `#FFF4D2` | — |
-    | 15 | `#FFEEBA` | Migration: #fff0bc → notice.15 / Legacy: yellow-100 |
-    | 20 | `#FFE595` | Migration: #ffdd64 → notice.20 / Legacy: yellow-300 |
-    | 25 | `#FFD547` | Migration: #ffc700 → notice.25 / Legacy: yellow-500 |
-    | 30 | `#E9BE05` | Migration: #e6b300 → notice.30 / Legacy: yellow-700 |
-    | 40 | `#C6A002` | — |
-    | 50 | `#AA8A04` | — |
-    | 60 | `#8D7102` | — |
-    | 70 | `#7D6400` | — |
-    | 80 | `#665200` | — |
-    | 85 | `#4F3F01` | — |
-    | 90 | `#392C00` | — |
-    | 95 | `#261D00` | — |
-    | 98 | `#1A1300` | — |
-    | 99 | `#0F0A00` | — |
-    | 100 | `#000000` | — |
+    | ステップ | HEX       | コメント                                                |
+    | ---- | --------- | --------------------------------------------------- |
+    | 0    | `#FFFFFF` | —                                                   |
+    | 5    | `#FFF9E6` | —                                                   |
+    | 10   | `#FFF4D2` | —                                                   |
+    | 15   | `#FFEEBA` | Migration: #fff0bc → notice.15 / Legacy: yellow-100 |
+    | 20   | `#FFE595` | Migration: #ffdd64 → notice.20 / Legacy: yellow-300 |
+    | 25   | `#FFD547` | Migration: #ffc700 → notice.25 / Legacy: yellow-500 |
+    | 30   | `#E9BE05` | Migration: #e6b300 → notice.30 / Legacy: yellow-700 |
+    | 40   | `#C6A002` | —                                                   |
+    | 50   | `#AA8A04` | —                                                   |
+    | 60   | `#8D7102` | —                                                   |
+    | 70   | `#7D6400` | —                                                   |
+    | 80   | `#665200` | —                                                   |
+    | 85   | `#4F3F01` | —                                                   |
+    | 90   | `#392C00` | —                                                   |
+    | 95   | `#261D00` | —                                                   |
+    | 98   | `#1A1300` | —                                                   |
+    | 99   | `#0F0A00` | —                                                   |
+    | 100  | `#000000` | —                                                   |
 
     #### Cyan
 
     このカラースケールがLightness-mode tokensでのfeedback.info, feedback-container.info, on-feedback.info, feedback-border.infoで使用されます。
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#FFFFFF` | — |
-    | 5 | `#F3FBFE` | — |
-    | 10 | `#E7F7FF` | Migration: #d5f1f3 → informative.10 / Legacy: blue-100 (alternative to soda) |
-    | 15 | `#DDF2FE` | — |
-    | 20 | `#CFEBFC` | — |
-    | 25 | `#AEE1FF` | — |
-    | 30 | `#71CFFF` | Migration: #58c5cd → informative.30 / Legacy: blue-300 (alternative to soda) |
-    | 40 | `#16B2F0` | — |
-    | 50 | `#129ACF` | Migration: #00a0ab → informative.50 / Legacy: blue-500 (alternative to soda) |
-    | 60 | `#037FAC` | — |
-    | 70 | `#127098` | Migration: #00757d → informative.70 / Legacy: blue-700 (alternative to soda) |
-    | 80 | `#085B7E` | — |
-    | 85 | `#064762` | — |
-    | 90 | `#053246` | — |
-    | 95 | `#002131` | — |
-    | 98 | `#001622` | — |
-    | 99 | `#010D13` | — |
-    | 100 | `#000000` | — |
+    | ステップ | HEX       | コメント                                                                         |
+    | ---- | --------- | ---------------------------------------------------------------------------- |
+    | 0    | `#FFFFFF` | —                                                                            |
+    | 5    | `#F3FBFE` | —                                                                            |
+    | 10   | `#E7F7FF` | Migration: #d5f1f3 → informative.10 / Legacy: blue-100 (alternative to soda) |
+    | 15   | `#DDF2FE` | —                                                                            |
+    | 20   | `#CFEBFC` | —                                                                            |
+    | 25   | `#AEE1FF` | —                                                                            |
+    | 30   | `#71CFFF` | Migration: #58c5cd → informative.30 / Legacy: blue-300 (alternative to soda) |
+    | 40   | `#16B2F0` | —                                                                            |
+    | 50   | `#129ACF` | Migration: #00a0ab → informative.50 / Legacy: blue-500 (alternative to soda) |
+    | 60   | `#037FAC` | —                                                                            |
+    | 70   | `#127098` | Migration: #00757d → informative.70 / Legacy: blue-700 (alternative to soda) |
+    | 80   | `#085B7E` | —                                                                            |
+    | 85   | `#064762` | —                                                                            |
+    | 90   | `#053246` | —                                                                            |
+    | 95   | `#002131` | —                                                                            |
+    | 98   | `#001622` | —                                                                            |
+    | 99   | `#010D13` | —                                                                            |
+    | 100  | `#000000` | —                                                                            |
 
     ### その他のAccent Color
 
@@ -488,198 +526,197 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     #### copper
 
-    | ステップ | HEX |
-    | --- | --- |
-    | 0 | `#FFFFFF` |
-    | 5 | `#FDF8F5` |
-    | 10 | `#FCF2EC` |
-    | 15 | `#FDEADF` |
-    | 20 | `#FCE0D1` |
-    | 25 | `#FCCFB2` |
-    | 30 | `#F3B288` |
-    | 40 | `#E08E58` |
-    | 50 | `#CA7538` |
-    | 60 | `#B05A11` |
-    | 70 | `#9D4F0C` |
-    | 80 | `#823F05` |
-    | 85 | `#643106` |
-    | 90 | `#4A2100` |
-    | 95 | `#311501` |
-    | 98 | `#230D01` |
-    | 99 | `#150600` |
-    | 100 | `#000000` |
+    | ステップ | HEX       |
+    | ---- | --------- |
+    | 0    | `#FFFFFF` |
+    | 5    | `#FDF8F5` |
+    | 10   | `#FCF2EC` |
+    | 15   | `#FDEADF` |
+    | 20   | `#FCE0D1` |
+    | 25   | `#FCCFB2` |
+    | 30   | `#F3B288` |
+    | 40   | `#E08E58` |
+    | 50   | `#CA7538` |
+    | 60   | `#B05A11` |
+    | 70   | `#9D4F0C` |
+    | 80   | `#823F05` |
+    | 85   | `#643106` |
+    | 90   | `#4A2100` |
+    | 95   | `#311501` |
+    | 98   | `#230D01` |
+    | 99   | `#150600` |
+    | 100  | `#000000` |
 
     #### orange
 
-    | ステップ | HEX |
-    | --- | --- |
-    | 0 | `#FFFFFF` |
-    | 5 | `#FEF8F3` |
-    | 10 | `#FEF1E6` |
-    | 15 | `#FEEADC` |
-    | 20 | `#FCE0CC` |
-    | 25 | `#FFCEA7` |
-    | 30 | `#FFAE67` |
-    | 40 | `#EF8604` |
-    | 50 | `#CE7402` |
-    | 60 | `#AB5E02` |
-    | 70 | `#985401` |
-    | 80 | `#7B4508` |
-    | 85 | `#613404` |
-    | 90 | `#442503` |
-    | 95 | `#2F1600` |
-    | 98 | `#220E00` |
-    | 99 | `#140700` |
-    | 100 | `#000000` |
+    | ステップ | HEX       |
+    | ---- | --------- |
+    | 0    | `#FFFFFF` |
+    | 5    | `#FEF8F3` |
+    | 10   | `#FEF1E6` |
+    | 15   | `#FEEADC` |
+    | 20   | `#FCE0CC` |
+    | 25   | `#FFCEA7` |
+    | 30   | `#FFAE67` |
+    | 40   | `#EF8604` |
+    | 50   | `#CE7402` |
+    | 60   | `#AB5E02` |
+    | 70   | `#985401` |
+    | 80   | `#7B4508` |
+    | 85   | `#613404` |
+    | 90   | `#442503` |
+    | 95   | `#2F1600` |
+    | 98   | `#220E00` |
+    | 99   | `#140700` |
+    | 100  | `#000000` |
 
     #### beige
 
-    | ステップ | HEX |
-    | --- | --- |
-    | 0 | `#FFFFFF` |
-    | 5 | `#FEF9EF` |
-    | 10 | `#FCF3E1` |
-    | 15 | `#FCEDCd` |
-    | 20 | `#F9E4B5` |
-    | 25 | `#F1D794` |
-    | 30 | `#DBC070` |
-    | 40 | `#BCA34D` |
-    | 50 | `#A2882F` |
-    | 60 | `#8B7210` |
-    | 70 | `#7B6510` |
-    | 80 | `#645316` |
-    | 85 | `#4F3F12` |
-    | 90 | `#372D07` |
-    | 95 | `#251D02` |
-    | 98 | `#191402` |
-    | 99 | `#0F0A02` |
-    | 100 | `#000000` |
+    | ステップ | HEX       |
+    | ---- | --------- |
+    | 0    | `#FFFFFF` |
+    | 5    | `#FEF9EF` |
+    | 10   | `#FCF3E1` |
+    | 15   | `#FCEDCd` |
+    | 20   | `#F9E4B5` |
+    | 25   | `#F1D794` |
+    | 30   | `#DBC070` |
+    | 40   | `#BCA34D` |
+    | 50   | `#A2882F` |
+    | 60   | `#8B7210` |
+    | 70   | `#7B6510` |
+    | 80   | `#645316` |
+    | 85   | `#4F3F12` |
+    | 90   | `#372D07` |
+    | 95   | `#251D02` |
+    | 98   | `#191402` |
+    | 99   | `#0F0A02` |
+    | 100  | `#000000` |
 
     #### yellow
 
-    | ステップ | HEX |
-    | --- | --- |
-    | 0 | `#FFFFFF` |
-    | 5 | `#FCFBE2` |
-    | 10 | `#F9F7C9` |
-    | 15 | `#F9F2A3` |
-    | 20 | `#F6EC4F` |
-    | 25 | `#EBDF19` |
-    | 30 | `#D3C715` |
-    | 40 | `#B3A912` |
-    | 50 | `#9A910A` |
-    | 60 | `#7F7703` |
-    | 70 | `#706A10` |
-    | 80 | `#5B560A` |
-    | 85 | `#474300` |
-    | 90 | `#322F04` |
-    | 95 | `#211E00` |
-    | 98 | `#161500` |
-    | 99 | `#0C0B00` |
-    | 100 | `#000000` |
+    | ステップ | HEX       |
+    | ---- | --------- |
+    | 0    | `#FFFFFF` |
+    | 5    | `#FCFBE2` |
+    | 10   | `#F9F7C9` |
+    | 15   | `#F9F2A3` |
+    | 20   | `#F6EC4F` |
+    | 25   | `#EBDF19` |
+    | 30   | `#D3C715` |
+    | 40   | `#B3A912` |
+    | 50   | `#9A910A` |
+    | 60   | `#7F7703` |
+    | 70   | `#706A10` |
+    | 80   | `#5B560A` |
+    | 85   | `#474300` |
+    | 90   | `#322F04` |
+    | 95   | `#211E00` |
+    | 98   | `#161500` |
+    | 99   | `#0C0B00` |
+    | 100  | `#000000` |
 
     #### teal
 
-    | ステップ | HEX | コメント |
-    | --- | --- | --- |
-    | 0 | `#FFFFFF` | — |
-    | 5 | `#EFFDFD` | — |
-    | 10 | `#E5F8F9` | — |
-    | 15 | `#D9F5F6` | Migration: #caf6f8 → link.15 / Legacy: blue-100 (accent, link use) |
-    | 20 | `#C0F1F3` | — |
-    | 25 | `#8EECF0` | — |
-    | 30 | `#3FDBE2` | Migration: #23c5cc → link.30 / Legacy: blue-300 (Link, Accent use) |
-    | 40 | `#14BBC2` | — |
-    | 50 | `#1AA1A7` | Migration: #119da3 → link.50 / Legacy: blue-500 (Link, Accent use) |
-    | 60 | `#01858B` | — |
-    | 70 | `#13767A` | Migration: #0d767b → link.70 / Legacy: blue-700 (Link, Accent use) |
-    | 80 | `#026065` | — |
-    | 85 | `#0A4A4E` | — |
-    | 90 | `#093537` | — |
-    | 95 | `#042324` | — |
-    | 98 | `#051718` | — |
-    | 99 | `#040D0D` | — |
-    | 100 | `#000000` | — |
+    | ステップ | HEX       | コメント                                                               |
+    | ---- | --------- | ------------------------------------------------------------------ |
+    | 0    | `#FFFFFF` | —                                                                  |
+    | 5    | `#EFFDFD` | —                                                                  |
+    | 10   | `#E5F8F9` | —                                                                  |
+    | 15   | `#D9F5F6` | Migration: #caf6f8 → link.15 / Legacy: blue-100 (accent, link use) |
+    | 20   | `#C0F1F3` | —                                                                  |
+    | 25   | `#8EECF0` | —                                                                  |
+    | 30   | `#3FDBE2` | Migration: #23c5cc → link.30 / Legacy: blue-300 (Link, Accent use) |
+    | 40   | `#14BBC2` | —                                                                  |
+    | 50   | `#1AA1A7` | Migration: #119da3 → link.50 / Legacy: blue-500 (Link, Accent use) |
+    | 60   | `#01858B` | —                                                                  |
+    | 70   | `#13767A` | Migration: #0d767b → link.70 / Legacy: blue-700 (Link, Accent use) |
+    | 80   | `#026065` | —                                                                  |
+    | 85   | `#0A4A4E` | —                                                                  |
+    | 90   | `#093537` | —                                                                  |
+    | 95   | `#042324` | —                                                                  |
+    | 98   | `#051718` | —                                                                  |
+    | 99   | `#040D0D` | —                                                                  |
+    | 100  | `#000000` | —                                                                  |
 
     #### indigo
 
-    | ステップ | HEX |
-    | --- | --- |
-    | 0 | `#FFFFFF` |
-    | 5 | `#F8F9FF` |
-    | 10 | `#F0F4FF` |
-    | 15 | `#E8EEFE` |
-    | 20 | `#DFE5FB` |
-    | 25 | `#CCD8FF` |
-    | 30 | `#AEBFFF` |
-    | 40 | `#879DFF` |
-    | 50 | `#6A7FFF` |
-    | 60 | `#4F5BF8` |
-    | 70 | `#433DFE` |
-    | 80 | `#3624DD` |
-    | 85 | `#2919B1` |
-    | 90 | `#1C0B85` |
-    | 95 | `#110061` |
-    | 98 | `#0B0048` |
-    | 99 | `#05022D` |
-    | 100 | `#000000` |
+    | ステップ | HEX       |
+    | ---- | --------- |
+    | 0    | `#FFFFFF` |
+    | 5    | `#F8F9FF` |
+    | 10   | `#F0F4FF` |
+    | 15   | `#E8EEFE` |
+    | 20   | `#DFE5FB` |
+    | 25   | `#CCD8FF` |
+    | 30   | `#AEBFFF` |
+    | 40   | `#879DFF` |
+    | 50   | `#6A7FFF` |
+    | 60   | `#4F5BF8` |
+    | 70   | `#433DFE` |
+    | 80   | `#3624DD` |
+    | 85   | `#2919B1` |
+    | 90   | `#1C0B85` |
+    | 95   | `#110061` |
+    | 98   | `#0B0048` |
+    | 99   | `#05022D` |
+    | 100  | `#000000` |
 
     #### purple
 
-    | ステップ | HEX |
-    | --- | --- |
-    | 0 | `#FFFFFF` |
-    | 5 | `#F8F8FE` |
-    | 10 | `#F2F2FF` |
-    | 15 | `#EDECFE` |
-    | 20 | `#E4E3FD` |
-    | 25 | `#D6D4FF` |
-    | 30 | `#BFB9FF` |
-    | 40 | `#A292FF` |
-    | 50 | `#8C71FF` |
-    | 60 | `#7649F6` |
-    | 70 | `#6D22F7` |
-    | 80 | `#591BCA` |
-    | 85 | `#4511A1` |
-    | 90 | `#310977` |
-    | 95 | `#200056` |
-    | 98 | `#150040` |
-    | 99 | `#0C002B` |
-    | 100 | `#000000` |
+    | ステップ | HEX       |
+    | ---- | --------- |
+    | 0    | `#FFFFFF` |
+    | 5    | `#F8F8FE` |
+    | 10   | `#F2F2FF` |
+    | 15   | `#EDECFE` |
+    | 20   | `#E4E3FD` |
+    | 25   | `#D6D4FF` |
+    | 30   | `#BFB9FF` |
+    | 40   | `#A292FF` |
+    | 50   | `#8C71FF` |
+    | 60   | `#7649F6` |
+    | 70   | `#6D22F7` |
+    | 80   | `#591BCA` |
+    | 85   | `#4511A1` |
+    | 90   | `#310977` |
+    | 95   | `#200056` |
+    | 98   | `#150040` |
+    | 99   | `#0C002B` |
+    | 100  | `#000000` |
 
     #### pink
 
-    | ステップ | HEX |
-    | --- | --- |
-    | 0 | `#FFFFFF` |
-    | 5 | `#FEF7F7` |
-    | 10 | `#FFF0F0` |
-    | 15 | `#FEE8E8` |
-    | 20 | `#FDDDDD` |
-    | 25 | `#FFCACB` |
-    | 30 | `#FFA7AA` |
-    | 40 | `#FF6F7C` |
-    | 50 | `#FA3356` |
-    | 60 | `#D8013F` |
-    | 70 | `#C10338` |
-    | 80 | `#9E062D` |
-    | 85 | `#7E0020` |
-    | 90 | `#5B0016` |
-    | 95 | `#3F000C` |
-    | 98 | `#2E0007` |
-    | 99 | `#1D0003` |
-    | 100 | `#000000` |
+    | ステップ | HEX       |
+    | ---- | --------- |
+    | 0    | `#FFFFFF` |
+    | 5    | `#FEF7F7` |
+    | 10   | `#FFF0F0` |
+    | 15   | `#FEE8E8` |
+    | 20   | `#FDDDDD` |
+    | 25   | `#FFCACB` |
+    | 30   | `#FFA7AA` |
+    | 40   | `#FF6F7C` |
+    | 50   | `#FA3356` |
+    | 60   | `#D8013F` |
+    | 70   | `#C10338` |
+    | 80   | `#9E062D` |
+    | 85   | `#7E0020` |
+    | 90   | `#5B0016` |
+    | 95   | `#3F000C` |
+    | 98   | `#2E0007` |
+    | 99   | `#1D0003` |
+    | 100  | `#000000` |
   </Tab>
-
   <Tab title="Lightness-Mode Tokens">
     > データソース: Figma Variables — コレクション "Lightness-mode"
 
-    <!-- Figma更新による主な差分（旧colors.mdxとの比較）:
-      - feedback-container の whisper/subtle が1段階薄く変更（例: positive/whisper: green.15 → green.10）
-      - feedback-container.assertive の soft: red.25 → red.20
-      - on-feedback の各バリアント: 1段階薄く変更（例: positive: green.70 → green.60）
-      - feedback（ベース）から positive が削除
-    -->
+    {/*  Figma更新による主な差分（旧colors.mdxとの比較）:
+- feedback-container の whisper/subtle が1段階薄く変更（例: positive/whisper: green.15 → green.10）
+- feedback-container.assertive の soft: red.25 → red.20
+- on-feedback の各バリアント: 1段階薄く変更（例: positive: green.70 → green.60）
+- feedback（ベース）から positive が削除
+*/}
 
     ## 命名規則
 
@@ -687,195 +724,194 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     ## 修飾子の意味
 
-    | 修飾子 | 説明 |
-    | --- | --- |
-    | .fixed | テーマモードに関わらず固定の色。ライト/ダークモードが切り替わっても常に同じ色を保ちます。 |
-    | .inverse | 反転色（背景と前景の関係を逆転）。ライトモードでは暗い色、ダークモードでは明るい色になり、ツールチップやトーストなど、周囲と明確に区別したい要素に使用します。 |
-    | .alternative | 代替色（バリエーション）。通常の default 色とは異なる選択肢を提供します。同じ役割を保ちながら視覚的な変化を付けたい場合や、階層構造を表現したい場合に使用します。 |
-    | .primary | プライマリ/メインバリエーション。そのカテゴリで最も一般的に使う主要色を示します。accent-containerやaccent-borderなど、複数バリエーション（primary、secondary等）を持つカテゴリの代表色として定義されます。 |
+    | 修飾子          | 説明                                                                                                                           |
+    | ------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+    | .fixed       | テーマモードに関わらず固定の色。ライト/ダークモードが切り替わっても常に同じ色を保ちます。                                                                                |
+    | .inverse     | 反転色（背景と前景の関係を逆転）。ライトモードでは暗い色、ダークモードでは明るい色になり、ツールチップやトーストなど、周囲と明確に区別したい要素に使用します。                                              |
+    | .alternative | 代替色（バリエーション）。通常の default 色とは異なる選択肢を提供します。同じ役割を保ちながら視覚的な変化を付けたい場合や、階層構造を表現したい場合に使用します。                                        |
+    | .primary     | プライマリ/メインバリエーション。そのカテゴリで最も一般的に使う主要色を示します。accent-containerやaccent-borderなど、複数バリエーション（primary、secondary等）を持つカテゴリの代表色として定義されます。 |
 
     💡 これらの修飾子は組み合わせて使えます（例：surface-raised-inverse-fixed）。意味を理解して、適切なトークンを選択しましょう。
 
     ### Surface
 
-    | トークン | 参照先 |
-    | --- | --- |
-    | color.surface.base.default | `{color.neutral.0}` |
-    | color.surface.base.alternative | `{color.neutral.10}` |
-    | color.surface.raised.level1 | `{color.neutral.0}` |
-    | color.surface.raised.level2 | `{color.neutral.10}` |
-    | color.surface.raised.inverse | `{color.neutral.90}` |
-    | color.surface.raised.inverse-fixed | `{color.neutral.90}` |
-    | color.surface.scrim.default | `{color.neutral-alpha.25}` |
-    | color.surface.scrim.fixed | `{color.neutral-alpha.80}` |
-    | color.surface.overlay | `{color.neutral.0}` |
-    | color.surface.sunken | `{color.neutral.10}` |
+    | トークン                               | 参照先                        |
+    | ---------------------------------- | -------------------------- |
+    | color.surface.base.default         | `{color.neutral.0}`        |
+    | color.surface.base.alternative     | `{color.neutral.10}`       |
+    | color.surface.raised.level1        | `{color.neutral.0}`        |
+    | color.surface.raised.level2        | `{color.neutral.10}`       |
+    | color.surface.raised.inverse       | `{color.neutral.90}`       |
+    | color.surface.raised.inverse-fixed | `{color.neutral.90}`       |
+    | color.surface.scrim.default        | `{color.neutral-alpha.25}` |
+    | color.surface.scrim.fixed          | `{color.neutral-alpha.80}` |
+    | color.surface.overlay              | `{color.neutral.0}`        |
+    | color.surface.sunken               | `{color.neutral.10}`       |
 
     ### Surface Container
 
-    | トークン | 参照先 |
-    | --- | --- |
-    | color.surface-container.default | `{color.neutral.0}` |
-    | color.surface-container.fixed | `{color.neutral.0}` |
-    | color.surface-container.whisper | `{color.neutral-alpha.5}` |
-    | color.surface-container.whisper-opaque | `{color.neutral.5}` |
-    | color.surface-container.subtle | `{color.neutral-alpha.10}` |
-    | color.surface-container.subtle-opaque | `{color.neutral.10}` |
-    | color.surface-container.medium | `{color.neutral-alpha.15}` |
-    | color.surface-container.medium-opaque | `{color.neutral.15}` |
-    | color.surface-container.bold | `{color.neutral-alpha.20}` |
-    | color.surface-container.heavy | `{color.neutral-alpha.25}` |
+    | トークン                                   | 参照先                        |
+    | -------------------------------------- | -------------------------- |
+    | color.surface-container.default        | `{color.neutral.0}`        |
+    | color.surface-container.fixed          | `{color.neutral.0}`        |
+    | color.surface-container.whisper        | `{color.neutral-alpha.5}`  |
+    | color.surface-container.whisper-opaque | `{color.neutral.5}`        |
+    | color.surface-container.subtle         | `{color.neutral-alpha.10}` |
+    | color.surface-container.subtle-opaque  | `{color.neutral.10}`       |
+    | color.surface-container.medium         | `{color.neutral-alpha.15}` |
+    | color.surface-container.medium-opaque  | `{color.neutral.15}`       |
+    | color.surface-container.bold           | `{color.neutral-alpha.20}` |
+    | color.surface-container.heavy          | `{color.neutral-alpha.25}` |
     | color.surface-container.inverse-subtle | `{color.neutral-alpha.80}` |
-    | color.surface-container.inverse | `{color.neutral.85}` |
+    | color.surface-container.inverse        | `{color.neutral.85}`       |
 
     ### on Surface
 
-    | トークン | 参照先 | 備考 |
-    | --- | --- | --- |
-    | color.on-surface.ghost | `{color.neutral-alpha.30}` | Disabledなど |
-    | color.on-surface.whisper | `{color.neutral-alpha.40}` | Placeholderなど |
-    | color.on-surface.subtle | `{color.neutral.60}` | セカンダリテキストなど |
-    | color.on-surface.medium | `{color.neutral.80}` | テキスト |
-    | color.on-surface.bold | `{color.neutral.90}` | 見出しなど |
-    | color.on-surface.inverse | `{color.neutral.0}` | — |
-    | color.on-surface.inverse-fixed | `{color.neutral.0}` | — |
+    | トークン                           | 参照先                        | 備考            |
+    | ------------------------------ | -------------------------- | ------------- |
+    | color.on-surface.ghost         | `{color.neutral-alpha.30}` | Disabledなど    |
+    | color.on-surface.whisper       | `{color.neutral-alpha.40}` | Placeholderなど |
+    | color.on-surface.subtle        | `{color.neutral.60}`       | セカンダリテキストなど   |
+    | color.on-surface.medium        | `{color.neutral.80}`       | テキスト          |
+    | color.on-surface.bold          | `{color.neutral.90}`       | 見出しなど         |
+    | color.on-surface.inverse       | `{color.neutral.0}`        | —             |
+    | color.on-surface.inverse-fixed | `{color.neutral.0}`        | —             |
 
     ### Border
 
-    | トークン | 参照先 |
-    | --- | --- |
-    | color.border.whisper | `{color.neutral-alpha.15}` |
-    | color.border.subtle | `{color.neutral-alpha.20}` |
-    | color.border.medium | `{color.neutral-alpha.30}` |
-    | color.border.bold | `{color.neutral-alpha.60}` |
-    | color.border.inverse-soft | `{color.white-alpha.80}` |
-    | color.border.inverse | `{color.white-alpha.100}` |
-    | color.border.inverse-fixed | `{color.white-alpha.100}` |
+    | トークン                       | 参照先                        |
+    | -------------------------- | -------------------------- |
+    | color.border.whisper       | `{color.neutral-alpha.15}` |
+    | color.border.subtle        | `{color.neutral-alpha.20}` |
+    | color.border.medium        | `{color.neutral-alpha.30}` |
+    | color.border.bold          | `{color.neutral-alpha.60}` |
+    | color.border.inverse-soft  | `{color.white-alpha.80}`   |
+    | color.border.inverse       | `{color.white-alpha.100}`  |
+    | color.border.inverse-fixed | `{color.white-alpha.100}`  |
 
     ### Accent
 
     #### Accent
 
-    | トークン | 参照先 |
-    | --- | --- |
+    | トークン                        | 参照先                         |
+    | --------------------------- | --------------------------- |
     | color.accent.primary.medium | `{color.accent.primary.60}` |
-    | color.accent.primary.bold | `{color.accent.primary.70}` |
-    | color.accent.primary.fixed | `{color.accent.primary.60}` |
-    | color.accent.link.default | `{color.accent.teal.60}` |
-    | color.accent.link.hover | `{color.accent.teal.60}` |
-    | color.accent.link.visited | `{color.accent.teal.50}` |
-    | color.accent.link.disabled | `{color.neutral.50}` |
+    | color.accent.primary.bold   | `{color.accent.primary.70}` |
+    | color.accent.primary.fixed  | `{color.accent.primary.60}` |
+    | color.accent.link.default   | `{color.accent.teal.60}`    |
+    | color.accent.link.hover     | `{color.accent.teal.60}`    |
+    | color.accent.link.visited   | `{color.accent.teal.50}`    |
+    | color.accent.link.disabled  | `{color.neutral.50}`        |
 
     #### Accent Container
 
-    | トークン | 参照先 | 備考 |
-    | --- | --- | --- |
-    | color.accent-container.primary.ghost | `{color.accent.primary.5}` | — |
-    | color.accent-container.primary.whisper | `{color.accent.primary.15}` | セカンダリーアクションなど |
-    | color.accent-container.primary.subtle | `{color.accent.primary.20}` | — |
-    | color.accent-container.primary.soft | `{color.accent.primary.25}` | — |
-    | color.accent-container.primary.medium | `{color.accent.primary.50}` | Primary ActionやSelectedなど |
-    | color.accent-container.primary.bold | `{color.accent.primary.60}` | — |
-    | color.accent-container.primary.heavy | `{color.accent.primary.70}` | — |
+    | トークン                                   | 参照先                         | 備考                        |
+    | -------------------------------------- | --------------------------- | ------------------------- |
+    | color.accent-container.primary.ghost   | `{color.accent.primary.5}`  | —                         |
+    | color.accent-container.primary.whisper | `{color.accent.primary.15}` | セカンダリーアクションなど             |
+    | color.accent-container.primary.subtle  | `{color.accent.primary.20}` | —                         |
+    | color.accent-container.primary.soft    | `{color.accent.primary.25}` | —                         |
+    | color.accent-container.primary.medium  | `{color.accent.primary.50}` | Primary ActionやSelectedなど |
+    | color.accent-container.primary.bold    | `{color.accent.primary.60}` | —                         |
+    | color.accent-container.primary.heavy   | `{color.accent.primary.70}` | —                         |
 
     #### Accent Border
 
-    | トークン | 参照先 |
-    | --- | --- |
+    | トークン                                | 参照先                         |
+    | ----------------------------------- | --------------------------- |
     | color.accent-border.primary.whisper | `{color.accent.primary.20}` |
-    | color.accent-border.primary.subtle | `{color.accent.primary.25}` |
-    | color.accent-border.primary.medium | `{color.accent.primary.50}` |
-    | color.accent-border.primary.bold | `{color.accent.primary.60}` |
+    | color.accent-border.primary.subtle  | `{color.accent.primary.25}` |
+    | color.accent-border.primary.medium  | `{color.accent.primary.50}` |
+    | color.accent-border.primary.bold    | `{color.accent.primary.60}` |
 
     #### On Accent
 
-    | トークン | 参照先 |
-    | --- | --- |
-    | color.on-accent.default | `{color.neutral.0}` |
+    | トークン                           | 参照先                         |
+    | ------------------------------ | --------------------------- |
+    | color.on-accent.default        | `{color.neutral.0}`         |
     | color.on-accent.primary.medium | `{color.accent.primary.60}` |
-    | color.on-accent.primary.bold | `{color.accent.primary.70}` |
+    | color.on-accent.primary.bold   | `{color.accent.primary.70}` |
 
     ### Feedback
 
     #### Feedback
 
-    | トークン | 参照先 |
-    | --- | --- |
-    | color.feedback.notice.medium | `{color.accent.amber.60}` |
-    | color.feedback.notice.bold | `{color.accent.amber.70}` |
-    | color.feedback.assertive.medium | `{color.accent.red.60}` |
-    | color.feedback.assertive.bold | `{color.accent.red.70}` |
-    | color.feedback.info.medium | `{color.accent.cyan.60}` |
-    | color.feedback.info.bold | `{color.accent.cyan.70}` |
+    | トークン                            | 参照先                       |
+    | ------------------------------- | ------------------------- |
+    | color.feedback.notice.medium    | `{color.accent.amber.60}` |
+    | color.feedback.notice.bold      | `{color.accent.amber.70}` |
+    | color.feedback.assertive.medium | `{color.accent.red.60}`   |
+    | color.feedback.assertive.bold   | `{color.accent.red.70}`   |
+    | color.feedback.info.medium      | `{color.accent.cyan.60}`  |
+    | color.feedback.info.bold        | `{color.accent.cyan.70}`  |
 
-    <!-- 旧バージョンに存在した feedback.positive.medium (green.70) / feedback.positive.bold (green.80) は削除されています -->
+    {/*  旧バージョンに存在した feedback.positive.medium (green.70) / feedback.positive.bold (green.80) は削除されています  */}
 
     #### Feedback Container
 
-    | トークン | 参照先 |
-    | --- | --- |
-    | color.feedback-container.positive.ghost | `{color.accent.green.5}` |
-    | color.feedback-container.positive.whisper | `{color.accent.green.10}` |
-    | color.feedback-container.positive.subtle | `{color.accent.green.15}` |
-    | color.feedback-container.positive.medium | `{color.accent.green.50}` |
-    | color.feedback-container.assertive.ghost | `{color.accent.red.5}` |
-    | color.feedback-container.assertive.whisper | `{color.accent.red.10}` |
-    | color.feedback-container.assertive.subtle | `{color.accent.red.15}` |
-    | color.feedback-container.assertive.soft | `{color.accent.red.20}` |
-    | color.feedback-container.assertive.medium | `{color.accent.red.50}` |
-    | color.feedback-container.assertive.bold | `{color.accent.red.60}` |
-    | color.feedback-container.assertive.heavy | `{color.accent.red.70}` |
-    | color.feedback-container.notice.ghost | `{color.accent.amber.5}` |
-    | color.feedback-container.notice.whisper | `{color.accent.amber.10}` |
-    | color.feedback-container.notice.subtle | `{color.accent.amber.15}` |
-    | color.feedback-container.notice.medium | `{color.accent.amber.25}` |
-    | color.feedback-container.info.ghost | `{color.accent.cyan.5}` |
-    | color.feedback-container.info.whisper | `{color.accent.cyan.10}` |
-    | color.feedback-container.info.subtle | `{color.accent.cyan.15}` |
-    | color.feedback-container.info.medium | `{color.accent.cyan.50}` |
+    | トークン                                       | 参照先                       |
+    | ------------------------------------------ | ------------------------- |
+    | color.feedback-container.positive.ghost    | `{color.accent.green.5}`  |
+    | color.feedback-container.positive.whisper  | `{color.accent.green.10}` |
+    | color.feedback-container.positive.subtle   | `{color.accent.green.15}` |
+    | color.feedback-container.positive.medium   | `{color.accent.green.50}` |
+    | color.feedback-container.assertive.ghost   | `{color.accent.red.5}`    |
+    | color.feedback-container.assertive.whisper | `{color.accent.red.10}`   |
+    | color.feedback-container.assertive.subtle  | `{color.accent.red.15}`   |
+    | color.feedback-container.assertive.soft    | `{color.accent.red.20}`   |
+    | color.feedback-container.assertive.medium  | `{color.accent.red.50}`   |
+    | color.feedback-container.assertive.bold    | `{color.accent.red.60}`   |
+    | color.feedback-container.assertive.heavy   | `{color.accent.red.70}`   |
+    | color.feedback-container.notice.ghost      | `{color.accent.amber.5}`  |
+    | color.feedback-container.notice.whisper    | `{color.accent.amber.10}` |
+    | color.feedback-container.notice.subtle     | `{color.accent.amber.15}` |
+    | color.feedback-container.notice.medium     | `{color.accent.amber.25}` |
+    | color.feedback-container.info.ghost        | `{color.accent.cyan.5}`   |
+    | color.feedback-container.info.whisper      | `{color.accent.cyan.10}`  |
+    | color.feedback-container.info.subtle       | `{color.accent.cyan.15}`  |
+    | color.feedback-container.info.medium       | `{color.accent.cyan.50}`  |
 
     #### Feedback Border
 
-    | トークン | 参照先 |
-    | --- | --- |
-    | color.feedback-border.postive.subtle | `{color.accent.green.30}` |
-    | color.feedback-border.postive.medium | `{color.accent.green.40}` |
-    | color.feedback-border.postive.bold | `{color.accent.green.50}` |
-    | color.feedback-border.assertive.subtle | `{color.accent.red.30}` |
-    | color.feedback-border.assertive.medium | `{color.accent.red.40}` |
-    | color.feedback-border.assertive.bold | `{color.accent.red.50}` |
-    | color.feedback-border.notice.subtle | `{color.accent.amber.25}` |
-    | color.feedback-border.notice.medium | `{color.accent.amber.40}` |
-    | color.feedback-border.notice.bold | `{color.accent.amber.50}` |
-    | color.feedback-border.info.subtle | `{color.accent.cyan.30}` |
-    | color.feedback-border.info.medium | `{color.accent.cyan.40}` |
-    | color.feedback-border.info.bold | `{color.accent.cyan.50}` |
+    | トークン                                   | 参照先                       |
+    | -------------------------------------- | ------------------------- |
+    | color.feedback-border.postive.subtle   | `{color.accent.green.30}` |
+    | color.feedback-border.postive.medium   | `{color.accent.green.40}` |
+    | color.feedback-border.postive.bold     | `{color.accent.green.50}` |
+    | color.feedback-border.assertive.subtle | `{color.accent.red.30}`   |
+    | color.feedback-border.assertive.medium | `{color.accent.red.40}`   |
+    | color.feedback-border.assertive.bold   | `{color.accent.red.50}`   |
+    | color.feedback-border.notice.subtle    | `{color.accent.amber.25}` |
+    | color.feedback-border.notice.medium    | `{color.accent.amber.40}` |
+    | color.feedback-border.notice.bold      | `{color.accent.amber.50}` |
+    | color.feedback-border.info.subtle      | `{color.accent.cyan.30}`  |
+    | color.feedback-border.info.medium      | `{color.accent.cyan.40}`  |
+    | color.feedback-border.info.bold        | `{color.accent.cyan.50}`  |
 
     #### On Feedback
 
-    | トークン | 参照先 |
-    | --- | --- |
-    | color.on-feedback.inverse | `{color.neutral.0}` |
-    | color.on-feedback.positive | `{color.accent.green.60}` |
-    | color.on-feedback.assertive | `{color.accent.red.60}` |
-    | color.on-feedback.notice | `{color.accent.amber.70}` |
-    | color.on-feedback.info | `{color.accent.cyan.70}` |
+    | トークン                        | 参照先                       |
+    | --------------------------- | ------------------------- |
+    | color.on-feedback.inverse   | `{color.neutral.0}`       |
+    | color.on-feedback.positive  | `{color.accent.green.60}` |
+    | color.on-feedback.assertive | `{color.accent.red.60}`   |
+    | color.on-feedback.notice    | `{color.accent.amber.70}` |
+    | color.on-feedback.info      | `{color.accent.cyan.70}`  |
 
     ### Shadow
 
-    | トークン | 参照先 | 備考 |
-    | --- | --- | --- |
-    | color.shadow.border | `{color.neutral-alpha.10}` | Border Shadow — 境界定義用の薄い影 (5%) |
+    | トークン                 | 参照先                        | 備考                                |
+    | -------------------- | -------------------------- | --------------------------------- |
+    | color.shadow.border  | `{color.neutral-alpha.10}` | Border Shadow — 境界定義用の薄い影 (5%)    |
     | color.shadow.ambient | `{color.neutral-alpha.15}` | Ambient Shadow — 環境光による柔らかい影 (8%) |
-    | color.shadow.key | `{color.neutral-alpha.25}` | Key Shadow — 指向性光による最も濃い影 (16%) |
+    | color.shadow.key     | `{color.neutral-alpha.25}` | Key Shadow — 指向性光による最も濃い影 (16%)   |
 
     ### opacity
 
-    | トークン | 値 |
-    | --- | --- |
+    | トークン     | 値    |
+    | -------- | ---- |
     | disabled | `40` |
   </Tab>
-
   <Tab title="Component Tokens">
     > データソース: Figma Variables — コレクション "Component"
 
@@ -883,82 +919,82 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     > ⚠️ **実装上の制約:** Panda CSSはセマンティックトークンの参照を2層までしか解決できません。Theme → Lightness-Mode で1層目を使い切っているため、**Component Tokensはコード上には実装されていません**。`@newmo-app/garage-ui-react` のコンポーネントは、Component Tokensの参照先であるLightness-Mode Tokensを直接使って実装されています。以下の「参照先（LM）」列が、実装時に使用すべきトークンとなります。
 
-    <!-- Figma更新による主な差分:
-      - input.background（新規）: surface-container.default
-      - input.background.error: assertive.ghost → assertive.whisper に変更
-      - input.border（新規）: border.medium
-      - button.secondary.text（新規）: on-accent.primary.medium
-      - table.td.background.error（新規）: feedback-container.assertive.ghost
-      - サイズ/レイアウトトークン（button/border-width, table/border-width 等）は削除
-    -->
+    {/*  Figma更新による主な差分:
+- input.background（新規）: surface-container.default
+- input.background.error: assertive.ghost → assertive.whisper に変更
+- input.border（新規）: border.medium
+- button.secondary.text（新規）: on-accent.primary.medium
+- table.td.background.error（新規）: feedback-container.assertive.ghost
+- サイズ/レイアウトトークン（button/border-width, table/border-width 等）は削除
+*/}
 
     ### Button
 
-    | トークン | 参照先（LM） |
-    | --- | --- |
-    | color.button.primary.background.default | `{color.accent-container.primary.medium}` |
-    | color.button.primary.background.hover | `{color.accent-container.primary.bold}` |
-    | color.button.primary.background.pressed | `{color.accent-container.primary.heavy}` |
-    | color.button.primary.background.destractive.default | `{color.feedback-container.assertive.medium}` |
-    | color.button.primary.background.destractive.hover | `{color.feedback-container.assertive.bold}` |
-    | color.button.primary.background.destractive.pressed | `{color.feedback-container.assertive.heavy}` |
-    | color.button.primary.text | `{color.on-accent.default}` |
-    | color.button.secondary.background.default | `{color.accent-container.primary.whisper}` |
-    | color.button.secondary.background.hover | `{color.accent-container.primary.subtle}` |
-    | color.button.secondary.background.pressed | `{color.accent-container.primary.soft}` |
-    | color.button.secondary.text | `{color.on-accent.primary.medium}` |
+    | トークン                                                  | 参照先（LM）                                        |
+    | ----------------------------------------------------- | ---------------------------------------------- |
+    | color.button.primary.background.default               | `{color.accent-container.primary.medium}`      |
+    | color.button.primary.background.hover                 | `{color.accent-container.primary.bold}`        |
+    | color.button.primary.background.pressed               | `{color.accent-container.primary.heavy}`       |
+    | color.button.primary.background.destractive.default   | `{color.feedback-container.assertive.medium}`  |
+    | color.button.primary.background.destractive.hover     | `{color.feedback-container.assertive.bold}`    |
+    | color.button.primary.background.destractive.pressed   | `{color.feedback-container.assertive.heavy}`   |
+    | color.button.primary.text                             | `{color.on-accent.default}`                    |
+    | color.button.secondary.background.default             | `{color.accent-container.primary.whisper}`     |
+    | color.button.secondary.background.hover               | `{color.accent-container.primary.subtle}`      |
+    | color.button.secondary.background.pressed             | `{color.accent-container.primary.soft}`        |
+    | color.button.secondary.text                           | `{color.on-accent.primary.medium}`             |
     | color.button.secondary.background.destractive.default | `{color.feedback-container.assertive.whisper}` |
-    | color.button.secondary.background.destractive.hover | `{color.feedback-container.assertive.subtle}` |
-    | color.button.secondary.background.destractive.pressed | `{color.feedback-container.assertive.soft}` |
-    | color.button.secondary.text.destractive | `{color.on-feedback.assertive}` |
-    | color.button.neutral.background.default | `{color.surface-container.medium}` |
-    | color.button.neutral.background.hover | `{color.surface-container.bold}` |
-    | color.button.neutral.background.pressed | `{color.surface-container.heavy}` |
-    | color.button.neutral.text.default | `{color.on-surface.medium}` |
-    | color.button.neutral.text.destractive | `{color.feedback.assertive.bold}` |
-    | color.button.ghost.background.default | `{color.neutral-alpha.0}` |
-    | color.button.ghost.background.hover | `{color.surface-container.subtle}` |
-    | color.button.ghost.background.pressed | `{color.surface-container.bold}` |
-    | color.button.ghost.text | `{color.on-surface.medium}` |
+    | color.button.secondary.background.destractive.hover   | `{color.feedback-container.assertive.subtle}`  |
+    | color.button.secondary.background.destractive.pressed | `{color.feedback-container.assertive.soft}`    |
+    | color.button.secondary.text.destractive               | `{color.on-feedback.assertive}`                |
+    | color.button.neutral.background.default               | `{color.surface-container.medium}`             |
+    | color.button.neutral.background.hover                 | `{color.surface-container.bold}`               |
+    | color.button.neutral.background.pressed               | `{color.surface-container.heavy}`              |
+    | color.button.neutral.text.default                     | `{color.on-surface.medium}`                    |
+    | color.button.neutral.text.destractive                 | `{color.feedback.assertive.bold}`              |
+    | color.button.ghost.background.default                 | `{color.neutral-alpha.0}`                      |
+    | color.button.ghost.background.hover                   | `{color.surface-container.subtle}`             |
+    | color.button.ghost.background.pressed                 | `{color.surface-container.bold}`               |
+    | color.button.ghost.text                               | `{color.on-surface.medium}`                    |
 
     ### Input
 
-    | トークン | 参照先（LM） |
-    | --- | --- |
-    | color.input.background | `{color.surface-container.default}` |
-    | color.input.background.alternative | `{color.surface-container.subtle}` |
-    | color.input.background.alternativeHover | `{color.surface-container.medium}` |
-    | color.input.background.error | `{color.feedback-container.assertive.whisper}` |
-    | color.input.border | `{color.border.medium}` |
-    | color.input.border.hover | `{color.border.bold}` |
-    | color.input.border.error | `{color.feedback-border.assertive.medium}` |
-    | color.input.text.label | `{color.on-surface.medium}` |
-    | color.input.text.value | `{color.on-surface.bold}` |
-    | color.input.text.placeholder | `{color.on-surface.whisper}` |
-    | color.input.text.affix | `{color.on-surface.subtle}` |
-    | color.input.text.triggerIcon | `{color.on-surface.medium}` |
+    | トークン                                    | 参照先（LM）                                        |
+    | --------------------------------------- | ---------------------------------------------- |
+    | color.input.background                  | `{color.surface-container.default}`            |
+    | color.input.background.alternative      | `{color.surface-container.subtle}`             |
+    | color.input.background.alternativeHover | `{color.surface-container.medium}`             |
+    | color.input.background.error            | `{color.feedback-container.assertive.whisper}` |
+    | color.input.border                      | `{color.border.medium}`                        |
+    | color.input.border.hover                | `{color.border.bold}`                          |
+    | color.input.border.error                | `{color.feedback-border.assertive.medium}`     |
+    | color.input.text.label                  | `{color.on-surface.medium}`                    |
+    | color.input.text.value                  | `{color.on-surface.bold}`                      |
+    | color.input.text.placeholder            | `{color.on-surface.whisper}`                   |
+    | color.input.text.affix                  | `{color.on-surface.subtle}`                    |
+    | color.input.text.triggerIcon            | `{color.on-surface.medium}`                    |
 
     ### Choice
 
-    | トークン | 参照先（LM） |
-    | --- | --- |
-    | color.choice.background.default | `{color.surface-container.subtle}` |
-    | color.choice.background.selected | `{color.accent-container.primary.medium}` |
-    | color.choice.background.error | `{color.feedback-container.assertive.medium}` |
-    | color.choice.border.default | `{color.border.medium}` |
-    | color.choice.border.hover | `{color.border.bold}` |
-    | color.choice.border.selected | `{color.accent-border.primary.medium}` |
-    | color.choice.border.error | `{color.feedback-border.assertive.bold}` |
-    | color.choice.mark.default | `{color.on-accent.default}` |
+    | トークン                             | 参照先（LM）                                       |
+    | -------------------------------- | --------------------------------------------- |
+    | color.choice.background.default  | `{color.surface-container.subtle}`            |
+    | color.choice.background.selected | `{color.accent-container.primary.medium}`     |
+    | color.choice.background.error    | `{color.feedback-container.assertive.medium}` |
+    | color.choice.border.default      | `{color.border.medium}`                       |
+    | color.choice.border.hover        | `{color.border.bold}`                         |
+    | color.choice.border.selected     | `{color.accent-border.primary.medium}`        |
+    | color.choice.border.error        | `{color.feedback-border.assertive.bold}`      |
+    | color.choice.mark.default        | `{color.on-accent.default}`                   |
 
     ### Table
 
-    | トークン | 参照先（LM） |
-    | --- | --- |
-    | color.table.td.background.hover | `{color.surface-container.whisper}` |
-    | color.table.th.background.alternative | `{color.surface-container.whisper}` |
-    | color.table.td.background.error | `{color.feedback-container.assertive.ghost}` |
+    | トークン                                  | 参照先（LM）                                        |
+    | ------------------------------------- | ---------------------------------------------- |
+    | color.table.td.background.hover       | `{color.surface-container.whisper}`            |
+    | color.table.th.background.alternative | `{color.surface-container.whisper}`            |
+    | color.table.td.background.error       | `{color.feedback-container.assertive.ghost}`   |
     | color.table.td.background.error.hover | `{color.feedback-container.assertive.whisper}` |
-    | color.table.border | `{color.border.subtle}` |
+    | color.table.border                    | `{color.border.subtle}`                        |
   </Tab>
 </Tabs>
