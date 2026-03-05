@@ -4,8 +4,8 @@
   "name": "Garage Design System",
   "colors": {
     "primary": "#00a724",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "light": "#00a724",
+    "dark": "#028d1d"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -124,5 +124,8 @@
       "github": "https://github.com/mintlify",
       "linkedin": "https://linkedin.com/company/mintlify"
     }
+  },
+  "appearance": {
+    "default": "system"
   }
 }
