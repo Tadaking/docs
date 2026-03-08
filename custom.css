@@ -1,0 +1,70 @@
+/* Color Chip — Theme Token tables */
+.color-chip-wrapper {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  /* Checkerboard for transparent colors */
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #e8e8e8 25%, transparent 25%),
+    linear-gradient(-45deg, #e8e8e8 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e8e8e8 75%),
+    linear-gradient(-45deg, transparent 75%, #e8e8e8 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.color-chip-wrapper:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.color-chip-wrapper:active {
+  transform: scale(0.95);
+}
+
+.color-chip {
+  position: absolute;
+  inset: 0;
+}
+
+.color-chip-copied {
+  outline: 2px solid #00a724;
+  outline-offset: 1px;
+}
+
+.color-chip-check {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Dark mode */
+.dark .color-chip-wrapper {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: #2a2a2a;
+  background-image:
+    linear-gradient(45deg, #3a3a3a 25%, transparent 25%),
+    linear-gradient(-45deg, #3a3a3a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #3a3a3a 75%),
+    linear-gradient(-45deg, transparent 75%, #3a3a3a 75%);
+}
+
+.dark .color-chip-wrapper:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}

@@ -3,6 +3,24 @@ title: "Colors"
 description: "色は階層を確立し、ブランディングを強化し、調和を築きます。"
 ---
 
+export const ColorChip = ({ color, token }) => {
+  const [copied, setCopied] = useState(false);
+  return (
+    <span
+      className={`color-chip-wrapper${copied ? ' color-chip-copied' : ''}`}
+      onClick={() => {
+        navigator.clipboard.writeText(token);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      }}
+      title={token}
+    >
+      <span className="color-chip" style={{ backgroundColor: color }} />
+      {copied && <span className="color-chip-check">✓</span>}
+    </span>
+  );
+};
+
 <Tabs>
   <Tab title="Overview">
     ## Quicklook
@@ -351,64 +369,64 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     #### neutral
 
-    | ステップ | HEX       | コメント                                                  |
-    | ---- | --------- | ----------------------------------------------------- |
-    | 0    | `#FFFFFF` | Migration: #ffffff → neutral.0 / Legacy: white        |
-    | 5    | `#F8F9FA` | —                                                     |
-    | 10   | `#F2F4F6` | Migration: #f5f5f5 → neutral.10 / Legacy: neutral-100 |
-    | 15   | `#ECEFF2` | Migration: #e5e5e5 → neutral.15 / Legacy: neutral-200 |
-    | 20   | `#E3E6EA` | Migration: #cccccc → neutral.20 / Legacy: neutral-300 |
-    | 25   | `#D6D9DB` | —                                                     |
-    | 30   | `#C0C3C6` | Migration: #aaaaaa → neutral.30 / Legacy: neutral-400 |
-    | 40   | `#A2A5A8` | —                                                     |
-    | 50   | `#8A8E92` | Migration: #888888 → neutral.50 / Legacy: neutral-500 |
-    | 60   | `#717579` | —                                                     |
-    | 70   | `#64686D` | Migration: #666666 → neutral.70 / Legacy: neutral-600 |
-    | 80   | `#505459` | Migration: #555555 → neutral.80 / Legacy: neutral-700 |
-    | 85   | `#3D4146` | —                                                     |
-    | 90   | `#2A2E32` | Migration: #373737 → neutral.90 / Legacy: neutral-800 |
-    | 95   | `#1B1E21` | Migration: #222222 → neutral.95 / Legacy: neutral-900 |
-    | 98   | `#111417` | —                                                     |
-    | 99   | `#090B0D` | —                                                     |
-    | 100  | `#000000` | —                                                     |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.neutral.0" /> | `#FFFFFF` | Migration: #ffffff → neutral.0 / Legacy: white |
+    | <ColorChip color="#F8F9FA" token="color.neutral.5" /> | `#F8F9FA` | — |
+    | <ColorChip color="#F2F4F6" token="color.neutral.10" /> | `#F2F4F6` | Migration: #f5f5f5 → neutral.10 / Legacy: neutral-100 |
+    | <ColorChip color="#ECEFF2" token="color.neutral.15" /> | `#ECEFF2` | Migration: #e5e5e5 → neutral.15 / Legacy: neutral-200 |
+    | <ColorChip color="#E3E6EA" token="color.neutral.20" /> | `#E3E6EA` | Migration: #cccccc → neutral.20 / Legacy: neutral-300 |
+    | <ColorChip color="#D6D9DB" token="color.neutral.25" /> | `#D6D9DB` | — |
+    | <ColorChip color="#C0C3C6" token="color.neutral.30" /> | `#C0C3C6` | Migration: #aaaaaa → neutral.30 / Legacy: neutral-400 |
+    | <ColorChip color="#A2A5A8" token="color.neutral.40" /> | `#A2A5A8` | — |
+    | <ColorChip color="#8A8E92" token="color.neutral.50" /> | `#8A8E92` | Migration: #888888 → neutral.50 / Legacy: neutral-500 |
+    | <ColorChip color="#717579" token="color.neutral.60" /> | `#717579` | — |
+    | <ColorChip color="#64686D" token="color.neutral.70" /> | `#64686D` | Migration: #666666 → neutral.70 / Legacy: neutral-600 |
+    | <ColorChip color="#505459" token="color.neutral.80" /> | `#505459` | Migration: #555555 → neutral.80 / Legacy: neutral-700 |
+    | <ColorChip color="#3D4146" token="color.neutral.85" /> | `#3D4146` | — |
+    | <ColorChip color="#2A2E32" token="color.neutral.90" /> | `#2A2E32` | Migration: #373737 → neutral.90 / Legacy: neutral-800 |
+    | <ColorChip color="#1B1E21" token="color.neutral.95" /> | `#1B1E21` | Migration: #222222 → neutral.95 / Legacy: neutral-900 |
+    | <ColorChip color="#111417" token="color.neutral.98" /> | `#111417` | — |
+    | <ColorChip color="#090B0D" token="color.neutral.99" /> | `#090B0D` | — |
+    | <ColorChip color="#000000" token="color.neutral.100" /> | `#000000` | — |
 
     #### neutral-alpha
 
-    | ステップ | HEX         | コメント                                                                         |
-    | ---- | ----------- | ---------------------------------------------------------------------------- |
-    | 0    | `#00375800` | —                                                                            |
-    | 5    | `#00375807` | Migration: rgba(17,17,17,0.04) → neutralAlpha.5 / Legacy: neutral-alpha-100  |
-    | 10   | `#00234A0D` | —                                                                            |
-    | 15   | `#00234A13` | Migration: rgba(17,17,17,0.10) → neutralAlpha.15 / Legacy: neutral-alpha-200 |
-    | 20   | `#001A3D1C` | —                                                                            |
-    | 25   | `#00112229` | Migration: rgba(17,17,17,0.22) → neutralAlpha.25 / Legacy: neutral-alpha-300 |
-    | 30   | `#010B173F` | —                                                                            |
-    | 40   | `#0109115D` | Migration: rgba(17,17,17,0.36) → neutralAlpha.40 / Legacy: neutral-alpha-400 |
-    | 50   | `#01091175` | Migration: rgba(17,17,17,0.50) → neutralAlpha.50 / Legacy: neutral-alpha-500 |
-    | 60   | `#0109108F` | Migration: rgba(17,17,17,0.64) → neutralAlpha.60 / Legacy: neutral-alpha-600 |
-    | 70   | `#2F3032CC` | Migration: rgba(17,17,17,0.72) → neutralAlpha.70 / Legacy: neutral-alpha-700 |
-    | 80   | `#2F3032E0` | —                                                                            |
-    | 90   | `#1A1E22ED` | Migration: rgba(17,17,17,0.92) → neutralAlpha.90 / Legacy: neutral-alpha-900 |
-    | 100  | `#000000`   | —                                                                            |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#00375800" token="color.neutral-alpha.0" /> | `#00375800` | — |
+    | <ColorChip color="#00375807" token="color.neutral-alpha.5" /> | `#00375807` | Migration: rgba(17,17,17,0.04) → neutralAlpha.5 / Legacy: neutral-alpha-100 |
+    | <ColorChip color="#00234A0D" token="color.neutral-alpha.10" /> | `#00234A0D` | — |
+    | <ColorChip color="#00234A13" token="color.neutral-alpha.15" /> | `#00234A13` | Migration: rgba(17,17,17,0.10) → neutralAlpha.15 / Legacy: neutral-alpha-200 |
+    | <ColorChip color="#001A3D1C" token="color.neutral-alpha.20" /> | `#001A3D1C` | — |
+    | <ColorChip color="#00112229" token="color.neutral-alpha.25" /> | `#00112229` | Migration: rgba(17,17,17,0.22) → neutralAlpha.25 / Legacy: neutral-alpha-300 |
+    | <ColorChip color="#010B173F" token="color.neutral-alpha.30" /> | `#010B173F` | — |
+    | <ColorChip color="#0109115D" token="color.neutral-alpha.40" /> | `#0109115D` | Migration: rgba(17,17,17,0.36) → neutralAlpha.40 / Legacy: neutral-alpha-400 |
+    | <ColorChip color="#01091175" token="color.neutral-alpha.50" /> | `#01091175` | Migration: rgba(17,17,17,0.50) → neutralAlpha.50 / Legacy: neutral-alpha-500 |
+    | <ColorChip color="#0109108F" token="color.neutral-alpha.60" /> | `#0109108F` | Migration: rgba(17,17,17,0.64) → neutralAlpha.60 / Legacy: neutral-alpha-600 |
+    | <ColorChip color="#2F3032CC" token="color.neutral-alpha.70" /> | `#2F3032CC` | Migration: rgba(17,17,17,0.72) → neutralAlpha.70 / Legacy: neutral-alpha-700 |
+    | <ColorChip color="#2F3032E0" token="color.neutral-alpha.80" /> | `#2F3032E0` | — |
+    | <ColorChip color="#1A1E22ED" token="color.neutral-alpha.90" /> | `#1A1E22ED` | Migration: rgba(17,17,17,0.92) → neutralAlpha.90 / Legacy: neutral-alpha-900 |
+    | <ColorChip color="#000000" token="color.neutral-alpha.100" /> | `#000000` | — |
 
     #### white-alpha
 
-    | ステップ | HEX         | コメント                                                                        |
-    | ---- | ----------- | --------------------------------------------------------------------------- |
-    | 0    | `#FFFFFF00` | Migration: rgba(255,255,255,0) → whiteAlpha.0 / Legacy: white-alpha-0       |
-    | 5    | `#FFFFFF05` | —                                                                           |
-    | 10   | `#FFFFFF0A` | Migration: rgba(255,255,255,0.05) → whiteAlpha.10 / Legacy: white-alpha-10  |
-    | 15   | `#FFFFFF12` | —                                                                           |
-    | 20   | `#FFFFFF1A` | —                                                                           |
-    | 25   | `#FFFFFF21` | Migration: rgba(255,255,255,0.12) → whiteAlpha.25 / Legacy: white-alpha-20  |
-    | 30   | `#FFFFFF29` | Migration: rgba(255,255,255,0.12) → whiteAlpha.30 / Legacy: white-alpha-30  |
-    | 40   | `#FFFFFF3D` | Migration: rgba(255,255,255,0.24) → whiteAlpha.40 / Legacy: white-alpha-40  |
-    | 50   | `#FFFFFF52` | Migration: rgba(255,255,255,0.31) → whiteAlpha.50 / Legacy: white-alpha-50  |
-    | 60   | `#FFFFFF7A` | Migration: rgba(255,255,255,0.46) → whiteAlpha.60 / Legacy: white-alpha-70  |
-    | 70   | `#FFFFFFA3` | Migration: rgba(255,255,255,0.61) → whiteAlpha.70 / Legacy: white-alpha-100 |
-    | 80   | `#FFFFFFCC` | Migration: rgba(255,255,255,0.75) → whiteAlpha.80 / Legacy: white-alpha-120 |
-    | 90   | `#FFFFFFEB` | Migration: rgba(255,255,255,0.87) → whiteAlpha.90 / Legacy: white-alpha-140 |
-    | 100  | `#FFFFFF`   | Migration: rgba(255,255,255,1) → whiteAlpha.100 / Legacy: white-alpha-160   |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#FFFFFF00" token="color.white-alpha.0" /> | `#FFFFFF00` | Migration: rgba(255,255,255,0) → whiteAlpha.0 / Legacy: white-alpha-0 |
+    | <ColorChip color="#FFFFFF05" token="color.white-alpha.5" /> | `#FFFFFF05` | — |
+    | <ColorChip color="#FFFFFF0A" token="color.white-alpha.10" /> | `#FFFFFF0A` | Migration: rgba(255,255,255,0.05) → whiteAlpha.10 / Legacy: white-alpha-10 |
+    | <ColorChip color="#FFFFFF12" token="color.white-alpha.15" /> | `#FFFFFF12` | — |
+    | <ColorChip color="#FFFFFF1A" token="color.white-alpha.20" /> | `#FFFFFF1A` | — |
+    | <ColorChip color="#FFFFFF21" token="color.white-alpha.25" /> | `#FFFFFF21` | Migration: rgba(255,255,255,0.12) → whiteAlpha.25 / Legacy: white-alpha-20 |
+    | <ColorChip color="#FFFFFF29" token="color.white-alpha.30" /> | `#FFFFFF29` | Migration: rgba(255,255,255,0.12) → whiteAlpha.30 / Legacy: white-alpha-30 |
+    | <ColorChip color="#FFFFFF3D" token="color.white-alpha.40" /> | `#FFFFFF3D` | Migration: rgba(255,255,255,0.24) → whiteAlpha.40 / Legacy: white-alpha-40 |
+    | <ColorChip color="#FFFFFF52" token="color.white-alpha.50" /> | `#FFFFFF52` | Migration: rgba(255,255,255,0.31) → whiteAlpha.50 / Legacy: white-alpha-50 |
+    | <ColorChip color="#FFFFFF7A" token="color.white-alpha.60" /> | `#FFFFFF7A` | Migration: rgba(255,255,255,0.46) → whiteAlpha.60 / Legacy: white-alpha-70 |
+    | <ColorChip color="#FFFFFFA3" token="color.white-alpha.70" /> | `#FFFFFFA3` | Migration: rgba(255,255,255,0.61) → whiteAlpha.70 / Legacy: white-alpha-100 |
+    | <ColorChip color="#FFFFFFCC" token="color.white-alpha.80" /> | `#FFFFFFCC` | Migration: rgba(255,255,255,0.75) → whiteAlpha.80 / Legacy: white-alpha-120 |
+    | <ColorChip color="#FFFFFFEB" token="color.white-alpha.90" /> | `#FFFFFFEB` | Migration: rgba(255,255,255,0.87) → whiteAlpha.90 / Legacy: white-alpha-140 |
+    | <ColorChip color="#FFFFFF" token="color.white-alpha.100" /> | `#FFFFFF` | Migration: rgba(255,255,255,1) → whiteAlpha.100 / Legacy: white-alpha-160 |
 
     ### Accent Colors
 
@@ -416,126 +434,126 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     このカラースケールがLightness-mode tokensでのaccent, accent-container, on-accent, accent-borderで使用されます。
 
-    | ステップ | HEX       | コメント                                                                          |
-    | ---- | --------- | ----------------------------------------------------------------------------- |
-    | 0    | `#FFFFFF` | —                                                                             |
-    | 5    | `#F3FCF3` | —                                                                             |
-    | 10   | `#EAF9EA` | Migration: #e2f9e7 → brand.10 / Legacy: green-100 (primary use)               |
-    | 15   | `#DBF8DB` | —                                                                             |
-    | 20   | `#CAF4C9` | —                                                                             |
-    | 25   | `#A6EEA6` | —                                                                             |
-    | 30   | `#7BDD7E` | Migration: #4ecb69 → brand.30 / Legacy: green-300 (primary use)               |
-    | 40   | `#43C24A` | —                                                                             |
-    | 50   | `#00A724` | Migration: #00a724 → brand.50 / Legacy: green-500 (primary use) / Brand color |
-    | 60   | `#028D1D` | —                                                                             |
-    | 70   | `#027E19` | Migration: #00811c → brand.70 / Legacy: green-700 (primary use)               |
-    | 80   | `#076615` | —                                                                             |
-    | 85   | `#01500D` | —                                                                             |
-    | 90   | `#003906` | —                                                                             |
-    | 95   | `#002603` | —                                                                             |
-    | 98   | `#011A03` | —                                                                             |
-    | 99   | `#020F02` | —                                                                             |
-    | 100  | `#000000` | —                                                                             |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.primary.0" /> | `#FFFFFF` | — |
+    | <ColorChip color="#F3FCF3" token="color.accent.primary.5" /> | `#F3FCF3` | — |
+    | <ColorChip color="#EAF9EA" token="color.accent.primary.10" /> | `#EAF9EA` | Migration: #e2f9e7 → brand.10 / Legacy: green-100 (primary use) |
+    | <ColorChip color="#DBF8DB" token="color.accent.primary.15" /> | `#DBF8DB` | — |
+    | <ColorChip color="#CAF4C9" token="color.accent.primary.20" /> | `#CAF4C9` | — |
+    | <ColorChip color="#A6EEA6" token="color.accent.primary.25" /> | `#A6EEA6` | — |
+    | <ColorChip color="#7BDD7E" token="color.accent.primary.30" /> | `#7BDD7E` | Migration: #4ecb69 → brand.30 / Legacy: green-300 (primary use) |
+    | <ColorChip color="#43C24A" token="color.accent.primary.40" /> | `#43C24A` | — |
+    | <ColorChip color="#00A724" token="color.accent.primary.50" /> | `#00A724` | Migration: #00a724 → brand.50 / Legacy: green-500 (primary use) / Brand color |
+    | <ColorChip color="#028D1D" token="color.accent.primary.60" /> | `#028D1D` | — |
+    | <ColorChip color="#027E19" token="color.accent.primary.70" /> | `#027E19` | Migration: #00811c → brand.70 / Legacy: green-700 (primary use) |
+    | <ColorChip color="#076615" token="color.accent.primary.80" /> | `#076615` | — |
+    | <ColorChip color="#01500D" token="color.accent.primary.85" /> | `#01500D` | — |
+    | <ColorChip color="#003906" token="color.accent.primary.90" /> | `#003906` | — |
+    | <ColorChip color="#002603" token="color.accent.primary.95" /> | `#002603` | — |
+    | <ColorChip color="#011A03" token="color.accent.primary.98" /> | `#011A03` | — |
+    | <ColorChip color="#020F02" token="color.accent.primary.99" /> | `#020F02` | — |
+    | <ColorChip color="#000000" token="color.accent.primary.100" /> | `#000000` | — |
 
     #### Red
 
     このカラースケールがLightness-mode tokensでのfeedback.assertive, feedback-container.assertive, on-feedback.assertive, feedback-border.assertiveで使用されます。
 
-    | ステップ | HEX       | コメント                                                |
-    | ---- | --------- | --------------------------------------------------- |
-    | 0    | `#FFFFFF` | —                                                   |
-    | 5    | `#FEF7F6` | —                                                   |
-    | 10   | `#FFF0EF` | —                                                   |
-    | 15   | `#FFE9E4` | Migration: #ffe2e0 → assertive.15 / Legacy: red-100 |
-    | 20   | `#FFDDD8` | —                                                   |
-    | 25   | `#FFCBC1` | —                                                   |
-    | 30   | `#FFA99A` | —                                                   |
-    | 40   | `#FF735F` | Migration: #ff6157 → assertive.40 / Legacy: red-300 |
-    | 50   | `#F43828` | Migration: #e80e00 → assertive.50 / Legacy: red-500 |
-    | 60   | `#DA0900` | —                                                   |
-    | 70   | `#BE1E12` | Migration: #cd0d00 → assertive.70 / Legacy: red-700 |
-    | 80   | `#9E0E05` | —                                                   |
-    | 85   | `#7E0601` | —                                                   |
-    | 90   | `#5A0703` | —                                                   |
-    | 95   | `#400000` | —                                                   |
-    | 98   | `#2E0100` | —                                                   |
-    | 99   | `#1C0100` | —                                                   |
-    | 100  | `#000000` | —                                                   |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.red.0" /> | `#FFFFFF` | — |
+    | <ColorChip color="#FEF7F6" token="color.accent.red.5" /> | `#FEF7F6` | — |
+    | <ColorChip color="#FFF0EF" token="color.accent.red.10" /> | `#FFF0EF` | — |
+    | <ColorChip color="#FFE9E4" token="color.accent.red.15" /> | `#FFE9E4` | Migration: #ffe2e0 → assertive.15 / Legacy: red-100 |
+    | <ColorChip color="#FFDDD8" token="color.accent.red.20" /> | `#FFDDD8` | — |
+    | <ColorChip color="#FFCBC1" token="color.accent.red.25" /> | `#FFCBC1` | — |
+    | <ColorChip color="#FFA99A" token="color.accent.red.30" /> | `#FFA99A` | — |
+    | <ColorChip color="#FF735F" token="color.accent.red.40" /> | `#FF735F` | Migration: #ff6157 → assertive.40 / Legacy: red-300 |
+    | <ColorChip color="#F43828" token="color.accent.red.50" /> | `#F43828` | Migration: #e80e00 → assertive.50 / Legacy: red-500 |
+    | <ColorChip color="#DA0900" token="color.accent.red.60" /> | `#DA0900` | — |
+    | <ColorChip color="#BE1E12" token="color.accent.red.70" /> | `#BE1E12` | Migration: #cd0d00 → assertive.70 / Legacy: red-700 |
+    | <ColorChip color="#9E0E05" token="color.accent.red.80" /> | `#9E0E05` | — |
+    | <ColorChip color="#7E0601" token="color.accent.red.85" /> | `#7E0601` | — |
+    | <ColorChip color="#5A0703" token="color.accent.red.90" /> | `#5A0703` | — |
+    | <ColorChip color="#400000" token="color.accent.red.95" /> | `#400000` | — |
+    | <ColorChip color="#2E0100" token="color.accent.red.98" /> | `#2E0100` | — |
+    | <ColorChip color="#1C0100" token="color.accent.red.99" /> | `#1C0100` | — |
+    | <ColorChip color="#000000" token="color.accent.red.100" /> | `#000000` | — |
 
     #### Green
 
     このカラースケールがLightness-mode tokensでのfeedback.positive, feedback-container.positive, on-feedback.positive, feedback-border.positiveで使用されます。
 
-    | ステップ | HEX       | コメント                                                               |
-    | ---- | --------- | ------------------------------------------------------------------ |
-    | 0    | `#FFFFFF` | —                                                                  |
-    | 5    | `#F1FDF4` | —                                                                  |
-    | 10   | `#E7F9EC` | Migration: #e2f9e7 → positive.10 / Legacy: green-100 (success use) |
-    | 15   | `#D8F8E2` | —                                                                  |
-    | 20   | `#C2F5D2` | —                                                                  |
-    | 25   | `#9BEFB9` | —                                                                  |
-    | 30   | `#6EDD9A` | Migration: #4ecb69 → positive.30 / Legacy: green-300 (success use) |
-    | 40   | `#33C176` | —                                                                  |
-    | 50   | `#00A55E` | Migration: #00a724 → positive.50 / Legacy: green-500 (success use) |
-    | 60   | `#018B4F` | —                                                                  |
-    | 70   | `#007C45` | —                                                                  |
-    | 80   | `#006538` | —                                                                  |
-    | 85   | `#004F2A` | —                                                                  |
-    | 90   | `#02381D` | —                                                                  |
-    | 95   | `#002511` | —                                                                  |
-    | 98   | `#001A0A` | —                                                                  |
-    | 99   | `#010F05` | —                                                                  |
-    | 100  | `#000000` | —                                                                  |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.green.0" /> | `#FFFFFF` | — |
+    | <ColorChip color="#F1FDF4" token="color.accent.green.5" /> | `#F1FDF4` | — |
+    | <ColorChip color="#E7F9EC" token="color.accent.green.10" /> | `#E7F9EC` | Migration: #e2f9e7 → positive.10 / Legacy: green-100 (success use) |
+    | <ColorChip color="#D8F8E2" token="color.accent.green.15" /> | `#D8F8E2` | — |
+    | <ColorChip color="#C2F5D2" token="color.accent.green.20" /> | `#C2F5D2` | — |
+    | <ColorChip color="#9BEFB9" token="color.accent.green.25" /> | `#9BEFB9` | — |
+    | <ColorChip color="#6EDD9A" token="color.accent.green.30" /> | `#6EDD9A` | Migration: #4ecb69 → positive.30 / Legacy: green-300 (success use) |
+    | <ColorChip color="#33C176" token="color.accent.green.40" /> | `#33C176` | — |
+    | <ColorChip color="#00A55E" token="color.accent.green.50" /> | `#00A55E` | Migration: #00a724 → positive.50 / Legacy: green-500 (success use) |
+    | <ColorChip color="#018B4F" token="color.accent.green.60" /> | `#018B4F` | — |
+    | <ColorChip color="#007C45" token="color.accent.green.70" /> | `#007C45` | — |
+    | <ColorChip color="#006538" token="color.accent.green.80" /> | `#006538` | — |
+    | <ColorChip color="#004F2A" token="color.accent.green.85" /> | `#004F2A` | — |
+    | <ColorChip color="#02381D" token="color.accent.green.90" /> | `#02381D` | — |
+    | <ColorChip color="#002511" token="color.accent.green.95" /> | `#002511` | — |
+    | <ColorChip color="#001A0A" token="color.accent.green.98" /> | `#001A0A` | — |
+    | <ColorChip color="#010F05" token="color.accent.green.99" /> | `#010F05` | — |
+    | <ColorChip color="#000000" token="color.accent.green.100" /> | `#000000` | — |
 
     #### Amber
 
     このカラースケールがLightness-mode tokensでのfeedback.notice, feedback-container.notice, on-feedback.notice, feedback-border.noticeで使用されます。
 
-    | ステップ | HEX       | コメント                                                |
-    | ---- | --------- | --------------------------------------------------- |
-    | 0    | `#FFFFFF` | —                                                   |
-    | 5    | `#FFF9E6` | —                                                   |
-    | 10   | `#FFF4D2` | —                                                   |
-    | 15   | `#FFEEBA` | Migration: #fff0bc → notice.15 / Legacy: yellow-100 |
-    | 20   | `#FFE595` | Migration: #ffdd64 → notice.20 / Legacy: yellow-300 |
-    | 25   | `#FFD547` | Migration: #ffc700 → notice.25 / Legacy: yellow-500 |
-    | 30   | `#E9BE05` | Migration: #e6b300 → notice.30 / Legacy: yellow-700 |
-    | 40   | `#C6A002` | —                                                   |
-    | 50   | `#AA8A04` | —                                                   |
-    | 60   | `#8D7102` | —                                                   |
-    | 70   | `#7D6400` | —                                                   |
-    | 80   | `#665200` | —                                                   |
-    | 85   | `#4F3F01` | —                                                   |
-    | 90   | `#392C00` | —                                                   |
-    | 95   | `#261D00` | —                                                   |
-    | 98   | `#1A1300` | —                                                   |
-    | 99   | `#0F0A00` | —                                                   |
-    | 100  | `#000000` | —                                                   |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.amber.0" /> | `#FFFFFF` | — |
+    | <ColorChip color="#FFF9E6" token="color.accent.amber.5" /> | `#FFF9E6` | — |
+    | <ColorChip color="#FFF4D2" token="color.accent.amber.10" /> | `#FFF4D2` | — |
+    | <ColorChip color="#FFEEBA" token="color.accent.amber.15" /> | `#FFEEBA` | Migration: #fff0bc → notice.15 / Legacy: yellow-100 |
+    | <ColorChip color="#FFE595" token="color.accent.amber.20" /> | `#FFE595` | Migration: #ffdd64 → notice.20 / Legacy: yellow-300 |
+    | <ColorChip color="#FFD547" token="color.accent.amber.25" /> | `#FFD547` | Migration: #ffc700 → notice.25 / Legacy: yellow-500 |
+    | <ColorChip color="#E9BE05" token="color.accent.amber.30" /> | `#E9BE05` | Migration: #e6b300 → notice.30 / Legacy: yellow-700 |
+    | <ColorChip color="#C6A002" token="color.accent.amber.40" /> | `#C6A002` | — |
+    | <ColorChip color="#AA8A04" token="color.accent.amber.50" /> | `#AA8A04` | — |
+    | <ColorChip color="#8D7102" token="color.accent.amber.60" /> | `#8D7102` | — |
+    | <ColorChip color="#7D6400" token="color.accent.amber.70" /> | `#7D6400` | — |
+    | <ColorChip color="#665200" token="color.accent.amber.80" /> | `#665200` | — |
+    | <ColorChip color="#4F3F01" token="color.accent.amber.85" /> | `#4F3F01` | — |
+    | <ColorChip color="#392C00" token="color.accent.amber.90" /> | `#392C00` | — |
+    | <ColorChip color="#261D00" token="color.accent.amber.95" /> | `#261D00` | — |
+    | <ColorChip color="#1A1300" token="color.accent.amber.98" /> | `#1A1300` | — |
+    | <ColorChip color="#0F0A00" token="color.accent.amber.99" /> | `#0F0A00` | — |
+    | <ColorChip color="#000000" token="color.accent.amber.100" /> | `#000000` | — |
 
     #### Cyan
 
     このカラースケールがLightness-mode tokensでのfeedback.info, feedback-container.info, on-feedback.info, feedback-border.infoで使用されます。
 
-    | ステップ | HEX       | コメント                                                                         |
-    | ---- | --------- | ---------------------------------------------------------------------------- |
-    | 0    | `#FFFFFF` | —                                                                            |
-    | 5    | `#F3FBFE` | —                                                                            |
-    | 10   | `#E7F7FF` | Migration: #d5f1f3 → informative.10 / Legacy: blue-100 (alternative to soda) |
-    | 15   | `#DDF2FE` | —                                                                            |
-    | 20   | `#CFEBFC` | —                                                                            |
-    | 25   | `#AEE1FF` | —                                                                            |
-    | 30   | `#71CFFF` | Migration: #58c5cd → informative.30 / Legacy: blue-300 (alternative to soda) |
-    | 40   | `#16B2F0` | —                                                                            |
-    | 50   | `#129ACF` | Migration: #00a0ab → informative.50 / Legacy: blue-500 (alternative to soda) |
-    | 60   | `#037FAC` | —                                                                            |
-    | 70   | `#127098` | Migration: #00757d → informative.70 / Legacy: blue-700 (alternative to soda) |
-    | 80   | `#085B7E` | —                                                                            |
-    | 85   | `#064762` | —                                                                            |
-    | 90   | `#053246` | —                                                                            |
-    | 95   | `#002131` | —                                                                            |
-    | 98   | `#001622` | —                                                                            |
-    | 99   | `#010D13` | —                                                                            |
-    | 100  | `#000000` | —                                                                            |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.cyan.0" /> | `#FFFFFF` | — |
+    | <ColorChip color="#F3FBFE" token="color.accent.cyan.5" /> | `#F3FBFE` | — |
+    | <ColorChip color="#E7F7FF" token="color.accent.cyan.10" /> | `#E7F7FF` | Migration: #d5f1f3 → informative.10 / Legacy: blue-100 (alternative to soda) |
+    | <ColorChip color="#DDF2FE" token="color.accent.cyan.15" /> | `#DDF2FE` | — |
+    | <ColorChip color="#CFEBFC" token="color.accent.cyan.20" /> | `#CFEBFC` | — |
+    | <ColorChip color="#AEE1FF" token="color.accent.cyan.25" /> | `#AEE1FF` | — |
+    | <ColorChip color="#71CFFF" token="color.accent.cyan.30" /> | `#71CFFF` | Migration: #58c5cd → informative.30 / Legacy: blue-300 (alternative to soda) |
+    | <ColorChip color="#16B2F0" token="color.accent.cyan.40" /> | `#16B2F0` | — |
+    | <ColorChip color="#129ACF" token="color.accent.cyan.50" /> | `#129ACF` | Migration: #00a0ab → informative.50 / Legacy: blue-500 (alternative to soda) |
+    | <ColorChip color="#037FAC" token="color.accent.cyan.60" /> | `#037FAC` | — |
+    | <ColorChip color="#127098" token="color.accent.cyan.70" /> | `#127098` | Migration: #00757d → informative.70 / Legacy: blue-700 (alternative to soda) |
+    | <ColorChip color="#085B7E" token="color.accent.cyan.80" /> | `#085B7E` | — |
+    | <ColorChip color="#064762" token="color.accent.cyan.85" /> | `#064762` | — |
+    | <ColorChip color="#053246" token="color.accent.cyan.90" /> | `#053246` | — |
+    | <ColorChip color="#002131" token="color.accent.cyan.95" /> | `#002131` | — |
+    | <ColorChip color="#001622" token="color.accent.cyan.98" /> | `#001622` | — |
+    | <ColorChip color="#010D13" token="color.accent.cyan.99" /> | `#010D13` | — |
+    | <ColorChip color="#000000" token="color.accent.cyan.100" /> | `#000000` | — |
 
     ### その他のAccent Color
 
@@ -543,187 +561,187 @@ description: "色は階層を確立し、ブランディングを強化し、調
 
     #### copper
 
-    | ステップ | HEX       |
-    | ---- | --------- |
-    | 0    | `#FFFFFF` |
-    | 5    | `#FDF8F5` |
-    | 10   | `#FCF2EC` |
-    | 15   | `#FDEADF` |
-    | 20   | `#FCE0D1` |
-    | 25   | `#FCCFB2` |
-    | 30   | `#F3B288` |
-    | 40   | `#E08E58` |
-    | 50   | `#CA7538` |
-    | 60   | `#B05A11` |
-    | 70   | `#9D4F0C` |
-    | 80   | `#823F05` |
-    | 85   | `#643106` |
-    | 90   | `#4A2100` |
-    | 95   | `#311501` |
-    | 98   | `#230D01` |
-    | 99   | `#150600` |
-    | 100  | `#000000` |
+    | カラー | HEX |
+    | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.copper.0" /> | `#FFFFFF` |
+    | <ColorChip color="#FDF8F5" token="color.accent.copper.5" /> | `#FDF8F5` |
+    | <ColorChip color="#FCF2EC" token="color.accent.copper.10" /> | `#FCF2EC` |
+    | <ColorChip color="#FDEADF" token="color.accent.copper.15" /> | `#FDEADF` |
+    | <ColorChip color="#FCE0D1" token="color.accent.copper.20" /> | `#FCE0D1` |
+    | <ColorChip color="#FCCFB2" token="color.accent.copper.25" /> | `#FCCFB2` |
+    | <ColorChip color="#F3B288" token="color.accent.copper.30" /> | `#F3B288` |
+    | <ColorChip color="#E08E58" token="color.accent.copper.40" /> | `#E08E58` |
+    | <ColorChip color="#CA7538" token="color.accent.copper.50" /> | `#CA7538` |
+    | <ColorChip color="#B05A11" token="color.accent.copper.60" /> | `#B05A11` |
+    | <ColorChip color="#9D4F0C" token="color.accent.copper.70" /> | `#9D4F0C` |
+    | <ColorChip color="#823F05" token="color.accent.copper.80" /> | `#823F05` |
+    | <ColorChip color="#643106" token="color.accent.copper.85" /> | `#643106` |
+    | <ColorChip color="#4A2100" token="color.accent.copper.90" /> | `#4A2100` |
+    | <ColorChip color="#311501" token="color.accent.copper.95" /> | `#311501` |
+    | <ColorChip color="#230D01" token="color.accent.copper.98" /> | `#230D01` |
+    | <ColorChip color="#150600" token="color.accent.copper.99" /> | `#150600` |
+    | <ColorChip color="#000000" token="color.accent.copper.100" /> | `#000000` |
 
     #### orange
 
-    | ステップ | HEX       |
-    | ---- | --------- |
-    | 0    | `#FFFFFF` |
-    | 5    | `#FEF8F3` |
-    | 10   | `#FEF1E6` |
-    | 15   | `#FEEADC` |
-    | 20   | `#FCE0CC` |
-    | 25   | `#FFCEA7` |
-    | 30   | `#FFAE67` |
-    | 40   | `#EF8604` |
-    | 50   | `#CE7402` |
-    | 60   | `#AB5E02` |
-    | 70   | `#985401` |
-    | 80   | `#7B4508` |
-    | 85   | `#613404` |
-    | 90   | `#442503` |
-    | 95   | `#2F1600` |
-    | 98   | `#220E00` |
-    | 99   | `#140700` |
-    | 100  | `#000000` |
+    | カラー | HEX |
+    | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.orange.0" /> | `#FFFFFF` |
+    | <ColorChip color="#FEF8F3" token="color.accent.orange.5" /> | `#FEF8F3` |
+    | <ColorChip color="#FEF1E6" token="color.accent.orange.10" /> | `#FEF1E6` |
+    | <ColorChip color="#FEEADC" token="color.accent.orange.15" /> | `#FEEADC` |
+    | <ColorChip color="#FCE0CC" token="color.accent.orange.20" /> | `#FCE0CC` |
+    | <ColorChip color="#FFCEA7" token="color.accent.orange.25" /> | `#FFCEA7` |
+    | <ColorChip color="#FFAE67" token="color.accent.orange.30" /> | `#FFAE67` |
+    | <ColorChip color="#EF8604" token="color.accent.orange.40" /> | `#EF8604` |
+    | <ColorChip color="#CE7402" token="color.accent.orange.50" /> | `#CE7402` |
+    | <ColorChip color="#AB5E02" token="color.accent.orange.60" /> | `#AB5E02` |
+    | <ColorChip color="#985401" token="color.accent.orange.70" /> | `#985401` |
+    | <ColorChip color="#7B4508" token="color.accent.orange.80" /> | `#7B4508` |
+    | <ColorChip color="#613404" token="color.accent.orange.85" /> | `#613404` |
+    | <ColorChip color="#442503" token="color.accent.orange.90" /> | `#442503` |
+    | <ColorChip color="#2F1600" token="color.accent.orange.95" /> | `#2F1600` |
+    | <ColorChip color="#220E00" token="color.accent.orange.98" /> | `#220E00` |
+    | <ColorChip color="#140700" token="color.accent.orange.99" /> | `#140700` |
+    | <ColorChip color="#000000" token="color.accent.orange.100" /> | `#000000` |
 
     #### beige
 
-    | ステップ | HEX       |
-    | ---- | --------- |
-    | 0    | `#FFFFFF` |
-    | 5    | `#FEF9EF` |
-    | 10   | `#FCF3E1` |
-    | 15   | `#FCEDCd` |
-    | 20   | `#F9E4B5` |
-    | 25   | `#F1D794` |
-    | 30   | `#DBC070` |
-    | 40   | `#BCA34D` |
-    | 50   | `#A2882F` |
-    | 60   | `#8B7210` |
-    | 70   | `#7B6510` |
-    | 80   | `#645316` |
-    | 85   | `#4F3F12` |
-    | 90   | `#372D07` |
-    | 95   | `#251D02` |
-    | 98   | `#191402` |
-    | 99   | `#0F0A02` |
-    | 100  | `#000000` |
+    | カラー | HEX |
+    | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.beige.0" /> | `#FFFFFF` |
+    | <ColorChip color="#FEF9EF" token="color.accent.beige.5" /> | `#FEF9EF` |
+    | <ColorChip color="#FCF3E1" token="color.accent.beige.10" /> | `#FCF3E1` |
+    | <ColorChip color="#FCEDCd" token="color.accent.beige.15" /> | `#FCEDCd` |
+    | <ColorChip color="#F9E4B5" token="color.accent.beige.20" /> | `#F9E4B5` |
+    | <ColorChip color="#F1D794" token="color.accent.beige.25" /> | `#F1D794` |
+    | <ColorChip color="#DBC070" token="color.accent.beige.30" /> | `#DBC070` |
+    | <ColorChip color="#BCA34D" token="color.accent.beige.40" /> | `#BCA34D` |
+    | <ColorChip color="#A2882F" token="color.accent.beige.50" /> | `#A2882F` |
+    | <ColorChip color="#8B7210" token="color.accent.beige.60" /> | `#8B7210` |
+    | <ColorChip color="#7B6510" token="color.accent.beige.70" /> | `#7B6510` |
+    | <ColorChip color="#645316" token="color.accent.beige.80" /> | `#645316` |
+    | <ColorChip color="#4F3F12" token="color.accent.beige.85" /> | `#4F3F12` |
+    | <ColorChip color="#372D07" token="color.accent.beige.90" /> | `#372D07` |
+    | <ColorChip color="#251D02" token="color.accent.beige.95" /> | `#251D02` |
+    | <ColorChip color="#191402" token="color.accent.beige.98" /> | `#191402` |
+    | <ColorChip color="#0F0A02" token="color.accent.beige.99" /> | `#0F0A02` |
+    | <ColorChip color="#000000" token="color.accent.beige.100" /> | `#000000` |
 
     #### yellow
 
-    | ステップ | HEX       |
-    | ---- | --------- |
-    | 0    | `#FFFFFF` |
-    | 5    | `#FCFBE2` |
-    | 10   | `#F9F7C9` |
-    | 15   | `#F9F2A3` |
-    | 20   | `#F6EC4F` |
-    | 25   | `#EBDF19` |
-    | 30   | `#D3C715` |
-    | 40   | `#B3A912` |
-    | 50   | `#9A910A` |
-    | 60   | `#7F7703` |
-    | 70   | `#706A10` |
-    | 80   | `#5B560A` |
-    | 85   | `#474300` |
-    | 90   | `#322F04` |
-    | 95   | `#211E00` |
-    | 98   | `#161500` |
-    | 99   | `#0C0B00` |
-    | 100  | `#000000` |
+    | カラー | HEX |
+    | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.yellow.0" /> | `#FFFFFF` |
+    | <ColorChip color="#FCFBE2" token="color.accent.yellow.5" /> | `#FCFBE2` |
+    | <ColorChip color="#F9F7C9" token="color.accent.yellow.10" /> | `#F9F7C9` |
+    | <ColorChip color="#F9F2A3" token="color.accent.yellow.15" /> | `#F9F2A3` |
+    | <ColorChip color="#F6EC4F" token="color.accent.yellow.20" /> | `#F6EC4F` |
+    | <ColorChip color="#EBDF19" token="color.accent.yellow.25" /> | `#EBDF19` |
+    | <ColorChip color="#D3C715" token="color.accent.yellow.30" /> | `#D3C715` |
+    | <ColorChip color="#B3A912" token="color.accent.yellow.40" /> | `#B3A912` |
+    | <ColorChip color="#9A910A" token="color.accent.yellow.50" /> | `#9A910A` |
+    | <ColorChip color="#7F7703" token="color.accent.yellow.60" /> | `#7F7703` |
+    | <ColorChip color="#706A10" token="color.accent.yellow.70" /> | `#706A10` |
+    | <ColorChip color="#5B560A" token="color.accent.yellow.80" /> | `#5B560A` |
+    | <ColorChip color="#474300" token="color.accent.yellow.85" /> | `#474300` |
+    | <ColorChip color="#322F04" token="color.accent.yellow.90" /> | `#322F04` |
+    | <ColorChip color="#211E00" token="color.accent.yellow.95" /> | `#211E00` |
+    | <ColorChip color="#161500" token="color.accent.yellow.98" /> | `#161500` |
+    | <ColorChip color="#0C0B00" token="color.accent.yellow.99" /> | `#0C0B00` |
+    | <ColorChip color="#000000" token="color.accent.yellow.100" /> | `#000000` |
 
     #### teal
 
-    | ステップ | HEX       | コメント                                                               |
-    | ---- | --------- | ------------------------------------------------------------------ |
-    | 0    | `#FFFFFF` | —                                                                  |
-    | 5    | `#EFFDFD` | —                                                                  |
-    | 10   | `#E5F8F9` | —                                                                  |
-    | 15   | `#D9F5F6` | Migration: #caf6f8 → link.15 / Legacy: blue-100 (accent, link use) |
-    | 20   | `#C0F1F3` | —                                                                  |
-    | 25   | `#8EECF0` | —                                                                  |
-    | 30   | `#3FDBE2` | Migration: #23c5cc → link.30 / Legacy: blue-300 (Link, Accent use) |
-    | 40   | `#14BBC2` | —                                                                  |
-    | 50   | `#1AA1A7` | Migration: #119da3 → link.50 / Legacy: blue-500 (Link, Accent use) |
-    | 60   | `#01858B` | —                                                                  |
-    | 70   | `#13767A` | Migration: #0d767b → link.70 / Legacy: blue-700 (Link, Accent use) |
-    | 80   | `#026065` | —                                                                  |
-    | 85   | `#0A4A4E` | —                                                                  |
-    | 90   | `#093537` | —                                                                  |
-    | 95   | `#042324` | —                                                                  |
-    | 98   | `#051718` | —                                                                  |
-    | 99   | `#040D0D` | —                                                                  |
-    | 100  | `#000000` | —                                                                  |
+    | カラー | HEX | コメント |
+    | --- | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.teal.0" /> | `#FFFFFF` | — |
+    | <ColorChip color="#EFFDFD" token="color.accent.teal.5" /> | `#EFFDFD` | — |
+    | <ColorChip color="#E5F8F9" token="color.accent.teal.10" /> | `#E5F8F9` | — |
+    | <ColorChip color="#D9F5F6" token="color.accent.teal.15" /> | `#D9F5F6` | Migration: #caf6f8 → link.15 / Legacy: blue-100 (accent, link use) |
+    | <ColorChip color="#C0F1F3" token="color.accent.teal.20" /> | `#C0F1F3` | — |
+    | <ColorChip color="#8EECF0" token="color.accent.teal.25" /> | `#8EECF0` | — |
+    | <ColorChip color="#3FDBE2" token="color.accent.teal.30" /> | `#3FDBE2` | Migration: #23c5cc → link.30 / Legacy: blue-300 (Link, Accent use) |
+    | <ColorChip color="#14BBC2" token="color.accent.teal.40" /> | `#14BBC2` | — |
+    | <ColorChip color="#1AA1A7" token="color.accent.teal.50" /> | `#1AA1A7` | Migration: #119da3 → link.50 / Legacy: blue-500 (Link, Accent use) |
+    | <ColorChip color="#01858B" token="color.accent.teal.60" /> | `#01858B` | — |
+    | <ColorChip color="#13767A" token="color.accent.teal.70" /> | `#13767A` | Migration: #0d767b → link.70 / Legacy: blue-700 (Link, Accent use) |
+    | <ColorChip color="#026065" token="color.accent.teal.80" /> | `#026065` | — |
+    | <ColorChip color="#0A4A4E" token="color.accent.teal.85" /> | `#0A4A4E` | — |
+    | <ColorChip color="#093537" token="color.accent.teal.90" /> | `#093537` | — |
+    | <ColorChip color="#042324" token="color.accent.teal.95" /> | `#042324` | — |
+    | <ColorChip color="#051718" token="color.accent.teal.98" /> | `#051718` | — |
+    | <ColorChip color="#040D0D" token="color.accent.teal.99" /> | `#040D0D` | — |
+    | <ColorChip color="#000000" token="color.accent.teal.100" /> | `#000000` | — |
 
     #### indigo
 
-    | ステップ | HEX       |
-    | ---- | --------- |
-    | 0    | `#FFFFFF` |
-    | 5    | `#F8F9FF` |
-    | 10   | `#F0F4FF` |
-    | 15   | `#E8EEFE` |
-    | 20   | `#DFE5FB` |
-    | 25   | `#CCD8FF` |
-    | 30   | `#AEBFFF` |
-    | 40   | `#879DFF` |
-    | 50   | `#6A7FFF` |
-    | 60   | `#4F5BF8` |
-    | 70   | `#433DFE` |
-    | 80   | `#3624DD` |
-    | 85   | `#2919B1` |
-    | 90   | `#1C0B85` |
-    | 95   | `#110061` |
-    | 98   | `#0B0048` |
-    | 99   | `#05022D` |
-    | 100  | `#000000` |
+    | カラー | HEX |
+    | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.indigo.0" /> | `#FFFFFF` |
+    | <ColorChip color="#F8F9FF" token="color.accent.indigo.5" /> | `#F8F9FF` |
+    | <ColorChip color="#F0F4FF" token="color.accent.indigo.10" /> | `#F0F4FF` |
+    | <ColorChip color="#E8EEFE" token="color.accent.indigo.15" /> | `#E8EEFE` |
+    | <ColorChip color="#DFE5FB" token="color.accent.indigo.20" /> | `#DFE5FB` |
+    | <ColorChip color="#CCD8FF" token="color.accent.indigo.25" /> | `#CCD8FF` |
+    | <ColorChip color="#AEBFFF" token="color.accent.indigo.30" /> | `#AEBFFF` |
+    | <ColorChip color="#879DFF" token="color.accent.indigo.40" /> | `#879DFF` |
+    | <ColorChip color="#6A7FFF" token="color.accent.indigo.50" /> | `#6A7FFF` |
+    | <ColorChip color="#4F5BF8" token="color.accent.indigo.60" /> | `#4F5BF8` |
+    | <ColorChip color="#433DFE" token="color.accent.indigo.70" /> | `#433DFE` |
+    | <ColorChip color="#3624DD" token="color.accent.indigo.80" /> | `#3624DD` |
+    | <ColorChip color="#2919B1" token="color.accent.indigo.85" /> | `#2919B1` |
+    | <ColorChip color="#1C0B85" token="color.accent.indigo.90" /> | `#1C0B85` |
+    | <ColorChip color="#110061" token="color.accent.indigo.95" /> | `#110061` |
+    | <ColorChip color="#0B0048" token="color.accent.indigo.98" /> | `#0B0048` |
+    | <ColorChip color="#05022D" token="color.accent.indigo.99" /> | `#05022D` |
+    | <ColorChip color="#000000" token="color.accent.indigo.100" /> | `#000000` |
 
     #### purple
 
-    | ステップ | HEX       |
-    | ---- | --------- |
-    | 0    | `#FFFFFF` |
-    | 5    | `#F8F8FE` |
-    | 10   | `#F2F2FF` |
-    | 15   | `#EDECFE` |
-    | 20   | `#E4E3FD` |
-    | 25   | `#D6D4FF` |
-    | 30   | `#BFB9FF` |
-    | 40   | `#A292FF` |
-    | 50   | `#8C71FF` |
-    | 60   | `#7649F6` |
-    | 70   | `#6D22F7` |
-    | 80   | `#591BCA` |
-    | 85   | `#4511A1` |
-    | 90   | `#310977` |
-    | 95   | `#200056` |
-    | 98   | `#150040` |
-    | 99   | `#0C002B` |
-    | 100  | `#000000` |
+    | カラー | HEX |
+    | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.purple.0" /> | `#FFFFFF` |
+    | <ColorChip color="#F8F8FE" token="color.accent.purple.5" /> | `#F8F8FE` |
+    | <ColorChip color="#F2F2FF" token="color.accent.purple.10" /> | `#F2F2FF` |
+    | <ColorChip color="#EDECFE" token="color.accent.purple.15" /> | `#EDECFE` |
+    | <ColorChip color="#E4E3FD" token="color.accent.purple.20" /> | `#E4E3FD` |
+    | <ColorChip color="#D6D4FF" token="color.accent.purple.25" /> | `#D6D4FF` |
+    | <ColorChip color="#BFB9FF" token="color.accent.purple.30" /> | `#BFB9FF` |
+    | <ColorChip color="#A292FF" token="color.accent.purple.40" /> | `#A292FF` |
+    | <ColorChip color="#8C71FF" token="color.accent.purple.50" /> | `#8C71FF` |
+    | <ColorChip color="#7649F6" token="color.accent.purple.60" /> | `#7649F6` |
+    | <ColorChip color="#6D22F7" token="color.accent.purple.70" /> | `#6D22F7` |
+    | <ColorChip color="#591BCA" token="color.accent.purple.80" /> | `#591BCA` |
+    | <ColorChip color="#4511A1" token="color.accent.purple.85" /> | `#4511A1` |
+    | <ColorChip color="#310977" token="color.accent.purple.90" /> | `#310977` |
+    | <ColorChip color="#200056" token="color.accent.purple.95" /> | `#200056` |
+    | <ColorChip color="#150040" token="color.accent.purple.98" /> | `#150040` |
+    | <ColorChip color="#0C002B" token="color.accent.purple.99" /> | `#0C002B` |
+    | <ColorChip color="#000000" token="color.accent.purple.100" /> | `#000000` |
 
     #### pink
 
-    | ステップ | HEX       |
-    | ---- | --------- |
-    | 0    | `#FFFFFF` |
-    | 5    | `#FEF7F7` |
-    | 10   | `#FFF0F0` |
-    | 15   | `#FEE8E8` |
-    | 20   | `#FDDDDD` |
-    | 25   | `#FFCACB` |
-    | 30   | `#FFA7AA` |
-    | 40   | `#FF6F7C` |
-    | 50   | `#FA3356` |
-    | 60   | `#D8013F` |
-    | 70   | `#C10338` |
-    | 80   | `#9E062D` |
-    | 85   | `#7E0020` |
-    | 90   | `#5B0016` |
-    | 95   | `#3F000C` |
-    | 98   | `#2E0007` |
-    | 99   | `#1D0003` |
-    | 100  | `#000000` |
+    | カラー | HEX |
+    | --- | --- |
+    | <ColorChip color="#FFFFFF" token="color.accent.pink.0" /> | `#FFFFFF` |
+    | <ColorChip color="#FEF7F7" token="color.accent.pink.5" /> | `#FEF7F7` |
+    | <ColorChip color="#FFF0F0" token="color.accent.pink.10" /> | `#FFF0F0` |
+    | <ColorChip color="#FEE8E8" token="color.accent.pink.15" /> | `#FEE8E8` |
+    | <ColorChip color="#FDDDDD" token="color.accent.pink.20" /> | `#FDDDDD` |
+    | <ColorChip color="#FFCACB" token="color.accent.pink.25" /> | `#FFCACB` |
+    | <ColorChip color="#FFA7AA" token="color.accent.pink.30" /> | `#FFA7AA` |
+    | <ColorChip color="#FF6F7C" token="color.accent.pink.40" /> | `#FF6F7C` |
+    | <ColorChip color="#FA3356" token="color.accent.pink.50" /> | `#FA3356` |
+    | <ColorChip color="#D8013F" token="color.accent.pink.60" /> | `#D8013F` |
+    | <ColorChip color="#C10338" token="color.accent.pink.70" /> | `#C10338` |
+    | <ColorChip color="#9E062D" token="color.accent.pink.80" /> | `#9E062D` |
+    | <ColorChip color="#7E0020" token="color.accent.pink.85" /> | `#7E0020` |
+    | <ColorChip color="#5B0016" token="color.accent.pink.90" /> | `#5B0016` |
+    | <ColorChip color="#3F000C" token="color.accent.pink.95" /> | `#3F000C` |
+    | <ColorChip color="#2E0007" token="color.accent.pink.98" /> | `#2E0007` |
+    | <ColorChip color="#1D0003" token="color.accent.pink.99" /> | `#1D0003` |
+    | <ColorChip color="#000000" token="color.accent.pink.100" /> | `#000000` |
   </Tab>
   <Tab title="Lightness-Mode Tokens">
     > データソース: Figma Variables — コレクション "Lightness-mode"
