@@ -1,3 +1,4 @@
+{/*  figma: https://www.figma.com/design/PSqBlA9pU7SHYbplxhS8q6/Foundation?node-id=110-160  */}
 ---
 title: "Colors"
 description: "色は階層を確立し、ブランディングを強化し、調和を築きます。"
@@ -234,9 +235,11 @@ export const ColorChip = ({ color, darkColor, token }) => {
 
     アクセシビリティの一貫性を保つため、キーボードフォーカス時のフォーカスリングは、画面や使う場所に関係なく、いつも同じ色を使います。
 
-    {/*  Focus Ringの画像はFigmaフレーム内に見つかりませんでした。必要に応じて追加してください  */}
+    <Frame>
+      ![Focus Ringの例](/images/colors-focus-ring-light.png)
+    </Frame>
 
-    {/*  figma-frame: PSqBlA9pU7SHYbplxhS8q6/3731-1404  */}
+    {/*  figma-frame: https://www.figma.com/design/PSqBlA9pU7SHYbplxhS8q6/Foundation?node-id=4364-8793&t=owgeRJIdnO7LUtlc-11  */}
 
     ## Surface
 
@@ -746,10 +749,6 @@ export const ColorChip = ({ color, darkColor, token }) => {
     | <ColorChip color="#000000" token="color.accent.pink.100" /> | `#000000` |
   </Tab>
   <Tab title="Lightness-Mode Tokens">
-    {/*  figma: https://www.figma.com/design/PSqBlA9pU7SHYbplxhS8q6/Foundation?node-id=110-160  */}
-
-    > データソース: Figma Variables — コレクション "Lightness-mode"
-
     {/*  Figma更新による主な差分（旧colors.mdxとの比較）:
 - feedback-container の whisper/subtle が1段階薄く変更（例: positive/whisper: green.15 → green.10）
 - feedback-container.assertive の soft: red.25 → red.20
