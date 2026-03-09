@@ -80,31 +80,86 @@ description: "適切なスケール、スタイル、ウェイトを用いて慎
 
     桁が揃い比較しやすくなる tabular-nums を適用します。
 
-    {/*  illustration-needed: テーブル内数値列の Do（tabular-nums で桁が揃い金額比較がしやすい）/ Don't（proportional-nums で「1」が狭く「8」が広いため桁位置がズレる）比較  */}
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <img src="/images/typography-tabular-do-table.png" alt="tabular-nums を適用したテーブル" />
+        <div class="do-dont-label">✅ Do</div>
+        <div class="do-dont-caption">tabular-nums を適用。桁がきれいに揃い、金額の比較がしやすい。</div>
+      </div>
+      <div class="dont-card">
+        <img src="/images/typography-tabular-dont-table.png" alt="proportional-nums のテーブル" />
+        <div class="do-dont-label">❌ Don't</div>
+        <div class="do-dont-caption">proportional-nums（デフォルト）では「1」が狭く「8」が広いため、桁位置がズレて比較しにくい。</div>
+      </div>
+    </div>
 
     ## 2. ダッシュボードの KPI・メトリクス
 
     KPI カードが横に並ぶ場面では、値が動的に更新されてもレイアウトが安定するよう tabular-nums を適用します。
 
-    {/*  illustration-needed: ダッシュボードKPIの Do（tabular-nums でリアルタイムに値が変わっても幅が一定）/ Don't（proportional-nums で値の更新時にテキスト幅が変動しレイアウトシフトの原因になる）比較  */}
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <img src="/images/typography-tabular-do-kpi.png" alt="tabular-nums を適用した KPI カード" />
+        <div class="do-dont-label">✅ Do</div>
+        <div class="do-dont-caption">tabular-nums でリアルタイムに値が変わっても幅が一定に保たれる。</div>
+      </div>
+      <div class="dont-card">
+        <img src="/images/typography-tabular-dont-kpi.png" alt="proportional-nums の KPI カード" />
+        <div class="do-dont-label">❌ Don't</div>
+        <div class="do-dont-caption">proportional-nums では値の更新時にテキスト幅が変動し、レイアウトシフトの原因になる。</div>
+      </div>
+    </div>
 
     ## 3. タイマー・カウントダウン
 
     秒単位で数値が切り替わるタイマー表示では、数字の幅変化による"ガタつき"を防ぐために tabular-nums を使います。
 
-    {/*  illustration-needed: タイマーの Do（等幅数字により「1」→「0」の切り替えでもコロンの位置が動かない）/ Don't（「1」が狭いため「11:11:11」と「00:00:00」で全体の幅が大きく変わり視覚的に不安定）比較  */}
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <img src="/images/typography-tabular-do-timer.png" alt="tabular-nums を適用したタイマー" />
+        <div class="do-dont-label">✅ Do</div>
+        <div class="do-dont-caption">等幅数字により、「1」→「0」の切り替えでもコロンの位置が動かない。</div>
+      </div>
+      <div class="dont-card">
+        <img src="/images/typography-tabular-dont-timer.png" alt="proportional-nums のタイマー" />
+        <div class="do-dont-label">❌ Don't</div>
+        <div class="do-dont-caption">「1」が狭いため「11:11:11」と「00:00:00」で全体の幅が大きく変わり、視覚的に不安定。</div>
+      </div>
+    </div>
 
     ## 4. テキストリンク型ページネーション
 
     背景やボーダーのないテキストリンク型のページネーションでは、数字の幅がそのまま要素間隔に影響します。tabular-nums で各数字の幅を揃え、リンク同士の間隔を均一にします。
 
-    {/*  illustration-needed: ページネーションの Do（tabular-nums で「1」も「4」も「11」も各桁が同幅でリンク間隔が均一）/ Don't（proportional-nums で「1」が狭く「4」が広いため等間隔の gap でも視覚的にバラつく）比較  */}
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <img src="/images/typography-tabular-do-pagination.png" alt="tabular-nums を適用したページネーション" />
+        <div class="do-dont-label">✅ Do</div>
+        <div class="do-dont-caption">tabular-nums で「1」も「4」も「11」も各桁が同幅に。リンク間の間隔が均一で整って見える。</div>
+      </div>
+      <div class="dont-card">
+        <img src="/images/typography-tabular-dont-pagination.png" alt="proportional-nums のページネーション" />
+        <div class="do-dont-label">❌ Don't</div>
+        <div class="do-dont-caption">proportional-nums では「1」が狭く「4」が広いため、等間隔の gap を設定しても視覚的にバラついて見える。</div>
+      </div>
+    </div>
 
     ## 5. フォームの数値入力
 
     数値入力フィールド（電話番号・金額・日付など）には tabular-nums を適用し、入力中のレイアウトシフトを抑えます。
 
-    {/*  illustration-needed: フォーム数値入力の Do（入力値の各桁が同幅でカーソル位置の予測がしやすい）/ Don't（proportional-nums で「1」入力時にテキスト幅が縮みカーソル合わせが難しくなる）比較  */}
+    <div class="do-dont-grid">
+      <div class="do-card">
+        <img src="/images/typography-tabular-do-form.png" alt="tabular-nums を適用したフォーム" />
+        <div class="do-dont-label">✅ Do</div>
+        <div class="do-dont-caption">入力値の各桁が同幅で、カーソル位置の予測がしやすい。</div>
+      </div>
+      <div class="dont-card">
+        <img src="/images/typography-tabular-dont-form.png" alt="proportional-nums のフォーム" />
+        <div class="do-dont-label">❌ Don't</div>
+        <div class="do-dont-caption">proportional-nums では「1」入力時にテキスト幅が縮み、修正時のカーソル合わせが難しくなる。</div>
+      </div>
+    </div>
   </Tab>
   <Tab title="Web">
     ## Type scale
