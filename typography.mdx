@@ -4,266 +4,253 @@ description: "適切なスケール、スタイル、ウェイトを用いて慎
 ---
 
 {/* zeroheight: https://zeroheight.com/5c2735b16/p/35e93d-typography */}
+
 {/* figma: https://www.figma.com/design/PSqBlA9pU7SHYbplxhS8q6/Foundation?node-id=2712-151 */}
 
 <Tabs>
   <Tab title="Overview">
+    タイポグラフィは、文字を通じて情報に構造と意味を与える行為です。色やレイアウトが印象を形作る一方で、もっとも直接的に「言葉」を届け、ユーザーが情報を認識し、判断し、行動するまでの時間に影響します。
 
-タイポグラフィは、文字を通じて情報に構造と意味を与える行為です。色やレイアウトが印象を形作る一方で、もっとも直接的に「言葉」を届け、ユーザーが情報を認識し、判断し、行動するまでの時間に影響します。
+    newmo のプロダクトにおいて、タイポグラフィは特別な責任を負います。タクシーという移動体験では、テキストは常に時間と安全に直結します。「読めた」だけでは不十分で、瞬時に、正確に、迷いなく理解できることが求められます。
 
-newmo のプロダクトにおいて、タイポグラフィは特別な責任を負います。タクシーという移動体験では、テキストは常に時間と安全に直結します。「読めた」だけでは不十分で、瞬時に、正確に、迷いなく理解できることが求められます。
+    # Principle
 
-## Principle
+    Garage のタイポグラフィは、以下の4つの原則に基づいて設計されています。個々のフォントサイズやウェイトの決定は、すべてこれらの原則に立ち返って判断します。
 
-Garage のタイポグラフィは、以下の4つの原則に基づいて設計されています。個々のフォントサイズやウェイトの決定は、すべてこれらの原則に立ち返って判断します。
+    ## Instant Legibility（即読性）
 
-### Instant Legibility（即読性）
+    情報は、読むのではなく「見た瞬間に分かる」。運転中は特に、じっくり文章を読む余裕がありません。ドライバーは運転中に画面を一瞥し、乗客は揺れる車内でスマートフォンを操作します。Garage のタイポグラフィは、認知負荷を最小限に抑え、情報を瞬時に伝えることを最優先にします。
 
-情報は、読むのではなく「見た瞬間に分かる」。運転中は特に、じっくり文章を読む余裕がありません。ドライバーは運転中に画面を一瞥し、乗客は揺れる車内でスマートフォンを操作します。Garage のタイポグラフィは、認知負荷を最小限に抑え、情報を瞬時に伝えることを最優先にします。
+    ## Clear Hierarchy（階層の明快さ）
 
-### Clear Hierarchy（階層の明快さ）
+    目に入った瞬間に、何が最も重要で、次にどこを見ればよいか分かるようにします。6 つのカテゴリ（Big Title / Display / Title / Body / Label / Caption）は、単にサイズの段階ではありません。それぞれが明確な役割を持ち、タイポグラフィの階層そのものが、視線を自然に導く設計を目指しています。
 
-目に入った瞬間に、何が最も重要で、次にどこを見ればよいか分かるようにします。6 つのカテゴリ（Big Title / Display / Title / Body / Label / Caption）は、単にサイズの段階ではありません。それぞれが明確な役割を持ち、タイポグラフィの階層そのものが、視線を自然に導く設計を目指しています。
+    ## Contextual Adaptation（環境適応）
 
-### Contextual Adaptation（環境適応）
+    同じ情報でも、使われる場所が変われば最適な見せ方は変わります。newmo のプロダクトは、多様なデバイスと環境で使用されます。画面の物理サイズ、視認距離、操作コンテキストはそれぞれ大きく異なります。
 
-同じ情報でも、使われる場所が変われば最適な見せ方は変わります。newmo のプロダクトは、多様なデバイスと環境で使用されます。画面の物理サイズ、視認距離、操作コンテキストはそれぞれ大きく異なります。
+    ## Safety Conscious（安全への配慮）
 
-### Safety Conscious（安全への配慮）
+    必要な情報を、最小の認知コストで届けるようにしましょう。タイポグラフィ設計は単なる使いやすさではなく、安全に直結する責任と捉えています。
 
-必要な情報を、最小の認知コストで届けるようにしましょう。タイポグラフィ設計は単なる使いやすさではなく、安全に直結する責任と捉えています。
+    # Type face
 
-## Type face
+    プラットフォームごとに推奨のフォントファミリーを定義しています。iOS / Android はシステム標準フォント、Web は日本語と英語でフォントを分けて設計します。
 
-プラットフォームごとに推奨のフォントファミリーを定義しています。iOS / Android はシステム標準フォント、Web は日本語と英語でフォントを分けて設計します。
+    |     | Web          | Android    | iOS        |
+    | --- | ------------ | ---------- | ---------- |
+    | 日本語 | Noto Sans JP | システム標準フォント | システム標準フォント |
+    | 英数  | Inter        | システム標準フォント | システム標準フォント |
 
-|  | Web | Android | iOS |
-|---|---|---|---|
-| 日本語 | Noto Sans JP | システム標準フォント | システム標準フォント |
-| 英数 | Inter | システム標準フォント | システム標準フォント |
+    <Note>
+      Safari（WebKit）ではシステム標準フォントにフォールバックします。
+    </Note>
+    ## Safari（WebKit）でのフォールバック
 
-<Note>
-Safari（WebKit）ではシステム標準フォントにフォールバックします。
-</Note>
+    Safari では `-apple-system`（システム標準フォント）を優先して使います。これは、iOS アプリ内の文字と、アプリの WebView 内で表示される文字を同じ見た目にそろえるための設計です。
 
-### Safari（WebKit）でのフォールバック
+    アプリと WebView でフォントが違うと、同じ画面でも文字サイズや行間が少しずれて見えてしまいます。このズレをなくすために、Safari ではシステムフォントを優先する構成にしています。
 
-Safari では `-apple-system`（システム標準フォント）を優先して使います。これは、iOS アプリ内の文字と、アプリの WebView 内で表示される文字を同じ見た目にそろえるための設計です。
+    ### **既知のトレードオフ:**
 
-アプリと WebView でフォントが違うと、同じ画面でも文字サイズや行間が少しずれて見えてしまいます。このズレをなくすために、Safari ではシステムフォントを優先する構成にしています。
+    - macOS / iOS の Safari では、日本語フォントがやや小さく見えるように調整されています
+    - iOS アプリと Web ではタイプスケールが異なるため、日本語フォントサイズが WebView 上で小さく表示される
+    - デスクトップ環境では、Windows（Inter 適用）と macOS Safari（San Francisco 適用）で、日本語の見た目のフォントサイズが変わってしまう
 
-**既知のトレードオフ:**
+    ### **CSS font-family スタック:**
 
-- macOS / iOS の Safari では、日本語フォントがやや小さく見えるように調整されています
-- iOS アプリと Web ではタイプスケールが異なるため、日本語フォントサイズが WebView 上で小さく表示される
-- デスクトップ環境では、Windows（Inter 適用）と macOS Safari（San Francisco 適用）で、日本語の見た目のフォントサイズが変わってしまう
+    ```css
+    font-family: -apple-system, var(--font-inter), var(--font-noto-sans-jp), sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    ```
 
-**CSS font-family スタック:**
+    Safari はシステムフォント優先、他ブラウザは Inter + Noto Sans JP。
 
-```css
-font-family: -apple-system, var(--font-inter), var(--font-noto-sans-jp), sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-```
+    # Type scale
 
-Safari はシステムフォント優先、他ブラウザは Inter + Noto Sans JP。
+    iOS / Android / Web それぞれに専用のタイプスケールを定義しています。さらに、Web と Android では画面密度に応じて 2 種類のタイプスケールを用意し、自動・またはレイアウト設計で切り替えられるようになっています。
 
-## Type scale
+    - **iOS**: 単一のタイプスケール — ディスプレイ、タイトル、本文、ラベル、キャプションを段階的に定義
+    - **Android**: 2 系統のタイプスケール — ドライバー向けなどの低密度レイアウト向けスケール / 高密度レイアウト向けスケール
+    - **Web**: 2 系統のタイプスケール — デスクトップやモバイル向けなどの高密度レイアウト向けスケール / 大画面・低密度レイアウト向けスケール（🚧準備中）
 
-iOS / Android / Web それぞれに専用のタイプスケールを定義しています。さらに、Web と Android では画面密度に応じて 2 種類のタイプスケールを用意し、自動・またはレイアウト設計で切り替えられるようになっています。
+    # Tabular nums
 
-- **iOS**: 単一のタイプスケール — ディスプレイ、タイトル、本文、ラベル、キャプションを段階的に定義
-- **Android**: 2 系統のタイプスケール — ドライバー向けなどの低密度レイアウト向けスケール / 高密度レイアウト向けスケール
-- **Web**: 2 系統のタイプスケール — デスクトップやモバイル向けなどの高密度レイアウト向けスケール / 大画面・低密度レイアウト向けスケール（🚧準備中）
+    Body には tabular-nums バリアントが用意されています。tabular-nums（等幅数字）は、すべての数字が同じ幅で表示される OpenType 機能です。数値が縦に並ぶ場面で桁揃えを実現し、値が動的に変化する UI でレイアウトシフトを防ぎます。
 
-## Semantic styles
+    ## 1. テーブル内で数値が縦に並ぶ列
 
-このデザインシステムでは、用途にもとづいたセマンティックなタイポグラフィスタイルを定義しています。数字ベースの「H1 / H2 / 16px」ではなく、役割にもとづいてスタイルを選択します。
+    桁が揃い比較しやすくなる tabular-nums を適用します。
 
-| カテゴリ | 役割 | 主な使用場面例 |
-|---|---|---|
-| Big Title | 最大の見出し | ヒーローエリア |
-| Display | 装飾的見出し | ページタイトル（装飾的）、セクション見出し（装飾的）、Dashboard などでのスタッツなど |
-| Title | 機能的見出し | ページタイトル（機能的）、カード見出し、モーダルタイトル、セクション見出し（機能的） |
-| Body | 本文（標準） | 説明文、フォーム内テキスト |
-| Body-Comfortable | 本文（ゆったり） | 記事、長文読み物 |
-| Body-Compact | 本文（詰まった表示） | データテーブル、リスト内テキスト |
-| Label | ラベル・操作テキスト | ボタン、フォームラベル、ナビゲーション |
-| Caption | 補助テキスト | タイムスタンプ、注釈 |
+    {/*  illustration-needed: テーブル内数値列の Do（tabular-nums で桁が揃い金額比較がしやすい）/ Don't（proportional-nums で「1」が狭く「8」が広いため桁位置がズレる）比較  */}
 
-セマンティックスタイルは、プラットフォームごとにスケールやサイズ値は異なりますが、役割と使い分けの考え方は共通です。
+    ## 2. ダッシュボードの KPI・メトリクス
 
-### 命名規則
+    KPI カードが横に並ぶ場面では、値が動的に更新されてもレイアウトが安定するよう tabular-nums を適用します。
 
-`{role}-{variant}-{size}`
+    {/*  illustration-needed: ダッシュボードKPIの Do（tabular-nums でリアルタイムに値が変わっても幅が一定）/ Don't（proportional-nums で値の更新時にテキスト幅が変動しレイアウトシフトの原因になる）比較  */}
 
-例: `body-comfortable-lg`, `title-xl`, `caption-sm`
+    ## 3. タイマー・カウントダウン
 
-## Tabular nums
+    秒単位で数値が切り替わるタイマー表示では、数字の幅変化による"ガタつき"を防ぐために tabular-nums を使います。
 
-Body には tabular-nums バリアントが用意されています。tabular-nums（等幅数字）は、すべての数字が同じ幅で表示される OpenType 機能です。数値が縦に並ぶ場面で桁揃えを実現し、値が動的に変化する UI でレイアウトシフトを防ぎます。
+    {/*  illustration-needed: タイマーの Do（等幅数字により「1」→「0」の切り替えでもコロンの位置が動かない）/ Don't（「1」が狭いため「11:11:11」と「00:00:00」で全体の幅が大きく変わり視覚的に不安定）比較  */}
 
-### 1. テーブル内で数値が縦に並ぶ列
+    ## 4. テキストリンク型ページネーション
 
-桁が揃い比較しやすくなる tabular-nums を適用します。
+    背景やボーダーのないテキストリンク型のページネーションでは、数字の幅がそのまま要素間隔に影響します。tabular-nums で各数字の幅を揃え、リンク同士の間隔を均一にします。
 
-<!-- illustration-needed: テーブル内数値列の Do（tabular-nums で桁が揃い金額比較がしやすい）/ Don't（proportional-nums で「1」が狭く「8」が広いため桁位置がズレる）比較 -->
+    {/*  illustration-needed: ページネーションの Do（tabular-nums で「1」も「4」も「11」も各桁が同幅でリンク間隔が均一）/ Don't（proportional-nums で「1」が狭く「4」が広いため等間隔の gap でも視覚的にバラつく）比較  */}
 
-### 2. ダッシュボードの KPI・メトリクス
+    ## 5. フォームの数値入力
 
-KPI カードが横に並ぶ場面では、値が動的に更新されてもレイアウトが安定するよう tabular-nums を適用します。
+    数値入力フィールド（電話番号・金額・日付など）には tabular-nums を適用し、入力中のレイアウトシフトを抑えます。
 
-<!-- illustration-needed: ダッシュボードKPIの Do（tabular-nums でリアルタイムに値が変わっても幅が一定）/ Don't（proportional-nums で値の更新時にテキスト幅が変動しレイアウトシフトの原因になる）比較 -->
-
-### 3. タイマー・カウントダウン
-
-秒単位で数値が切り替わるタイマー表示では、数字の幅変化による"ガタつき"を防ぐために tabular-nums を使います。
-
-<!-- illustration-needed: タイマーの Do（等幅数字により「1」→「0」の切り替えでもコロンの位置が動かない）/ Don't（「1」が狭いため「11:11:11」と「00:00:00」で全体の幅が大きく変わり視覚的に不安定）比較 -->
-
-### 4. テキストリンク型ページネーション
-
-背景やボーダーのないテキストリンク型のページネーションでは、数字の幅がそのまま要素間隔に影響します。tabular-nums で各数字の幅を揃え、リンク同士の間隔を均一にします。
-
-<!-- illustration-needed: ページネーションの Do（tabular-nums で「1」も「4」も「11」も各桁が同幅でリンク間隔が均一）/ Don't（proportional-nums で「1」が狭く「4」が広いため等間隔の gap でも視覚的にバラつく）比較 -->
-
-### 5. フォームの数値入力
-
-数値入力フィールド（電話番号・金額・日付など）には tabular-nums を適用し、入力中のレイアウトシフトを抑えます。
-
-<!-- illustration-needed: フォーム数値入力の Do（入力値の各桁が同幅でカーソル位置の予測がしやすい）/ Don't（proportional-nums で「1」入力時にテキスト幅が縮みカーソル合わせが難しくなる）比較 -->
-
+    {/*  illustration-needed: フォーム数値入力の Do（入力値の各桁が同幅でカーソル位置の予測がしやすい）/ Don't（proportional-nums で「1」入力時にテキスト幅が縮みカーソル合わせが難しくなる）比較  */}
   </Tab>
-
   <Tab title="Web">
+    ## Type scale
 
-## Type scale
+    ### Standard Scale
 
-### Standard Scale
+    | トークン            | サイズ (px) |
+    | --------------- | -------- |
+    | `typeScale.6xl` | 102      |
+    | `typeScale.5xl` | 64       |
+    | `typeScale.4xl` | 42       |
+    | `typeScale.3xl` | 32       |
+    | `typeScale.2xl` | 26       |
+    | `typeScale.xl`  | 22       |
+    | `typeScale.lg`  | 18       |
+    | `typeScale.md`  | 16       |
+    | `typeScale.sm`  | 14       |
+    | `typeScale.xs`  | 13       |
+    | `typeScale.2xs` | 12       |
+    | `typeScale.3xs` | 11       |
 
-| トークン | サイズ (px) |
-|---|---|
-| `typeScale.6xl` | 102 |
-| `typeScale.5xl` | 64 |
-| `typeScale.4xl` | 42 |
-| `typeScale.3xl` | 32 |
-| `typeScale.2xl` | 26 |
-| `typeScale.xl` | 22 |
-| `typeScale.lg` | 18 |
-| `typeScale.md` | 16 |
-| `typeScale.sm` | 14 |
-| `typeScale.xs` | 13 |
-| `typeScale.2xs` | 12 |
-| `typeScale.3xs` | 11 |
+    ### Comfortable Scale
 
-### Comfortable Scale
+    | トークン            | サイズ (px) |
+    | --------------- | -------- |
+    | `typeScale.6xl` | 144      |
+    | `typeScale.5xl` | 128      |
+    | `typeScale.4xl` | 102      |
+    | `typeScale.3xl` | 84       |
+    | `typeScale.2xl` | 64       |
+    | `typeScale.xl`  | 42       |
+    | `typeScale.lg`  | 32       |
+    | `typeScale.md`  | 26       |
+    | `typeScale.sm`  | 22       |
+    | `typeScale.xs`  | 20       |
+    | `typeScale.2xs` | 16       |
+    | `typeScale.3xs` | 14       |
 
-| トークン | サイズ (px) |
-|---|---|
-| `typeScale.6xl` | 144 |
-| `typeScale.5xl` | 128 |
-| `typeScale.4xl` | 102 |
-| `typeScale.3xl` | 84 |
-| `typeScale.2xl` | 64 |
-| `typeScale.xl` | 42 |
-| `typeScale.lg` | 32 |
-| `typeScale.md` | 26 |
-| `typeScale.sm` | 22 |
-| `typeScale.xs` | 20 |
-| `typeScale.2xs` | 16 |
-| `typeScale.3xs` | 14 |
+    # Semantic styles
 
-## Semantic styles
+    このデザインシステムでは、用途にもとづいたセマンティックなタイポグラフィスタイルを定義しています。数字ベースの「H1 / H2 / 16px」ではなく、役割にもとづいてスタイルを選択します。
 
-### Big Title
+    | カテゴリ             | 役割         | 主な使用場面例                                         |
+    | :--------------- | :--------- | :---------------------------------------------- |
+    | Big Title        | 最大の見出し     | ヒーローエリア                                         |
+    | Display          | 装飾的見出し     | ページタイトル（装飾的）、セクション見出し（装飾的）、Dashboard などでのスタッツなど |
+    | Title            | 機能的見出し     | ページタイトル（機能的）、カード見出し、モーダルタイトル、セクション見出し（機能的）      |
+    | Body             | 本文（標準）     | 説明文、フォーム内テキスト                                   |
+    | Body-Comfortable | 本文（ゆったり）   | 記事、長文読み物                                        |
+    | Body-Compact     | 本文（詰まった表示） | データテーブル、リスト内テキスト                                |
+    | Label            | ラベル・操作テキスト | ボタン、フォームラベル、ナビゲーション                             |
+    | Caption          | 補助テキスト     | タイムスタンプ、注釈                                      |
 
-| 言語 | フォント | ウェイト | サイズ | 行間 | 字間 |
-|---|---|---|---|---|---|
-| jp | Noto Sans JP | Medium (500) | 102px / 6.375rem | 120px / 7.5rem | 0px |
-| en | Inter | Medium (500) | 102px / 6.375rem | 120px / 7.5rem | 0px |
+    セマンティックスタイルは、プラットフォームごとにスケールやサイズ値は異なりますが、役割と使い分けの考え方は共通です。
 
-### Display
+    ## 命名規則
 
-| バリアント | 言語 | フォント | ウェイト | サイズ | 行間 | 字間 |
-|---|---|---|---|---|---|---|
-| lg | jp | Noto Sans JP | Regular (400) | 64px / 4rem | 76px / 4.75rem | 0px |
-| lg | en | Inter | Regular (400) | 64px / 4rem | 76px / 4.75rem | 0px |
-| md | jp | Noto Sans JP | Medium (500) | 42px / 2.625rem | 52px / 3.25rem | 0px |
-| md | en | Inter | Medium (500) | 42px / 2.625rem | 52px / 3.25rem | 0px |
-| sm | jp | Noto Sans JP | Medium (500) | 32px / 2rem | 40px / 2.5rem | 0px |
-| sm | en | Inter | Medium (500) | 32px / 2rem | 40px / 2.5rem | 0px |
-| xs | jp | Noto Sans JP | Medium (500) | 26px / 1.625rem | 36px / 2.25rem | 0px |
-| xs | en | Inter | Medium (500) | 26px / 1.625rem | 36px / 2.25rem | 0px |
+    `{role}-{variant}-{size}`
 
-### Title
+    例: `body-comfortable-lg`, `title-xl`, `caption-sm`
 
-| バリアント | 言語 | フォント | ウェイト | サイズ | 行間 | 字間 |
-|---|---|---|---|---|---|---|
-| xl | jp | Noto Sans JP | Semi Bold (600) | 32px / 2rem | 40px / 2.5rem | 0px |
-| xl | en | Inter | Semi Bold (600) | 32px / 2rem | 40px / 2.5rem | 0px |
-| lg | jp | Noto Sans JP | Semi Bold (600) | 26px / 1.625rem | 36px / 2.25rem | 0px |
-| lg | en | Inter | Semi Bold (600) | 26px / 1.625rem | 36px / 2.25rem | 0px |
-| md | jp | Noto Sans JP | Semi Bold (600) | 22px / 1.375rem | 28px / 1.75rem | 0px |
-| md | en | Inter | Semi Bold (600) | 22px / 1.375rem | 28px / 1.75rem | 0px |
-| sm | jp | Noto Sans JP | Semi Bold (600) | 18px / 1.125rem | 24px / 1.5rem | 0px |
-| sm | en | Inter | Semi Bold (600) | 18px / 1.125rem | 24px / 1.5rem | 0px |
-| xs | jp | Noto Sans JP | Semi Bold (600) | 16px / 1rem | 24px / 1.5rem | 0px |
-| xs | en | Inter | Semi Bold (600) | 16px / 1rem | 24px / 1.5rem | 0px |
-| 2xs | jp | Noto Sans JP | Semi Bold (600) | 14px / 0.875rem | 20px / 1.25rem | 0px |
-| 2xs | en | Inter | Semi Bold (600) | 14px / 0.875rem | 20px / 1.25rem | 0px |
+    ## Big Title
 
-### Body
+    | 言語 | フォント         | ウェイト         | サイズ              | 行間             | 字間  |
+    | --- | ------------ | ------------ | ---------------- | -------------- | --- |
+    | jp | Noto Sans JP | Medium (500) | 102px / 6.375rem | 120px / 7.5rem | 0px |
+    | en | Inter        | Medium (500) | 102px / 6.375rem | 120px / 7.5rem | 0px |
 
-行間は Comfortable（ゆるめ）、Compact（狭め）のバリエーションがあり、3種類から選べます。
+    ## Display
 
-| バリアント | 言語 | フォント | ウェイト | サイズ | 行間 | 字間 |
-|---|---|---|---|---|---|---|
-| lg | jp | Noto Sans JP | Regular (400) | 18px / 1.125rem | 28px / 1.75rem | 0px |
-| lg | en | Inter | Regular (400) | 18px / 1.125rem | 28px / 1.75rem | 0px |
-| md | jp | Noto Sans JP | Regular (400) | 16px / 1rem | 24px / 1.5rem | 0px |
-| md | en | Inter | Regular (400) | 16px / 1rem | 24px / 1.5rem | 0px |
-| sm | jp | Noto Sans JP | Regular (400) | 14px / 0.875rem | 20px / 1.25rem | 0px |
-| sm | en | Inter | Regular (400) | 14px / 0.875rem | 20px / 1.25rem | 0px |
+    | バリアント | 言語 | フォント         | ウェイト          | サイズ             | 行間             | 字間  |
+    | ----- | --- | ------------ | ------------- | --------------- | -------------- | --- |
+    | lg    | jp | Noto Sans JP | Regular (400) | 64px / 4rem     | 76px / 4.75rem | 0px |
+    | lg    | en | Inter        | Regular (400) | 64px / 4rem     | 76px / 4.75rem | 0px |
+    | md    | jp | Noto Sans JP | Medium (500)  | 42px / 2.625rem | 52px / 3.25rem | 0px |
+    | md    | en | Inter        | Medium (500)  | 42px / 2.625rem | 52px / 3.25rem | 0px |
+    | sm    | jp | Noto Sans JP | Medium (500)  | 32px / 2rem     | 40px / 2.5rem  | 0px |
+    | sm    | en | Inter        | Medium (500)  | 32px / 2rem     | 40px / 2.5rem  | 0px |
+    | xs    | jp | Noto Sans JP | Medium (500)  | 26px / 1.625rem | 36px / 2.25rem | 0px |
+    | xs    | en | Inter        | Medium (500)  | 26px / 1.625rem | 36px / 2.25rem | 0px |
 
-### Label
+    ## Title
 
-| バリアント | 言語 | フォント | ウェイト | サイズ | 行間 | 字間 |
-|---|---|---|---|---|---|---|
-| xl | jp | Noto Sans JP | Medium (500) | 22px / 1.375rem | 24px / 1.5rem | 0px |
-| xl | en | Inter | Medium (500) | 22px / 1.375rem | 24px / 1.5rem | 0px |
-| md | jp | Noto Sans JP | Medium (500) | 16px / 1rem | 24px / 1.5rem | 0px |
-| md | en | Inter | Medium (500) | 16px / 1rem | 24px / 1.5rem | 0px |
-| sm | jp | Noto Sans JP | Medium (500) | 14px / 0.875rem | 20px / 1.25rem | 0px |
-| sm | en | Inter | Medium (500) | 14px / 0.875rem | 20px / 1.25rem | 0px |
-| xs | jp | Noto Sans JP | Medium (500) | 13px / 0.8125rem | 16px / 1rem | 0px |
-| xs | en | Inter | Medium (500) | 13px / 0.8125rem | 16px / 1rem | 0px |
+    | バリアント | 言語 | フォント         | ウェイト            | サイズ             | 行間             | 字間  |
+    | ----- | --- | ------------ | --------------- | --------------- | -------------- | --- |
+    | xl    | jp | Noto Sans JP | Semi Bold (600) | 32px / 2rem     | 40px / 2.5rem  | 0px |
+    | xl    | en | Inter        | Semi Bold (600) | 32px / 2rem     | 40px / 2.5rem  | 0px |
+    | lg    | jp | Noto Sans JP | Semi Bold (600) | 26px / 1.625rem | 36px / 2.25rem | 0px |
+    | lg    | en | Inter        | Semi Bold (600) | 26px / 1.625rem | 36px / 2.25rem | 0px |
+    | md    | jp | Noto Sans JP | Semi Bold (600) | 22px / 1.375rem | 28px / 1.75rem | 0px |
+    | md    | en | Inter        | Semi Bold (600) | 22px / 1.375rem | 28px / 1.75rem | 0px |
+    | sm    | jp | Noto Sans JP | Semi Bold (600) | 18px / 1.125rem | 24px / 1.5rem  | 0px |
+    | sm    | en | Inter        | Semi Bold (600) | 18px / 1.125rem | 24px / 1.5rem  | 0px |
+    | xs    | jp | Noto Sans JP | Semi Bold (600) | 16px / 1rem     | 24px / 1.5rem  | 0px |
+    | xs    | en | Inter        | Semi Bold (600) | 16px / 1rem     | 24px / 1.5rem  | 0px |
+    | 2xs   | jp | Noto Sans JP | Semi Bold (600) | 14px / 0.875rem | 20px / 1.25rem | 0px |
+    | 2xs   | en | Inter        | Semi Bold (600) | 14px / 0.875rem | 20px / 1.25rem | 0px |
 
-### Caption
+    ## Body
 
-| バリアント | 言語 | フォント | ウェイト | サイズ | 行間 | 字間 |
-|---|---|---|---|---|---|---|
-| md | jp | Noto Sans JP | Regular (400) | 12px / 0.75rem | 16px / 1rem | 0px |
-| md | en | Inter | Regular (400) | 12px / 0.75rem | 16px / 1rem | 0px |
-| sm | jp | Noto Sans JP | Regular (400) | 11px / 0.6875rem | 16px / 1rem | 0px |
-| sm | en | Inter | Regular (400) | 11px / 0.6875rem | 16px / 1rem | 0px |
+    行間は Comfortable（ゆるめ）、Compact（狭め）のバリエーションがあり、3種類から選べます。
 
+    | バリアント | 言語 | フォント         | ウェイト          | サイズ             | 行間             | 字間  |
+    | ----- | --- | ------------ | ------------- | --------------- | -------------- | --- |
+    | lg    | jp | Noto Sans JP | Regular (400) | 18px / 1.125rem | 28px / 1.75rem | 0px |
+    | lg    | en | Inter        | Regular (400) | 18px / 1.125rem | 28px / 1.75rem | 0px |
+    | md    | jp | Noto Sans JP | Regular (400) | 16px / 1rem     | 24px / 1.5rem  | 0px |
+    | md    | en | Inter        | Regular (400) | 16px / 1rem     | 24px / 1.5rem  | 0px |
+    | sm    | jp | Noto Sans JP | Regular (400) | 14px / 0.875rem | 20px / 1.25rem | 0px |
+    | sm    | en | Inter        | Regular (400) | 14px / 0.875rem | 20px / 1.25rem | 0px |
+
+    ## Label
+
+    | バリアント | 言語 | フォント         | ウェイト         | サイズ              | 行間             | 字間  |
+    | ----- | --- | ------------ | ------------ | ---------------- | -------------- | --- |
+    | xl    | jp | Noto Sans JP | Medium (500) | 22px / 1.375rem  | 24px / 1.5rem  | 0px |
+    | xl    | en | Inter        | Medium (500) | 22px / 1.375rem  | 24px / 1.5rem  | 0px |
+    | md    | jp | Noto Sans JP | Medium (500) | 16px / 1rem      | 24px / 1.5rem  | 0px |
+    | md    | en | Inter        | Medium (500) | 16px / 1rem      | 24px / 1.5rem  | 0px |
+    | sm    | jp | Noto Sans JP | Medium (500) | 14px / 0.875rem  | 20px / 1.25rem | 0px |
+    | sm    | en | Inter        | Medium (500) | 14px / 0.875rem  | 20px / 1.25rem | 0px |
+    | xs    | jp | Noto Sans JP | Medium (500) | 13px / 0.8125rem | 16px / 1rem    | 0px |
+    | xs    | en | Inter        | Medium (500) | 13px / 0.8125rem | 16px / 1rem    | 0px |
+
+    ## Caption
+
+    | バリアント | 言語 | フォント         | ウェイト          | サイズ              | 行間          | 字間  |
+    | ----- | --- | ------------ | ------------- | ---------------- | ----------- | --- |
+    | md    | jp | Noto Sans JP | Regular (400) | 12px / 0.75rem   | 16px / 1rem | 0px |
+    | md    | en | Inter        | Regular (400) | 12px / 0.75rem   | 16px / 1rem | 0px |
+    | sm    | jp | Noto Sans JP | Regular (400) | 11px / 0.6875rem | 16px / 1rem | 0px |
+    | sm    | en | Inter        | Regular (400) | 11px / 0.6875rem | 16px / 1rem | 0px |
   </Tab>
-
   <Tab title="Android">
+    Google の Material Design 3 に準拠します。
 
-Google の Material Design 3 に準拠します。
-
-<Note>
-🚧 Garage のセマンティックスタイルとのマッチング表を掲載予定
-</Note>
-
+    <Note>
+      🚧 Garage のセマンティックスタイルとのマッチング表を掲載予定
+    </Note>
   </Tab>
-
   <Tab title="iOS">
+    Apple の Human Interface Guideline に準拠します。
 
-Apple の Human Interface Guideline に準拠します。
-
-<Note>
-🚧 Garage のセマンティックスタイルとのマッチング表を掲載予定
-</Note>
-
+    <Note>
+      🚧 Garage のセマンティックスタイルとのマッチング表を掲載予定
+    </Note>
   </Tab>
 </Tabs>
