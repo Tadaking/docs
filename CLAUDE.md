@@ -402,10 +402,17 @@ Garage Design System固有のコンテンツ：
 ## ワークフロー
 
 ### 新しいガイドラインを書く場合
-1. Figma MCPでコンポーネント/トークン情報を読み取る
-2. テンプレートに沿って `.md` または `.mdx` ファイルを作成する
-3. `docs.json` の `navigation.tabs[].groups[]` 内の該当グループにページパスを追加する
-4. commit & push する
+
+**コンポーネントガイドラインの場合：**
+`skills/generate-component-doc.md` の手順に従って自動生成する。
+
+**Foundationガイドラインの場合：**
+CLAUDE.md の `#### Foundation ガイドライン` テンプレートに従って手動で作成する。
+
+共通手順：
+1. ファイルを作成する
+2. `docs.json` の `navigation.tabs[].groups[]` 内の該当グループにパスを追加する
+3. commit & push する
 
 ### 既存ガイドラインを更新する場合
 1. Mintlify MCPで現行の内容を確認する
