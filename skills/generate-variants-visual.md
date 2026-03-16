@@ -43,6 +43,10 @@ component properties から以下を取得する：
 
 `figma_execute` を使い、sizeの値を小さい順に横並びにしたフレームを生成する。
 ```javascript
+// 既存フレームの右端を取得し、重ならない位置に配置する
+const existingFrames = figma.currentPage.children;
+const maxX = existingFrames.reduce((max, node) => Math.max(max, node.x + node.width), 0);
+
 // 横並びフレームの生成パターン
 const frame = figma.createFrame();
 frame.name = '{ComponentName}/Size';
@@ -52,47 +56,151 @@ frame.paddingTop = frame.paddingBottom = 32;
 frame.paddingLeft = frame.paddingRight = 32;
 frame.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
 frame.cornerRadius = 12;
+frame.clipsContent = false;
+frame.x = maxX + 100;
+frame.y = 0;
 
 // sizeの値を小さい順に並べる（sm → md → lg → xl）
 const sizeOrder = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'];
 const sortedSizes = availableSizes.sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
 
+await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+
 for (const size of sortedSizes) {
   const instance = component.createInstance();
+
+  // boolean propertiesのうち、装飾系（アイコン等）をオフにする
+  const booleanProps = Object.entries(instance.componentProperties)
+    .filter(([key, prop]) =>
+      prop.type === 'BOOLEAN' &&
+      prop.value === true &&
+      !['focused', 'isDisabled', 'isPending'].includes(key)
+    );
+  for (const [key] of booleanProps) {
+    instance.setProperties({ [key]: false });
+  }
+
   instance.setProperties({ size });
+
+  // インスタンス本体のclipsContentのみオフにする（子は触らない）
+  if ('clipsContent' in instance) instance.clipsContent = false;
+
+  // インスタンス内の label/text プロパティにサイズ名を反映する（#nodeId サフィックス対応）
+  const textProps = Object.keys(instance.componentProperties)
+    .filter(key => /^(label|text)(#|$)/i.test(key));
+  if (textProps.length > 0) {
+    instance.setProperties({ [textProps[0]]: size });
+  }
+
+  // wrapperは使わず、インスタンスを直接frameに追加する
+  if ('clipsContent' in instance) instance.clipsContent = false;
   frame.appendChild(instance);
 }
 ```
 
-各インスタンスの下にサイズ名ラベル（`sm`, `md` 等）をテキストで追加する。
-
 ---
 
-### Step 3: State フレームの生成（`state` または `focused` / `isDisabled` がある場合）
+### Step 3: State フレームの生成
 
-以下の5パターンを左から順に横並びにする：
+`variant` × `intent` の全組み合わせを行として、state 5種を列として並べるグリッドを生成する。
+sizeは `md`（存在しない場合は最小サイズ）に固定する。
 
-| 表示名 | プロパティ設定 |
-|---|---|
-| Default | `state=default`, `focused=false`, `isDisabled=false` |
-| Hover | `state=hover` |
-| Pressed | `state=pressed` |
-| Focused | `state=default`, `focused=true` |
-| Disabled | `state=default`, `isDisabled=true` |
+#### 3-1: 組み合わせの列挙
 
-存在しないプロパティはスキップして生成できるパターンのみ並べる。
+`get_design_context` で取得した component properties から：
+- `variant` の全値を取得する
+- `intent` の全値を取得する（存在しない場合は `['default']` として扱う）
+- 全組み合わせをリストアップする
+
+#### 3-2: フレームの生成
 ```javascript
-const frame = figma.createFrame();
-frame.name = '{ComponentName}/State';
-frame.layoutMode = 'HORIZONTAL';
-frame.itemSpacing = 24;
-frame.paddingTop = frame.paddingBottom = 32;
-frame.paddingLeft = frame.paddingRight = 32;
-frame.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
-frame.cornerRadius = 12;
+const outerFrame = figma.createFrame();
+outerFrame.name = '{ComponentName}/State';
+outerFrame.layoutMode = 'VERTICAL';
+outerFrame.itemSpacing = 16;
+outerFrame.paddingTop = outerFrame.paddingBottom = 32;
+outerFrame.paddingLeft = outerFrame.paddingRight = 32;
+outerFrame.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
+outerFrame.cornerRadius = 12;
+outerFrame.clipsContent = false;
+
+const states = [
+  { label: 'Default',  props: { state: 'default', focused: false, isDisabled: false } },
+  { label: 'Hover',    props: { state: 'hover' } },
+  { label: 'Pressed',  props: { state: 'pressed' } },
+  { label: 'Focused',  props: { state: 'default', focused: true } },
+  { label: 'Disabled', props: { state: 'default', isDisabled: true } },
+];
+
+for (const { variantValue, intentValue } of combinations) {
+  // 1行 = variant × intent の横並びフレーム
+  const rowFrame = figma.createFrame();
+  rowFrame.layoutMode = 'HORIZONTAL';
+  rowFrame.itemSpacing = 16;
+  rowFrame.fills = [];
+  rowFrame.clipsContent = false;
+
+  for (const { label, props } of states) {
+    const instance = component.createInstance();
+
+    // プロパティ設定
+    const setProps = { size: 'md', variant: variantValue };
+    if (intentValue !== 'default') setProps.intent = intentValue;
+    Object.assign(setProps, props);
+
+    // 存在するプロパティのみ設定する（存在しないプロパティは無視）
+    const validProps = Object.fromEntries(
+      Object.entries(setProps).filter(([key]) => key in instance.componentProperties)
+    );
+    instance.setProperties(validProps);
+
+    // 装飾系boolean（focused/isDisabled/isPending以外）をオフにする
+    const booleanProps = Object.entries(instance.componentProperties)
+      .filter(([key, prop]) =>
+        prop.type === 'BOOLEAN' &&
+        prop.value === true &&
+        !['focused', 'isDisabled', 'isPending'].includes(key)
+      );
+    for (const [key] of booleanProps) {
+      instance.setProperties({ [key]: false });
+    }
+
+    // ラベルプロパティにステート名を反映（#nodeId サフィックス対応）
+    const textProps = Object.keys(instance.componentProperties)
+      .filter(key => /^(label|text)(#|$)/i.test(key));
+    if (textProps.length > 0) {
+      instance.setProperties({ [textProps[0]]: label });
+    }
+
+    // clipsContentをオフ
+    if ('clipsContent' in instance) instance.clipsContent = false;
+
+    rowFrame.appendChild(instance);
+  }
+
+  outerFrame.appendChild(rowFrame);
+}
+
+// 既存フレームと重ならない位置に配置
+const existingFrames = figma.currentPage.children;
+const maxX = existingFrames.reduce((max, node) => Math.max(max, node.x + node.width), 0);
+outerFrame.x = maxX + 100;
+outerFrame.y = 0;
 ```
 
-各インスタンスの下に状態名ラベルを追加する。
+#### 3-3: ラベル列の追加（オプション）
+
+各行の左端に `variant-intent` のラベルテキストを追加する：
+```javascript
+const rowLabel = figma.createText();
+await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+rowLabel.characters = intentValue !== 'default'
+  ? `${variantValue} / ${intentValue}`
+  : variantValue;
+rowLabel.fontSize = 11;
+rowLabel.fills = [{ type: 'SOLID', color: { r: 0.5, g: 0.5, b: 0.5 } }];
+rowFrame.insertChild(0, rowLabel); // 行の先頭に挿入
+```
 
 ---
 
@@ -100,9 +208,65 @@ frame.cornerRadius = 12;
 
 `full-radius=false`（角丸）と `full-radius=true`（フルラディウス）を横並びにする。
 
-各インスタンスの下にラベルを追加する：
-- `full-radius=false` → `Default`
-- `full-radius=true` → `Full radius`
+```javascript
+// 既存フレームの右端を取得し、重ならない位置に配置する
+const existingFrames = figma.currentPage.children;
+const maxX = existingFrames.reduce((max, node) => Math.max(max, node.x + node.width), 0);
+
+const frame = figma.createFrame();
+frame.name = '{ComponentName}/Shape';
+frame.layoutMode = 'HORIZONTAL';
+frame.itemSpacing = 24;
+frame.paddingTop = frame.paddingBottom = 32;
+frame.paddingLeft = frame.paddingRight = 32;
+frame.fills = [{ type: 'SOLID', color: { r: 0.97, g: 0.97, b: 0.97 } }];
+frame.cornerRadius = 12;
+frame.clipsContent = false;
+frame.x = maxX + 100;
+frame.y = 0;
+
+await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+
+const shapes = [
+  { label: 'Default',     fullRadius: false },
+  { label: 'Full radius', fullRadius: true  },
+];
+
+for (const s of shapes) {
+  const instance = component.createInstance();
+
+  // boolean propertiesのうち、装飾系（アイコン等）をオフにする
+  const booleanProps = Object.entries(instance.componentProperties)
+    .filter(([key, prop]) =>
+      prop.type === 'BOOLEAN' &&
+      prop.value === true &&
+      !['focused', 'isDisabled', 'isPending'].includes(key)
+    );
+  for (const [key] of booleanProps) {
+    instance.setProperties({ [key]: false });
+  }
+
+  instance.setProperties({ 'full-radius': s.fullRadius });
+
+  // インスタンス本体のclipsContentのみオフにする（子は触らない）
+  if ('clipsContent' in instance) instance.clipsContent = false;
+
+  // インスタンス内の label/text プロパティにラベル名を反映する（#nodeId サフィックス対応）
+  const textProps = Object.keys(instance.componentProperties)
+    .filter(key => /^(label|text)(#|$)/i.test(key));
+  if (textProps.length > 0) {
+    instance.setProperties({ [textProps[0]]: s.label });
+  }
+
+  // wrapperに入れる（ラベルテキストは不要、インスタンス内のlabelプロパティに反映済み）
+  const wrapper = figma.createFrame();
+  wrapper.layoutMode = 'NONE';
+  wrapper.fills = [];
+  wrapper.resize(instance.width, instance.height);
+  wrapper.appendChild(instance);
+  frame.appendChild(wrapper);
+}
+```
 
 ---
 

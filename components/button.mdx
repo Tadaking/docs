@@ -102,22 +102,48 @@ Primary に次ぐ重要度のアクション。ボーダーによって存在感
 
 削除や取り消しなど、破壊的・不可逆なアクションに使う。variant が Primary の場合は赤い背景、Secondary の場合は赤いテキストとボーダーになる。
 
-### size
+### Size
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5069:18972 | サイズ比較（sm〜xl） */}
+
+![Button Size](/images/button-size-light.png)
 
 | サイズ | 用途 |
 |---|---|
-| xl（56px） | ランディングページやヒーローセクションなど、大きく目立たせたい場面 |
-| lg（48px） | フォームの送信ボタンなど、標準的な主要アクション |
-| md（36px） | カード内やツールバーなど、標準的なUI |
 | sm（32px） | テーブルの行内アクションなど、省スペースが求められる場面 |
+| md（36px） | カード内やツールバーなど、標準的なUI |
+| lg（48px） | フォームの送信ボタンなど、標準的な主要アクション |
+| xl（56px） | ランディングページやヒーローセクションなど、大きく目立たせたい場面 |
 
-{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/4148-4978 | サイズ比較 */}
+### State
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5069:19068 | ステート一覧（variant × intent × state グリッド） */}
+
+![Button State](/images/button-state-light.png)
+
+| ステート | 説明 |
+|---|---|
+| Default | 通常状態 |
+| Hover | カーソルが乗っている状態 |
+| Pressed | クリック・タップ中の状態 |
+| Focused | キーボードフォーカス状態 |
+| Disabled | 操作不可状態。`opacity: 0.4` を適用 |
+
+### Shape
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5069:20028 | Shape比較 */}
+
+![Button Shape](/images/button-shape-light.png)
+
+| 形状 | 説明 |
+|---|---|
+| Default | 標準の角丸 |
+| Full radius | ピル型。角丸を最大にした形状 |
 
 ### その他のプロパティ
 
 | プロパティ | 説明 |
 |---|---|
-| full-radius | `true` にすると角丸が最大になり、ピル型のボタンになる |
 | hasLeftIcon / hasRightIcon | アイコンの表示・非表示を切り替える |
 | isPending | 処理中状態。ローディングインジケーターを表示する |
 
