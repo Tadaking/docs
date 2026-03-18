@@ -59,24 +59,89 @@ get_design_context(_guidelines の nodeId)
 | `related` | `## 類似要素との使い分け` セクション |
 | `variants/{name}/when-to-use` | 該当バリアントの「✅ いつ使う」 |
 | `variants/{name}/when-not-to-use` | 該当バリアントの「❌ いつ使わない」 |
-| `combinations/do-{n}/caption` | 組み合わせパターンのDoキャプション |
-| `combinations/dont-{n}/caption` | 組み合わせパターンのDon'tキャプション |
-| `combinations/caution-{n}/caption` | 組み合わせパターンのCautionキャプション |
+| `combinations/do/{do-n}` | DoのテキストレイヤーからコンポーネントとキャプションをFigmaに生成 |
+| `combinations/dont/{dont-n}` | DontのテキストレイヤーからコンポーネントとキャプションをFigmaに生成 |
+| `combinations/caution/{caution-n}` | CautionのテキストレイヤーからコンポーネントとキャプションをFigmaに生成 |
 
-`combinations` の `frame` レイヤーはスクリーンショットを取得して `images/{component-name}-combination-{do|dont|caution}-{n}-light.png` として保存する。
+#### combinations のテキスト解析ルール
 
-MDXの `## 組み合わせパターン` セクションは `do-dont-grid` クラスを使い、以下の形式で生成する：
+各テキストレイヤーの内容を以下のルールで解析する：
+````
+{variant}({intent}) + {variant}({intent}): キャプション
+````
+
+- `:` の前 → 配置するコンポーネントの組み合わせ
+- `:` の後 → キャプションテキスト
+- `+` で区切られた各要素が1つのコンポーネントインスタンス
+- `{variant}({intent})` → `variant={variant}, intent={intent}` として解釈
+- intentの記述がない場合 → intentプロパティは設定しない
+
+例：
+- `primary(neutral) + neutral` → `variant=primary, intent=neutral` と `variant=neutral` の2インスタンス
+- `primary(neutral) + primary(neutral)` → 同じprimary/neutralを2つ
+
+#### combinations のFigma生成手順
+
+各 `do-{n}` / `dont-{n}` / `caution-{n}` ごとに以下を実行する：
+
+1. テキストを解析してコンポーネントの組み合わせとキャプションを抽出する
+
+2. 対応するテンプレートを複製する：
+   - Do: https://www.figma.com/design/Pvlx7A6oDLlnPF8MQYFDcq/Web-Components?node-id=5087-16591
+   - Don't: https://www.figma.com/design/Pvlx7A6oDLlnPF8MQYFDcq/Web-Components?node-id=5087-16600
+   - Caution: https://www.figma.com/design/Pvlx7A6oDLlnPF8MQYFDcq/Web-Components?node-id=5087-16612
+
+3. `#preview` レイヤーにコンポーネントインスタンスを横並びに配置する：
+```javascript
+const previewLayer = templateInstance.findOne(n => n.name === '#preview');
+previewLayer.layoutMode = 'HORIZONTAL';
+previewLayer.itemSpacing = 16;
+previewLayer.clipsContent = false;
+
+for (const { variant, intent } of components) {
+  const instance = component.createInstance();
+  const props = { variant, size: 'md' };
+  if (intent) props.intent = intent;
+
+  // 装飾系booleanをオフ
+  const validProps = Object.fromEntries(
+    Object.entries(props).filter(([key]) => key in instance.componentProperties)
+  );
+  instance.setProperties(validProps);
+
+  const booleanProps = Object.entries(instance.componentProperties)
+    .filter(([key, prop]) =>
+      prop.type === 'BOOLEAN' &&
+      prop.value === true &&
+      !['focused', 'isDisabled', 'isPending'].includes(key)
+    );
+  for (const [key] of booleanProps) {
+    instance.setProperties({ [key]: false });
+  }
+
+  if ('clipsContent' in instance) instance.clipsContent = false;
+  previewLayer.appendChild(instance);
+}
+```
+
+4. フレーム名を `{ComponentName}/Combinations/{do|dont|caution}-{n}` にする
+
+5. スクリーンショットを取得して保存する：
+   - 保存先：`images/{component-name}-combination-{do|dont|caution}-{n}-light.png`
+   - 戻り値を直接使わず、必ずファイルとして保存してからパスを参照する
+
+6. MDXの `## 組み合わせパターン` セクションに挿入する：
 ```md
 <div class="do-dont-grid">
   <div class="do-card">
     ![](/images/{component-name}-combination-do-1-light.png)
     <div class="do-dont-label">✅ Do</div>
-    <div class="do-dont-caption">{caption テキスト}</div>
+    <div class="do-dont-caption">{キャプション}</div>
   </div>
   <div class="dont-card">
     ![](/images/{component-name}-combination-dont-1-light.png)
     <div class="do-dont-label">❌ Don't</div>
-    <div class="do-dont-caption">{caption テキスト}</div>
+    <div class="do-dont-caption">{キャプション}</div>
   </div>
 </div>
 
@@ -84,12 +149,13 @@ MDXの `## 組み合わせパターン` セクションは `do-dont-grid` クラ
   <div class="caution-card">
     ![](/images/{component-name}-combination-caution-1-light.png)
     <div class="do-dont-label">⚠️ Caution</div>
-    <div class="do-dont-caption">{caption テキスト}</div>
+    <div class="do-dont-caption">{キャプション}</div>
   </div>
 </div>
 ```
 
-do / dont / caution の数は `_guidelines` フレームの実際の連番に応じて動的に生成する。
+do / dont / caution の数は `_guidelines` の実際の連番に応じて動的に生成する。
+do と dont は可能な限りペアで `do-dont-grid` に並べる。ペアが合わない場合は単独で配置する。
 
 **見つからなかった場合：**
 該当セクションを以下のTODOコメントに置き換えて続行する：
