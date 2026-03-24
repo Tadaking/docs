@@ -1,0 +1,63 @@
+name: Notify Slack on doc update
+
+on:
+  push:
+    branches: [main]
+    paths: [index.mdx]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract latest update
+        id: extract
+        run: |
+          # 最新の <Update> から description と本文を抽出
+          DESC=$(grep -m1 'description=' index.mdx | sed 's/.*description="\([^"]*\)".*/\1/')
+          BODY=$(sed -n '/<Update/{n;s/^  //;p;q;}' index.mdx)
+          echo "desc=$DESC" >> "$GITHUB_OUTPUT"
+          echo "body=$BODY" >> "$GITHUB_OUTPUT"
+
+      - name: Send to Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          PAYLOAD=$(jq -n \
+            --arg desc "${{ steps.extract.outputs.desc }}" \
+            --arg body "${{ steps.extract.outputs.body }}" \
+            '{
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Design System docs updated"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ("*" + $desc + "*\n" + $body)
+                  }
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View docs"
+                      },
+                      "url": "https://newmo.mintlify.app"
+                    }
+                  ]
+                }
+              ]
+            }')
+          curl -sS -X POST "$SLACK_WEBHOOK_URL" \
+            -H 'Content-Type: application/json' \
+            -d "$PAYLOAD"
