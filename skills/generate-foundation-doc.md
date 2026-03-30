@@ -3,7 +3,7 @@
 ## 役割
 
 Foundation ページ（Spacing / Elevation / Motion 等）の MDX を新規生成する。
-`colors.mdx` と同じタブ構成（Overview / Primitive / Semantic / ...）で出力する。
+`foundation/colors.mdx` と同じタブ構成（Overview / Primitive / Semantic / ...）で出力する。
 
 ---
 
@@ -81,7 +81,7 @@ description: "{1行の説明文}"
 #### Primitive タブ
 
 Primitive トークンを値テーブルで列挙する。
-`colors.mdx` の Theme タブのフォーマットに準拠する。
+`foundation/colors.mdx` の Theme タブのフォーマットに準拠する。
 ```md
 <Tab title="Primitive">
   ## {グループ名}
@@ -95,7 +95,7 @@ Primitive トークンを値テーブルで列挙する。
 #### Semantic タブ
 
 Semantic トークンをエイリアス先と値のテーブルで列挙する。
-`colors.mdx` の Lightness-Mode タブのフォーマットに準拠する。
+`foundation/colors.mdx` の Lightness-Mode タブのフォーマットに準拠する。
 ```md
 <Tab title="Semantic">
   ## {グループ名}

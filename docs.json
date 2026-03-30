@@ -16,22 +16,24 @@
           {
             "group": "Getting started",
             "pages": [
-              "index"
+              "index",
+              "design-principles"
             ]
           },
           {
             "group": "Foundation",
             "pages": [
-              "colors",
-              "typography",
-              "size",
-              "shadows"
+              "foundation/colors",
+              "foundation/typography",
+              "foundation/size",
+              "foundation/shadows"
             ]
           },
           {
             "group": "Components",
             "pages": [
-              "components/button"
+              "components/button",
+              "components/icon-button"
             ]
           },
           {
