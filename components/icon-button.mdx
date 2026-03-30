@@ -1,0 +1,300 @@
+---
+title: "Icon Button"
+description: "アイコンのみで構成されるコンパクトなアクション要素"
+---
+
+{/* STATUS: DRAFT */}
+{/* figma: https://www.figma.com/design/Pvlx7A6oDLlnPF8MQYFDcq/Web-Components?node-id=5138-10951 */}
+
+<Badge color="orange" icon="clock">Draft</Badge>
+
+<Tabs>
+<Tab title="Overview">
+
+## 概要
+
+Icon Button は、アイコンのみでアクションを表現するコンパクトなボタンです。ラベルテキストを持たないため、限られたスペースで直感的にアクションを提供したい場面で使いましょう。Button と同じバリアント体系（variant / intent / size / state）を共有しています。
+
+## 類似要素との使い分け
+
+| 判断基準 | 使用する要素 |
+|---|---|
+| アイコンだけで意味が伝わるアクション | Icon Button |
+| ラベルが必要なアクション | Button |
+| アイコン＋ラベルの組み合わせ | Button（hasLeftIcon / hasRightIcon） |
+| 別のページ・URLに移動する | Link |
+
+### Icon Button と Button の選び方
+
+Icon Button を選べるのは、**アイコンだけで意味が伝わる場合**に限ります。以下の基準で判断しましょう。
+
+**Icon Button が適しているケース：**
+- 閉じる（×）、検索（🔍）、メニュー（☰）、削除（ゴミ箱）など広く認知されたアイコン
+- ツールバーやテーブルの行内など、スペースが限られた場面
+- 同じアクションが繰り返し並ぶ場面（一覧の各行の編集ボタンなど）
+
+**Button（ラベル付き）が適しているケース：**
+- 「保存する」「送信する」「アカウントを作成」など、ユーザーに迷いなく押してほしい重要なアクション
+- アイコンだけでは意味が曖昧になるアクション
+- アイコンだけでは結果が予測しにくい重要なアクション（削除の最終確認、設定の変更など）
+
+<div class="do-dont-grid">
+  <div class="do-card">
+    <div class="do-dont-label">✅ Do</div>
+    <div class="do-dont-preview">
+      ![](/images/icon-button-usage-do-1-light.png)
+    </div>
+    <div class="do-dont-caption">広く認知されたアイコンなら Icon Button で十分</div>
+  </div>
+  <div class="dont-card">
+    <div class="do-dont-label">❌ Don't</div>
+    <div class="do-dont-preview">
+      ![](/images/icon-button-usage-dont-1-light.png)
+    </div>
+    <div class="do-dont-caption">意味が曖昧なアイコンだけでは伝わらない</div>
+  </div>
+</div>
+
+<div class="do-dont-grid">
+  <div class="do-card">
+    <div class="do-dont-label">✅ Do</div>
+    <div class="do-dont-preview">
+      ![](/images/icon-button-usage-do-2-light.png)
+    </div>
+    <div class="do-dont-caption">重要なアクションはラベル付き Button で明示する</div>
+  </div>
+  <div class="dont-card">
+    <div class="do-dont-label">❌ Don't</div>
+    <div class="do-dont-preview">
+      ![](/images/icon-button-usage-dont-2-light.png)
+    </div>
+    <div class="do-dont-caption">ラベルなしでは結果が予測しにくい重要なアクション</div>
+  </div>
+</div>
+
+## Anatomy
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5169-22768 | Anatomy */}
+
+![Icon Button Anatomy](/images/icon-button-anatomy-light.png)
+
+| # | Type | Element name | Notes |
+|---|---|---|---|
+| 1 | Structural | Background | Background fill with corner radius — always present |
+| 2 | Sub-component | Icon | Icon sub-component — always present, shown via `hasLeftIcon` toggle |
+
+## バリアント
+
+### variant
+
+#### Primary
+
+画面内で最も目立たせたいアクションに適しています。
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5169-22165 | Primary プレビュー */}
+![Primary](/images/icon-button-variant-primary-light.png)
+
+✅ いつ使う
+- フローティングアクションボタン（FAB）
+- ヘッダーやツールバーの主要アクション（「新規作成」「送信」など）
+
+❌ いつ使わない
+- 同じ画面に複数の Primary Icon Button を並べない
+- アイコンだけで意味が伝わりにくい場合は Button を使う
+
+#### Secondary
+
+Primary に次ぐ重要度のアクションに向いています。tint カラーで存在感を保ちつつ、Primary を引き立てます。
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5169-22192 | Secondary プレビュー */}
+![Secondary](/images/icon-button-variant-secondary-light.png)
+
+✅ いつ使う
+- Primary の補助として並べるアクション
+- 中程度の重要度のアクション
+
+❌ いつ使わない
+- 主要アクション（Primary を使う）
+- 目立たせたくない補助操作（Ghost を使う）
+
+#### Neutral
+
+迷ったらまずこのバリアントから検討しましょう。控えめな見た目で幅広い場面に適しています。
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5169-22219 | Neutral プレビュー */}
+![Neutral](/images/icon-button-variant-neutral-light.png)
+
+✅ いつ使う
+- ツールバーやカード内の操作ボタン
+- テーブルの行内アクション（編集、削除など）
+- 繰り返し並ぶアクション
+
+❌ いつ使わない
+- ユーザーに積極的に押してほしいアクション（Primary / Secondary を使う）
+
+#### Ghost
+
+背景を持たない最も控えめなバリアントです。
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5169-22246 | Ghost プレビュー */}
+![Ghost](/images/icon-button-variant-ghost-light.png)
+
+✅ いつ使う
+- ナビゲーション内のアイコン操作
+- 密集したUI内で視覚的なノイズを減らしたい場面
+- 閉じるボタン、メニュートグル、「もっと見る」などの補助的な操作
+
+❌ いつ使わない
+- ユーザーが見落としてはいけない重要なアクション
+
+### intent
+
+#### Neutral
+
+デフォルトの意図です。基本的にはこちらを選びましょう。
+
+#### Danger
+
+削除や取り消しなど、破壊的・不可逆なアクションであることを視覚的に伝えます。Button と同じカラールールが適用されます — Primary は赤い背景、Secondary は赤い tint カラー、Neutral は赤いアイコンになります。Ghost には Danger intent は存在しません。
+
+### その他のプロパティ
+
+| プロパティ | 説明 |
+|---|---|
+| full-radius | 角丸を最大にする（円形ボタン） |
+| isPending | 処理中状態。ローディングインジケーターを表示する |
+
+## ラベル・コンテンツの書き方
+
+Icon Button にはラベルテキストがないため、以下の点に注意しましょう。
+
+- **`aria-label` は必須**です。アイコンだけでは意味が伝わらないユーザーがいます
+- `aria-label` はアクションの意味を簡潔に書きましょう（例：「メニューを開く」「項目を削除する」）
+- ツールチップの併用を推奨します。ホバー時にアクションの説明を表示することで、すべてのユーザーにとって分かりやすくなります
+- アイコンは広く認知されたものを選びましょう。独自のアイコンでは意味が伝わりにくい場合、ラベル付きの Button を検討してください
+
+## アクセシビリティ
+
+### キーボード操作
+
+| キー | 動作 |
+|---|---|
+| `Tab` | ボタンにフォーカスを移動する |
+| `Enter` / `Space` | ボタンのアクションを実行する |
+
+### スクリーンリーダー
+
+| 属性 | 値 | 説明 |
+|---|---|---|
+| `role` | `button` | ネイティブ `<button>` 要素を使えば自動付与 |
+| `aria-label` | （必須） | アイコンのみのため必ず設定する |
+| `aria-disabled` | `true` | disabled 状態で付与。`disabled` 属性と併用する |
+| `aria-busy` | `true` | isPending 状態で付与 |
+
+### コントラスト（APCA基準）
+
+| バリアント | 組み合わせ | 基準 |
+|---|---|---|
+| Primary | `color/button/primary/text` on `color/button/primary/background/default` | Lc 60以上 |
+| Secondary | `color/button/secondary/text` on `color/button/secondary/background/default` | Lc 60以上 |
+| Neutral | `color/button/neutral/text/default` on `color/button/neutral/background/default` | Lc 60以上 |
+| Ghost | `color/button/neutral/text/default` on 親要素の背景色 | Lc 60以上 |
+
+</Tab>
+
+<Tab title="Web">
+
+## Size
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5169-22110 | サイズ比較（sm〜xl） */}
+
+![Icon Button Size](/images/icon-button-size-light.png)
+
+Icon Button は正方形で、幅と高さが等しくなります。
+
+| サイズ | 用途 |
+|---|---|
+| sm（28px） | テーブルの行内アクション、密集した UI |
+| md（36px） | ツールバー、カード内の標準的な操作 |
+| lg（48px） | フォーム周辺、標準的なアクション |
+| xl（56px） | ヒーローセクション、目立たせたいアクション |
+
+## State
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5169-22260 | ステート一覧 */}
+
+![Icon Button State](/images/icon-button-state-light.png)
+
+| ステート | 説明 |
+|---|---|
+| Default | 通常状態 |
+| Hover | カーソルが乗っている状態 |
+| Pressed | クリック・タップ中の状態 |
+| Focused | キーボードフォーカス状態 |
+| Disabled | 操作不可状態。`opacity: 0.4` を適用 |
+
+## Shape
+
+{/* figma-frame: Pvlx7A6oDLlnPF8MQYFDcq/5169-22737 | Shape比較 */}
+
+![Icon Button Shape](/images/icon-button-shape-light.png)
+
+| 形状 | 説明 |
+|---|---|
+| Default | 標準の角丸（Button と同じ corner-radius トークン） |
+| Full radius | 円形。`border-radius/full`（9999px）を適用 |
+
+## カラートークン
+
+Icon Button は Button と同じカラートークンを使用します。
+
+### Neutral intent
+
+#### Background
+
+| バリアント | Default | Hover | Pressed | Disabled |
+|---|---|---|---|---|
+| Primary | `color/button/primary/background/default` | `color/button/primary/background/hover` | `color/button/primary/background/pressed` | opacity: 0.4 |
+| Secondary | `color/button/secondary/background/default` | `color/button/secondary/background/hover` | `color/button/secondary/background/pressed` | opacity: 0.4 |
+| Neutral | `color/button/neutral/background/default` | `color/button/neutral/background/hover` | `color/button/neutral/background/pressed` | opacity: 0.4 |
+| Ghost | `color/button/ghost/background/default` | `color/button/ghost/background/hover` | `color/button/ghost/background/pressed` | opacity: 0.4 |
+
+#### Icon Color
+
+| バリアント | Default | Hover | Pressed | Disabled |
+|---|---|---|---|---|
+| Primary | `color/button/primary/text` | `color/button/primary/text` | `color/button/primary/text` | opacity: 0.4 |
+| Secondary | `color/button/secondary/text` | `color/button/secondary/text` | `color/button/secondary/text` | opacity: 0.4 |
+| Neutral | `color/button/neutral/text/default` | `color/button/neutral/text/default` | `color/button/neutral/text/default` | opacity: 0.4 |
+| Ghost | `color/button/neutral/text/default` | `color/button/ghost/text` | `color/button/ghost/text` | opacity: 0.4 |
+
+### Danger intent
+
+#### Background
+
+| バリアント | Default | Hover | Pressed | Disabled |
+|---|---|---|---|---|
+| Primary | `color/button/primary/background/destractive/default` | `color/button/primary/background/destractive/hover` | `color/button/primary/background/destractive/pressed` | opacity: 0.4 |
+| Secondary | `color/button/secondary/background/destractive/default` | `color/button/secondary/background/destractive/hover` | `color/button/secondary/background/destractive/pressed` | opacity: 0.4 |
+| Neutral | `color/button/neutral/background/default` | `color/button/neutral/background/hover` | `color/button/neutral/background/pressed` | opacity: 0.4 |
+
+#### Icon Color（Danger）
+
+| バリアント | Default | Hover | Pressed | Disabled |
+|---|---|---|---|---|
+| Primary | `color/button/primary/text` | `color/button/primary/text` | `color/button/primary/text` | opacity: 0.4 |
+| Secondary | `color/button/secondary/text/destractive` | `color/button/secondary/text/destractive` | `color/button/secondary/text/destractive` | opacity: 0.4 |
+| Neutral | `color/button/neutral/text/destractive` | `color/button/neutral/text/destractive` | `color/button/neutral/text/destractive` | opacity: 0.4 |
+
+## サイズ・スペーシング
+
+Icon Button は正方形のため、幅 = 高さです。パディングはなく、アイコンがセンター配置されます。
+
+| トークン | xl | lg | md | sm |
+|---|---|---|---|---|
+| サイズ（幅 = 高さ） | `size/Control/web/height/xl`（56px） | `size/Control/web/height/lg`（48px） | `size/Control/web/height/md`（36px） | `size/Control/web/height/sm`（28px） |
+| 角丸 | `Size/Control/xl/corner-radius`（14px） | `Size/Control/lg/corner-radius`（10px） | `Size/Control/md/corner-radius`（6px） | `Size/Control/xs/corner-radius`（6px） |
+| アイコンサイズ | `Size/Control/xl/icon-size`（28px） | `Size/Control/lg/icon-size`（24px） | `Size/Control/md/icon-size`（20px） | `Size/Control/sm/icon-size`（20px） |
+
+</Tab>
+</Tabs>
