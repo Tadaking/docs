@@ -84,8 +84,14 @@ for (const size of sortedSizes) {
 
   instance.setProperties({ size });
 
-  // インスタンス本体のclipsContentのみオフにする（子は触らない）
+  // インスタンス本体 + 内部フレームのclipsContentをオフにする
+  // フォーカスリングなどのエフェクトが見切れるのを防ぐ
   if ('clipsContent' in instance) instance.clipsContent = false;
+  if ('children' in instance) {
+    for (const child of instance.children) {
+      if ('clipsContent' in child) child.clipsContent = false;
+    }
+  }
 
   // インスタンス内の label/text プロパティにサイズ名を反映する（#nodeId サフィックス対応）
   const textProps = Object.keys(instance.componentProperties)
@@ -178,8 +184,14 @@ for (const { variantValue, intentValue } of combinations) {
       instance.setProperties({ [textProps[0]]: label });
     }
 
-    // clipsContentをオフ
+    // clipsContentをオフ（インスタンス本体 + 内部フレーム）
+    // フォーカスリングなどのエフェクトが見切れるのを防ぐ
     if ('clipsContent' in instance) instance.clipsContent = false;
+    if ('children' in instance) {
+      for (const child of instance.children) {
+        if ('clipsContent' in child) child.clipsContent = false;
+      }
+    }
 
     if (shouldSkipLabelRewrite) {
       // テキストが非表示になるステートはラベルをインスタンスの下に追加する
@@ -276,8 +288,14 @@ for (const s of shapes) {
 
   instance.setProperties({ 'full-radius': s.fullRadius });
 
-  // インスタンス本体のclipsContentのみオフにする（子は触らない）
+  // インスタンス本体 + 内部フレームのclipsContentをオフにする
+  // フォーカスリングなどのエフェクトが見切れるのを防ぐ
   if ('clipsContent' in instance) instance.clipsContent = false;
+  if ('children' in instance) {
+    for (const child of instance.children) {
+      if ('clipsContent' in child) child.clipsContent = false;
+    }
+  }
 
   // インスタンス内の label/text プロパティにラベル名を反映する（#nodeId サフィックス対応）
   const textProps = Object.keys(instance.componentProperties)
@@ -361,6 +379,11 @@ for (const intent of intents) {
   }
 
   if ('clipsContent' in instance) instance.clipsContent = false;
+  if ('children' in instance) {
+    for (const child of instance.children) {
+      if ('clipsContent' in child) child.clipsContent = false;
+    }
+  }
   previewLayer.appendChild(instance);
 }
 ```
