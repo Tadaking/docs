@@ -290,7 +290,7 @@ Button と Link、Modal と Drawer のように、混同しやすい要素が存
 ```
 
 - Size・State・Shape ビジュアル: バリアントビジュアル画像とサイズ・スペーシングトークンテーブルをセットで掲載する。インタラクションステート（default / hover（Web）/ pressed / focused / disabled）の挙動も含める。focused と disabled（opacity: 0.4）は必ず記載する
-- カラートークン: 各バリアント × 各ステートのマッピングをテーブルで示す
+- カラートークン: 各バリアント × 各ステートのマッピングをテーブルで示す。**Figma の Component コレクション変数（`color/button/*`、`size/Control/web/*` 等）は記載しない**（後述）
 
 ---
 
@@ -298,11 +298,30 @@ Button と Link、Modal と Drawer のように、混同しやすい要素が存
 
 トークンを提案・記載する際は、以下の優先順位を守る：
 
-1. **Component Tokens** を最優先で探す（button, input, choice, table 等）
-2. 該当がなければ **Lightness-Mode Tokens** から選ぶ（surface, on-surface, border, accent, feedback 等）
+1. **LM（Lightness-Mode）Tokens** を最優先で選ぶ（surface, on-surface, border, accent, feedback 等）
+2. 該当がなければ **Pattern コレクション（Size/Control/\*）** のサイズトークンを使う
 3. **Theme Tokens（primitive値）は例外的なケースのみ**。色に意味がなく置き換えても体験が変わらない場合に限る
 
 Theme Tokensを使う場合は、理由を明記し、ダークモード対応が自前で必要な旨を注記する。
+
+#### ⚠️ Figma Component コレクション変数はコードに存在しない
+
+Figma Variables に **Component コレクション**（`color/button/*`、`size/Control/web/*` 等）が存在するが、これらは**デザイン作業専用のエイリアス**であり、Panda CSS の実装には存在しない。
+
+MDX に記載するトークン（カラートークンテーブル・サイズ・スペーシングテーブル）には必ずエイリアスを辿った先の **LM / Pattern コレクションのトークン名**を使うこと。
+
+| ❌ 記載してはいけない（Figma Component コレクション） | ✅ 記載すべきLMトークン |
+|---|---|
+| `color/button/primary/background/default` | `color/accent-container/primary/medium` |
+| `color/button/neutral/background/hover` | `color/surface-container/bold` |
+| `size/Control/web/height/md` | `Size/Control/md/size` |
+| `size/button/web/height/xl` | `Size/Control/xl/size` |
+
+カラートークンテーブルの冒頭には必ず以下の注記を入れること：
+
+```md
+> 実装時はこのテーブルの LM（Lightness-Mode）トークンを直接使うこと。FigmaのComponent Variablesはデザイン作業用の参照であり、コードには存在しない。
+```
 
 ### アクセシビリティ
 

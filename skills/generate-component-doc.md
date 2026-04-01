@@ -42,6 +42,42 @@ get_variable_defs(nodeId)
 - `COLOR` scope → カラートークンテーブルに使う
 - `WIDTH_HEIGHT` / `GAP` / `CORNER_RADIUS` scope → サイズ・スペーシングテーブルに使う
 
+#### ⚠️ Component コレクション変数はエイリアスを辿ること
+
+`get_variable_defs` が返す変数名が **Component コレクション**（`color/button/*`、`size/Control/web/*`、`size/button/web/*` 等）に属する場合、それは**デザイン専用のエイリアス**であり、コードには存在しない。
+
+MDXに記載するトークン名は、必ずエイリアスの参照先（LM / Pattern コレクション）まで辿ること。
+
+**エイリアス解決の手順：**
+
+1. `get_variable_defs` でトークン名を取得する
+2. トークン名が `color/button/*` や `size/Control/web/*` など Component コレクションを示す場合、そのエイリアス先を確認する
+3. Figma Console MCP の `figma_get_variables` または `figma_get_token_values` でエイリアス先のコレクション名とトークン名を取得する
+4. LM（Pattern コレクション）または Size コレクションのトークン名をMDXに記載する
+
+**よくあるマッピング例（Button / Icon Button）：**
+
+| Component コレクション | → | LM / Pattern トークン |
+|---|---|---|
+| `color/button/primary/background/default` | → | `color/accent-container/primary/medium` |
+| `color/button/primary/background/hover` | → | `color/accent-container/primary/bold` |
+| `color/button/primary/background/pressed` | → | `color/accent-container/primary/heavy` |
+| `color/button/secondary/background/default` | → | `color/accent-container/primary/whisper` |
+| `color/button/neutral/background/default` | → | `color/surface-container/medium` |
+| `color/button/ghost/background/default` | → | `color/neutral-alpha/0` |
+| `color/button/primary/text` | → | `color/on-accent/default` |
+| `color/button/secondary/text` | → | `color/on-accent/primary/medium` |
+| `color/button/neutral/text/default` | → | `color/on-surface/medium` |
+| `size/Control/web/height/xl` | → | `Size/Control/xl/size` |
+| `size/Control/web/height/lg` | → | `Size/Control/lg/size` |
+| `size/Control/web/height/md` | → | `Size/Control/md/size` |
+| `size/Control/web/height/sm` | → | `Size/Control/xs/size` |
+
+カラートークンテーブルの冒頭には必ず以下の注記を入れること：
+```md
+> 実装時はこのテーブルの LM（Lightness-Mode）トークンを直接使うこと。FigmaのComponent Variablesはデザイン作業用の参照であり、コードには存在しない。
+```
+
 ### Step 3: `_guidelines` フレームの探索
 
 コンポーネントと同じページ内で `_guidelines` という名前のフレームを探す。
