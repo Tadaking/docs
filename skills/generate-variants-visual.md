@@ -41,6 +41,36 @@ component properties から以下を取得する：
 
 ---
 
+### 共通ヘルパー：ドキュメント用アイコンのスワップ
+
+各セクションで `component.createInstance()` した直後に、ネストされた `Icon Container` のアイコンを `_swap_icons`（ドキュメント専用コンポーネント）にスワップする。
+これにより、`hasLeftIcon` / `hasRightIcon` を `true` のままにしているケース（Icon Button 等）でも、デフォルトの点線プレースホルダーではなく実アイコン（左=星、右=chevron）が表示される。
+
+詳しい仕様とコードパターンは `generate-anatomy.md` の Step 4.5 を参照。要約：
+
+```javascript
+async function swapDocIcons(rootInstance) {
+  const LEFT_ICON_ID = '5291:19589';
+  const RIGHT_ICON_ID = '5291:19602';
+  const iconContainers = rootInstance.findAll(
+    n => n.type === 'INSTANCE' && n.name === 'Icon Container'
+  );
+  for (const ic of iconContainers) {
+    const visibleRef = ic.componentPropertyReferences && ic.componentPropertyReferences.visible;
+    const targetIconId = (visibleRef && visibleRef.startsWith('hasRightIcon'))
+      ? RIGHT_ICON_ID
+      : LEFT_ICON_ID;
+    const iconPropKey = Object.keys(ic.componentProperties).find(k => /^icon(#|$)/.test(k));
+    if (iconPropKey) ic.setProperties({ [iconPropKey]: targetIconId });
+  }
+}
+```
+
+このヘルパーは Step 2 / Step 3 / Step 4 / Step 6b の各 `instance.setProperties(...)` の後・`appendChild` の前で呼ぶこと。
+非表示のアイコンに対しては no-op になるので、`hasLeftIcon = false` を設定してアイコンを隠している既存ロジックには影響しない。
+
+---
+
 ### Step 2: Size フレームの生成（`size` プロパティがある場合）
 
 `figma_execute` を使い、sizeの値を小さい順に横並びにしたフレームを生成する。
@@ -99,6 +129,9 @@ for (const size of sortedSizes) {
   if (textProps.length > 0) {
     instance.setProperties({ [textProps[0]]: size });
   }
+
+  // ドキュメント用アイコンにスワップ（表示中の Icon Container のみ効く）
+  await swapDocIcons(instance);
 
   // wrapperは使わず、インスタンスを直接frameに追加する
   if ('clipsContent' in instance) instance.clipsContent = false;
@@ -192,6 +225,9 @@ for (const { variantValue, intentValue } of combinations) {
         if ('clipsContent' in child) child.clipsContent = false;
       }
     }
+
+    // ドキュメント用アイコンにスワップ
+    await swapDocIcons(instance);
 
     if (shouldSkipLabelRewrite) {
       // テキストが非表示になるステートはラベルをインスタンスの下に追加する
@@ -304,6 +340,9 @@ for (const s of shapes) {
     instance.setProperties({ [textProps[0]]: s.label });
   }
 
+  // ドキュメント用アイコンにスワップ
+  await swapDocIcons(instance);
+
   // wrapperに入れる（ラベルテキストは不要、インスタンス内のlabelプロパティに反映済み）
   const wrapper = figma.createFrame();
   wrapper.layoutMode = 'NONE';
@@ -384,6 +423,10 @@ for (const intent of intents) {
       if ('clipsContent' in child) child.clipsContent = false;
     }
   }
+
+  // ドキュメント用アイコンにスワップ
+  await swapDocIcons(instance);
+
   previewLayer.appendChild(instance);
 }
 ```
