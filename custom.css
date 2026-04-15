@@ -246,6 +246,19 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
+/* Spacing token tables — vertical alignment & image sizing */
+table td,
+table th {
+  vertical-align: middle !important;
+}
+
+table td img {
+  max-width: 120px;
+  height: auto;
+  display: block;
+  margin: 0 !important;
+}
+
 /* Card title color — primary */
 .card-group .card h2.not-prose {
   color: #00a724;
