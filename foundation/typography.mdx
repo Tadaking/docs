@@ -594,25 +594,13 @@ export const BP = ({ name, std, cmf, ls }) => {
     - 日本語テキスト: ローマ字・かな・漢字あわせて **31 文字以内**
     - アイコン・テキスト・画像のコントラスト比: **4.5:1 以上**
 
-    ## フォントの使い分け（32dp 閾値）
-
-    Google のガイドラインでは、サイズによって使用するフォントを切り替えることが推奨されています。
-
-    - **32dp 以上**: Google Sans（ディスプレイ向け。大きいサイズで映える）
-    - **32dp 未満**: Roboto（小さいサイズでも高い可読性を維持）
-    - 日本語など Google Sans / Roboto でカバーされない言語は **Noto Sans** を使います
-
-    Garage では「システム標準フォント」を指定していますが、Android Auto 等の車載環境で実装する際は、この 32dp 閾値に沿ってフォントを切り替える運用を推奨します。Garage のスケールだと display-sm（For Driving で 40dp）以上は Google Sans、headline-sm（28dp）以下は Roboto が目安になります。
-
-    ## ウェイトの使い分け
-
-    - 強調には **Medium（500）を優先** し、ここぞというときに限って使います
-    - **Bold（700）の多用は避けます**。車載ディスプレイでは Medium の方が可読性が高いとされています
-    - Button Label は例外的に Bold を使用しています（タッチ領域を明確にするため）
-
     ## 4dp グリッドへの整合
 
     すべてのタイプサイズ・行間は 4dp グリッドに揃っています。新しいスタイルを追加する際も 4dp 刻みで設計しましょう。
+
+    <Note>
+      **ウェイトについての補足**: Google のガイドラインでは強調に Medium（500）を推奨していますが、Android 実機にプリインストールされている Noto Sans CJK JP は Regular（400）と Bold（700）しか含まず、Medium を指定しても Regular にフォールバックします。そのため Garage では、日本語の強調には Bold（700）を使用しています（`weight-emphasized` トークン）。英数テキスト（Roboto）では Medium が利用できるため、トークン上の weight 値通りに描画されます。
+    </Note>
 
     <AndroidScaleSwitch>
 
