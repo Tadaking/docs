@@ -553,6 +553,40 @@ export const BP = ({ name, std, cmf, ls }) => {
       各カテゴリには `weight`（通常）と `weight-emphasized`（強調）の2種類のウェイトが定義されています。強調表示時は `weight-emphasized`（Bold 700）に切り替えます。Button Label は常に Bold（700）で定義されています。
     </Note>
 
+    # Design for Driving
+
+    車載ディスプレイ向けのタイポグラフィは、Google の [Design for Driving](https://developers.google.com/cars/design/android-auto/design-system/typography) のガイドラインに準拠しています。運転中の一瞥で情報を取得できることが最優先されるため、UI の通常スケールよりも厳しい制約があります。
+
+    For Driving モードは、このガイドラインに従って行間・字間・サイズを調整したモードです。ドライバー向けの画面にはこのモードを適用します。
+
+    ## 最小サイズと情報階層
+
+    - **本文の最小サイズは 24dp**。運転中に一瞥で読める下限です
+    - 24dp 未満のサイズは **非重要情報のみ** に使います（補助ラベル、タイムスタンプ、脚注など）
+    - 安全・運転判断に関わる情報には必ず 24dp 以上を使いましょう
+
+    Garage の For Driving モードでは以下のようにサイズが割り当てられています。
+
+    | カテゴリ | For Driving サイズ (dp) | 重要情報に使えるか |
+    | :-- | :-- | :-- |
+    | display-lg / md / sm | 56 / 44 / 40 | ✅ |
+    | headline-lg / md / sm | 36 / 32 / 28 | ✅ |
+    | title-lg / md / sm | 24 / 24 / 22 | title-sm は補助情報向け |
+    | body-lg | 24 | ✅ |
+    | body-md / sm | 22 / 20 | ⚠️ 非重要情報のみ |
+    | label-lg / md / sm | 22 / 20 / 18 | ⚠️ 非重要情報のみ |
+    | button-label-lg / md / sm / xs | 36 / 32 / 28 / 24 | ✅ |
+
+    ## ウェイトの使い分け
+
+    - 強調には **Medium（500）を優先** し、ここぞというときに限って使います
+    - **Bold（700）の多用は避けます**。車載ディスプレイでは Medium の方が可読性が高いとされています
+    - Button Label は例外的に Bold を使用しています（タッチ領域を明確にするため）
+
+    ## 4dp グリッドへの整合
+
+    すべてのタイプサイズ・行間は 4dp グリッドに揃っています。新しいスタイルを追加する際も 4dp 刻みで設計しましょう。
+
     <AndroidScaleSwitch>
 
     ## Display
