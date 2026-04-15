@@ -10,7 +10,7 @@ description: "適切なスケール、スタイル、ウェイトを用いて慎
 export const ScaleCtx = React.createContext('standard');
 
 export const toRem = (px) => { const v = px / 16; return Number.isInteger(v) ? v + 'rem' : parseFloat(v.toFixed(4)) + 'rem'; };
-export const WL = { 400: 'Regular (400)', 500: 'Medium (500)', 600: 'Semi Bold (600)' };
+export const WL = { 400: 'Regular (400)', 500: 'Medium (500)', 600: 'Semi Bold (600)', 700: 'Bold (700)' };
 export const JP = '足の速い茶色のキツネがぐうたら犬を飛び越えて逃げます。';
 export const EN = 'The quick brown fox jumps over the lazy dog and runs away.';
 export const JP_BODY = 'ある日の暮方の事である。一人の下人が、羅生門の下で雨やみを待っていた。広い門の下には、この男のほかに誰もいない。ただ、所々丹塗の剥げた、大きな円柱に、蟋蟀が一匹とまっている。羅生門が、朱雀大路にある以上は、この男のほかにも、雨やみをする市女笠や揉烏帽子が、もう二三人はありそうなものである。';
@@ -43,6 +43,40 @@ export const SP = ({ name, std, cmf, w }) => {
       <div className="type-preview-sample-en" style={{fontSize: sz+'px', fontWeight: w, lineHeight: lh+'px'}}>{EN}</div>
       <div className="type-preview-font">Inter</div>
       <div className="type-preview-specs">サイズ: {sz}px / {toRem(sz)}　ウェイト: {WL[w]}　行間: {lh}px / {toRem(lh)}</div>
+    </div>
+  );
+};
+
+export const AndroidScaleCtx = React.createContext('standard');
+
+export const AndroidScaleSwitch = ({ children }) => {
+  const [scale, setScale] = React.useState('standard');
+  return (
+    <AndroidScaleCtx.Provider value={scale}>
+      <div className="typescale-switcher">
+        {['standard', 'for_driving'].map(s => (
+          <button key={s} className={scale === s ? 'active' : ''} onClick={() => setScale(s)}>
+            {s === 'standard' ? 'Standard' : 'For Driving'}
+          </button>
+        ))}
+      </div>
+      {children}
+    </AndroidScaleCtx.Provider>
+  );
+};
+
+export const ASP = ({ name, std, fod, w, ls }) => {
+  const scale = React.useContext(AndroidScaleCtx);
+  const [sz, lh] = scale === 'standard' ? std : fod;
+  const lsVal = ls ? (scale === 'standard' ? ls.std : ls.fod) : 0;
+  return (
+    <div className="type-preview">
+      <div className="type-preview-name">{name}</div>
+      <div className="type-preview-sample-jp" style={{fontSize: sz+'px', fontWeight: w, lineHeight: lh+'px', letterSpacing: lsVal+'px'}}>{JP}</div>
+      <div className="type-preview-font">システム標準フォント</div>
+      <div className="type-preview-sample-en" style={{fontSize: sz+'px', fontWeight: w, lineHeight: lh+'px', letterSpacing: lsVal+'px'}}>{EN}</div>
+      <div className="type-preview-font">システム標準フォント</div>
+      <div className="type-preview-specs">サイズ: {sz}px / {toRem(sz)}　ウェイト: {WL[w]}　行間: {lh}px / {toRem(lh)}　字間: {lsVal}px</div>
     </div>
   );
 };
@@ -474,10 +508,211 @@ export const BP = ({ name, std, cmf, ls }) => {
     </Note>
   </Tab>
   <Tab title="Android">
-    Google の Material Design 3 に準拠します。
+    Google の Material Design 3 に準拠しつつ、Garage 独自に Button Label を拡張しています。
+
+    ## Type scale
+
+    Android のタイプスケールは Standard（高密度レイアウト）と For Driving（低密度レイアウト・ドライバー向け）の 2 系統を持ちます。
+
+    | トークン | Standard (px) | For Driving (px) |
+    | --- | --- | --- |
+    | `typeScale/6xl` | 57 | 56 |
+    | `typeScale/5xl` | 45 | 44 |
+    | `typeScale/4xl` | 36 | 40 |
+    | `typeScale/3xl` | 32 | 36 |
+    | `typeScale/2xl` | 28 | 32 |
+    | `typeScale/xl` | 24 | 28 |
+    | `typeScale/lg` | 22 | 24 |
+    | `typeScale/md` | 16 | 24 |
+    | `typeScale/sm` | 14 | 22 |
+    | `typeScale/xs` | 12 | 20 |
+    | `typeScale/2xs` | 11 | 18 |
+
+    # Semantic styles
+
+    このデザインシステムでは、用途にもとづいたセマンティックなタイポグラフィスタイルを定義しています。数字ベースの「H1 / H2 / 16sp」ではなく、役割にもとづいてスタイルを選択します。
+
+    | カテゴリ | 役割 | 主な使用場面例 |
+    | :-- | :-- | :-- |
+    | Display | 装飾的な大きな見出し | ヒーローエリア、ダッシュボードの大きな数値 |
+    | Headline | ページ・セクションの見出し | ページタイトル、セクションヘッダー |
+    | Title | カード・モーダルの見出し | カードタイトル、モーダルタイトル、リスト見出し |
+    | Body | 本文 | 説明文、記事本文、リスト内テキスト |
+    | Label | ラベル・補助テキスト | フォームラベル、タブラベル、キャプション |
+    | Button Label | ボタン内のラベル | ボタン、FAB のテキスト |
+
+    セマンティックスタイルは、プラットフォームごとにスケールやサイズ値は異なりますが、役割と使い分けの考え方は共通です。
+
+    ## 命名規則
+
+    `{role}-{size}`
+
+    例: `body-lg`, `title-md`, `button-label-xs`
 
     <Note>
-      🚧 Garage のセマンティックスタイルとのマッチング表を掲載予定
+      各カテゴリには `weight`（通常）と `weight-emphasized`（強調）の2種類のウェイトが定義されています。強調表示時は `weight-emphasized`（Bold 700）に切り替えます。Button Label は常に Bold（700）で定義されています。
+    </Note>
+
+    <AndroidScaleSwitch>
+
+    ## Display
+
+    <ASP name="display-lg" std={[57, 64]} fod={[56, 64]} w={400} ls={{std: -0.25, fod: 0}} />
+
+    <ASP name="display-md" std={[45, 52]} fod={[44, 52]} w={400} ls={{std: 0, fod: 0.1}} />
+
+    <ASP name="display-sm" std={[36, 44]} fod={[40, 48]} w={400} ls={{std: 0, fod: 0.2}} />
+
+    ## Headline
+
+    <ASP name="headline-lg" std={[32, 40]} fod={[36, 44]} w={400} ls={{std: 0, fod: 0.2}} />
+
+    <ASP name="headline-md" std={[28, 36]} fod={[32, 40]} w={400} ls={{std: 0, fod: 0.3}} />
+
+    <ASP name="headline-sm" std={[24, 32]} fod={[28, 36]} w={400} ls={{std: 0, fod: 0.3}} />
+
+    ## Title
+
+    <ASP name="title-lg" std={[22, 28]} fod={[24, 32]} w={400} ls={{std: 0, fod: 0.6}} />
+
+    <ASP name="title-md" std={[16, 24]} fod={[24, 32]} w={500} ls={{std: 0.15, fod: 0.6}} />
+
+    <ASP name="title-sm" std={[14, 20]} fod={[22, 28]} w={500} ls={{std: 0.1, fod: 1.1}} />
+
+    ## Body
+
+    <ASP name="body-lg" std={[16, 24]} fod={[24, 32]} w={400} ls={{std: 0.5, fod: 0.6}} />
+
+    <ASP name="body-md" std={[14, 20]} fod={[22, 28]} w={400} ls={{std: 0.25, fod: 1.1}} />
+
+    <ASP name="body-sm" std={[12, 16]} fod={[20, 26]} w={400} ls={{std: 0.4, fod: 1.2}} />
+
+    ## Label
+
+    <ASP name="label-lg" std={[14, 20]} fod={[22, 28]} w={500} ls={{std: 0.1, fod: 1.1}} />
+
+    <ASP name="label-md" std={[12, 16]} fod={[20, 26]} w={500} ls={{std: 0.5, fod: 1.2}} />
+
+    <ASP name="label-sm" std={[11, 16]} fod={[18, 24]} w={500} ls={{std: 0.5, fod: 1.2}} />
+
+    ## Button Label
+
+    <ASP name="button-label-lg" std={[24, 32]} fod={[36, 44]} w={700} ls={{std: 0.1, fod: 0.5}} />
+
+    <ASP name="button-label-md" std={[22, 28]} fod={[32, 40]} w={700} ls={{std: 0.1, fod: 0.5}} />
+
+    <ASP name="button-label-sm" std={[16, 24]} fod={[28, 36]} w={700} ls={{std: 0.1, fod: 0.5}} />
+
+    <ASP name="button-label-xs" std={[14, 20]} fod={[24, 32]} w={700} ls={{std: 0.1, fod: 0.5}} />
+
+    </AndroidScaleSwitch>
+
+    # Token reference
+
+    Typography-Android コレクションの全タイポグラフィトークン値です。モードを切り替えることで、各スケールでの値を確認できます。
+
+    ## Display
+
+    | トークン | Standard | For Driving |
+    | --- | --- | --- |
+    | `display/lg/size` | 57 | 56 |
+    | `display/md/size` | 45 | 44 |
+    | `display/sm/size` | 36 | 40 |
+    | `display/lg/line-height` | 64 | 64 |
+    | `display/md/line-height` | 52 | 52 |
+    | `display/sm/line-height` | 44 | 48 |
+    | `display/lg/tracking` | -0.25 | 0 |
+    | `display/md/tracking` | 0 | 0.1 |
+    | `display/sm/tracking` | 0 | 0.2 |
+    | `display/*/weight` | 400 | 400 |
+    | `display/*/weight-emphasized` | 700 | 700 |
+
+    ## Headline
+
+    | トークン | Standard | For Driving |
+    | --- | --- | --- |
+    | `headline/lg/size` | 32 | 36 |
+    | `headline/md/size` | 28 | 32 |
+    | `headline/sm/size` | 24 | 28 |
+    | `headline/lg/line-height` | 40 | 44 |
+    | `headline/md/line-height` | 36 | 40 |
+    | `headline/sm/line-height` | 32 | 36 |
+    | `headline/lg/tracking` | 0 | 0.2 |
+    | `headline/md/tracking` | 0 | 0.3 |
+    | `headline/sm/tracking` | 0 | 0.3 |
+    | `headline/*/weight` | 400 | 400 |
+    | `headline/*/weight-emphasized` | 700 | 700 |
+
+    ## Title
+
+    | トークン | Standard | For Driving |
+    | --- | --- | --- |
+    | `title/lg/size` | 22 | 24 |
+    | `title/md/size` | 16 | 24 |
+    | `title/sm/size` | 14 | 22 |
+    | `title/lg/line-height` | 28 | 32 |
+    | `title/md/line-height` | 24 | 32 |
+    | `title/sm/line-height` | 20 | 28 |
+    | `title/lg/tracking` | 0 | 0.6 |
+    | `title/md/tracking` | 0.15 | 0.6 |
+    | `title/sm/tracking` | 0.1 | 1.1 |
+    | `title/lg/weight` | 400 | 400 |
+    | `title/md/weight` | 500 | 500 |
+    | `title/sm/weight` | 500 | 500 |
+    | `title/*/weight-emphasized` | 700 | 700 |
+
+    ## Body
+
+    | トークン | Standard | For Driving |
+    | --- | --- | --- |
+    | `body/lg/size` | 16 | 24 |
+    | `body/md/size` | 14 | 22 |
+    | `body/sm/size` | 12 | 20 |
+    | `body/lg/line-height` | 24 | 32 |
+    | `body/md/line-height` | 20 | 28 |
+    | `body/sm/line-height` | 16 | 26 |
+    | `body/lg/tracking` | 0.5 | 0.6 |
+    | `body/md/tracking` | 0.25 | 1.1 |
+    | `body/sm/tracking` | 0.4 | 1.2 |
+    | `body/*/weight` | 400 | 400 |
+    | `body/*/weight-emphasized` | 700 | 700 |
+
+    ## Label
+
+    | トークン | Standard | For Driving |
+    | --- | --- | --- |
+    | `label/lg/size` | 14 | 22 |
+    | `label/md/size` | 12 | 20 |
+    | `label/sm/size` | 11 | 18 |
+    | `label/lg/line-height` | 20 | 28 |
+    | `label/md/line-height` | 16 | 26 |
+    | `label/sm/line-height` | 16 | 24 |
+    | `label/lg/tracking` | 0.1 | 1.1 |
+    | `label/md/tracking` | 0.5 | 1.2 |
+    | `label/sm/tracking` | 0.5 | 1.2 |
+    | `label/*/weight` | 500 | 500 |
+    | `label/*/weight-emphasized` | 700 | 700 |
+
+    ## Button Label
+
+    | トークン | Standard | For Driving |
+    | --- | --- | --- |
+    | `button-label/lg/size` | 24 | 36 |
+    | `button-label/md/size` | 22 | 32 |
+    | `button-label/sm/size` | 16 | 28 |
+    | `button-label/xs/size` | 14 | 24 |
+    | `button-label/lg/line-height` | 32 | 44 |
+    | `button-label/md/line-height` | 28 | 40 |
+    | `button-label/sm/line-height` | 24 | 36 |
+    | `button-label/xs/line-height` | 20 | 32 |
+    | `button-label/lg/tracking` | 0.1 | 0.5 |
+    | `button-label/md/tracking` | 0.1 | 0.5 |
+    | `button-label/sm/tracking` | 0.1 | 0.5 |
+    | `button-label/xs/tracking` | 0.1 | 0.5 |
+    | `button-label/*/weight` | 700 | 700 |
+
+    <Note>
+      トークン名のプレフィックス `typography/` は省略しています。すべて Typography-Android コレクションに属します。単位は px（tracking は letter-spacing 相当の値）です。
     </Note>
   </Tab>
   <Tab title="iOS">
