@@ -555,27 +555,44 @@ export const BP = ({ name, std, cmf, ls }) => {
 
     # Design for Driving
 
-    車載ディスプレイ向けのタイポグラフィは、Google の [Design for Driving](https://developers.google.com/cars/design/android-auto/design-system/typography) のガイドラインに準拠しています。運転中の一瞥で情報を取得できることが最優先されるため、UI の通常スケールよりも厳しい制約があります。
+    車載ディスプレイ向けのタイポグラフィは、Google の [Design for Driving](https://developers.google.com/cars/design/design-foundations/visual-principles?hl=ja#make_content_easy_to_read) のガイドラインに準拠しています。運転中の一瞥で情報を取得できることが最優先されるため、UI の通常スケールよりも厳しい制約があります。
 
     For Driving モードは、このガイドラインに従って行間・字間・サイズを調整したモードです。ドライバー向けの画面にはこのモードを適用します。
 
-    ## 最小サイズと情報階層
+    ## プライマリ / セカンダリでのサイズ使い分け
 
-    - **本文の最小サイズは 24dp**。運転中に一瞥で読める下限です
-    - 24dp 未満のサイズは **非重要情報のみ** に使います（補助ラベル、タイムスタンプ、脚注など）
-    - 安全・運転判断に関わる情報には必ず 24dp 以上を使いましょう
+    Google のガイドラインでは、テキストの役割によって必要な最小サイズが明確に定義されています。
+
+    | 役割 | 最小サイズ | 典型例 |
+    | :-- | :-- | :-- |
+    | **プライマリ** | **32dp** | 意思決定に必要な情報：曲のタイトル、連絡先名、ナビ指示、速度など |
+    | **セカンダリ** | **24dp** | 補足情報：アーティスト名、コールタイプ（「モバイル」など）、ステータス |
+    | サブテキスト | 24dp 未満も可 | 非重要情報のみ（脚注、タイムスタンプ等） |
 
     Garage の For Driving モードでは以下のようにサイズが割り当てられています。
 
-    | カテゴリ | For Driving サイズ (dp) | 重要情報に使えるか |
+    | カテゴリ | For Driving サイズ (dp) | 用途の目安 |
     | :-- | :-- | :-- |
-    | display-lg / md / sm | 56 / 44 / 40 | ✅ |
-    | headline-lg / md / sm | 36 / 32 / 28 | ✅ |
-    | title-lg / md / sm | 24 / 24 / 22 | title-sm は補助情報向け |
-    | body-lg | 24 | ✅ |
-    | body-md / sm | 22 / 20 | ⚠️ 非重要情報のみ |
-    | label-lg / md / sm | 22 / 20 / 18 | ⚠️ 非重要情報のみ |
-    | button-label-lg / md / sm / xs | 36 / 32 / 28 / 24 | ✅ |
+    | display-lg / md / sm | 56 / 44 / 40 | プライマリ（十分に大きい） |
+    | headline-lg / md | 36 / 32 | プライマリ |
+    | headline-sm | 28 | ⚠️ プライマリ基準（32dp）未満。セカンダリ用途で使う |
+    | title-lg / md | 24 / 24 | セカンダリ |
+    | title-sm | 22 | サブテキスト |
+    | body-lg | 24 | セカンダリ |
+    | body-md / sm | 22 / 20 | サブテキスト |
+    | label-lg / md / sm | 22 / 20 / 18 | サブテキスト |
+    | button-label-lg / md | 36 / 32 | プライマリ操作に使用可 |
+    | button-label-sm / xs | 28 / 24 | セカンダリ操作 |
+
+    <Warning>
+      意思決定に関わる最重要テキスト（速度、警告、ナビゲーション指示、選択肢のタイトル等）には **32dp 以上**を使いましょう。Garage では display / headline-lg / headline-md / button-label-lg / button-label-md が該当します。
+    </Warning>
+
+    ## テキスト長・コントラスト
+
+    - ローマ字テキスト: 句読点・スペースを含めて **120 文字以内**
+    - 日本語テキスト: ローマ字・かな・漢字あわせて **31 文字以内**
+    - アイコン・テキスト・画像のコントラスト比: **4.5:1 以上**
 
     ## フォントの使い分け（32dp 閾値）
 
